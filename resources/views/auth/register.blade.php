@@ -2,13 +2,30 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
+        <!-- Apellido -->
         <div>
-            <x-input-label for="name" :value="__('Nombre')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-label for="apellido" :value="__('Apellido')" />
+            <x-text-input id="apellido" class="block mt-1 w-full" type="text" name="apellido" :value="old('apellido')" required autofocus autocomplete="apellido" />
+            <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
         </div>
-
+        <!-- Nombre -->
+        <div class="mt-4">
+            <x-input-label for="nombre" :value="__('Nombre')" />
+            <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required autofocus autocomplete="nombre" />
+            <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+        </div>
+        <!-- Documento -->
+        <div class="mt-4">
+            <x-input-label for="documento" :value="__('Documento')" />
+            <x-text-input id="documento" class="block mt-1 w-full" type="text" name="documento" :value="old('documento')" required autofocus autocomplete="documento" />
+            <x-input-error :messages="$errors->get('documento')" class="mt-2" />
+        </div>
+        <!-- Temas -->
+        <div class="mt-4">
+            <x-input-label for="temas" :value="__('Solicito publicar en los siguientes temas')" />
+            <x-text-input id="temas" class="block mt-1 w-full" type="text" name="temas" :value="old('temas')" required autofocus autocomplete="temas" />
+            <x-input-error :messages="$errors->get('temas')" class="mt-2" />
+        </div>
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
