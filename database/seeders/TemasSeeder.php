@@ -13,19 +13,20 @@ class TemasSeeder extends Seeder
      */
     public function run(): void
     {
-       if(Tema::count()>0) {
+       if(Tema::count() !== 0) {
+        return;
        }
        
        $temas = [
             [
                 'titulo' => 'Tema 1',
                 'slug' => 'tema_1',
-                'descripcionn' => 'Descripción del tema 1'
+                'descripcion' => 'Descripción del tema 1'
             ],
             [
                 'titulo' => 'Tema 2',
                 'slug' => 'tema_2',
-                'descripcionn' => 'Descripción del tema 2'
+                'descripcion' => 'Descripción del tema 2'
             ]
             // Add more themes as needed
         ];
