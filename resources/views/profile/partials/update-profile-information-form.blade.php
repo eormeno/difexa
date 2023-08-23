@@ -66,15 +66,15 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Gurdar') }}</x-primary-button>
+            <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p
                     x-data="{ show: true }"
                     x-show="show"
                     x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
+                    x-init="setTimeout(() => show = false, 10000)"
+                    class="text-lg text-green-500 dark:text-blue-700"
                 >{{ __('Guardado.') }}</p>
             @endif
         </div>
