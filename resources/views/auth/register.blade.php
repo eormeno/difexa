@@ -1,10 +1,10 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" novalidate>
         @csrf
-
+      
         <!-- Apellido -->
         <div>
-            <x-input-label for="apellido" :value="__('Apellido')" />
+            <x-input-label for="apellido" :value="__('Apellido de la persona')" />
             <x-text-input id="apellido" class="block mt-1 w-full" type="text" name="apellido" :value="old('apellido')" required
                 autofocus autocomplete="apellido" />
             <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
@@ -21,7 +21,7 @@
         <!-- Documento -->
         <div class="mt-4">
             <x-input-label for="documento" :value="__('Documento')" />
-            <x-text-input id="documento" class="block mt-1 w-full" type="text" name="documento" :value="old('documento')"
+            <x-text-input id="documento" class="block mt-1 w-full" type="number" name="documento" :value="old('documento')"
                 required autofocus autocomplete="documento" />
             <x-input-error :messages="$errors->get('documento')" class="mt-2" />
         </div>
