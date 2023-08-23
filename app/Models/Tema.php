@@ -12,6 +12,6 @@ class Tema extends Model
     protected $fillable = [
         'titulo',
         'descripcon',
-        'slug',    
+        'slug',
     ];
 }
