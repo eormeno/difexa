@@ -47,7 +47,7 @@ class User extends Authenticatable
     ];
 
     public function getFullName(): string{
-        return "{$this->apellido}, {$this->Nombre}";
+        return "{$this->apellido}, {$this->nombre}";
     }
 }
 
