@@ -46,4 +46,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function getFullName(){
+        return ucfirst($this->apellido) . ' ' . ucfirst($this->nombre);
+    }
 }
