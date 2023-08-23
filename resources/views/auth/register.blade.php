@@ -19,13 +19,13 @@
         <!-- Documento -->
         <div class="mt-4">
             <x-input-label for="documento" :value="__('Documento')" />
-            <x-text-input id="documento" class="block mt-1 w-full" type="text" name="documento" :value="old('documento')" required autofocus autocomplete="documento" />
+            <x-text-input id="documento" class="block mt-1 w-full" type="number" name="documento" :value="old('documento')" required autofocus autocomplete="documento" />
             <x-input-error :messages="$errors->get('documento')" class="mt-2" />
         </div>
 
         <!-- Tema -->
         <div class="mt-4">
-            <x-input-label for="tema" :value="__('Solicitar tema a publicar:')" />
+            <x-input-label for="tema" :value="__('Tema a publicar')" />
             <x-text-input id="tema" class="block mt-1 w-full" type="text" name="tema" :value="old('tema')" required autofocus autocomplete="tema" />
             <x-input-error :messages="$errors->get('tema')" class="mt-2" />
         </div>
