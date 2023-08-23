@@ -18,9 +18,27 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Nombre')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="nombre" :value="__('Nombre')" />
+            <x-text-input id="nombre" name="nombre" type="text" class="mt-1 block w-full" :value="old('nombre', $user->name)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('nombre')" />
+        </div>
+
+       <div>
+            <x-input-label for="apellido" :value="__('Apellido')" />
+            <x-text-input id="apellido" name="apellido" type="text" class="mt-1 block w-full" :value="old('apellido', $user->apellido)" required autofocus autocomplete="apellido" />
+            <x-input-error class="mt-2" :messages="$errors->get('apellido')" />
+       </div>
+
+        <div>
+            <x-input-label for="documento" :value="__('Documento')" />
+            <x-text-input id="documento" name="documento" type="text" class="mt-1 block w-full" :value="old('documento', $user->documento)" required autofocus autocomplete="documento" />
+            <x-input-error class="mt-2" :messages="$errors->get('documento')" />
+        </div>
+
+        <div>
+            <x-input-label for="tema" :value="__('Solicito publicar bajo los siguientes tema:')" />
+            <x-text-input id="tema" name="tema" type="text" class="mt-1 block w-full" :value="old('tema', $user->tema)" required autofocus autocomplete="temas" />
+            <x-input-error class="mt-2" :messages="$errors->get('tema')" />
         </div>
 
         <div>
