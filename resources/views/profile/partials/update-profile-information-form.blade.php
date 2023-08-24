@@ -12,17 +12,39 @@
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
     </form>
-
+    @if (session('status') === 'profile-updated')
+    <p
+        x-data="{ show: true }"
+        x-show="show"
+        x-transition
+        x-init="setTimeout(() => show = false, 5000)"
+        class="text-lg text-green-600 dark:text-gray-400"
+    >{{ __('Datos actualizados.') }}</p>
+    @endif
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Nombre')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="apellido" :value="__('Apellido')" />
+            <x-text-input id="apellido" name="apellido" type="text" class="mt-1 block w-full" :value="old('apellido', $user->apellido)" required autofocus autocomplete="apellido" />
+            <x-input-error class="mt-2" :messages="$errors->get('apellido')" />
         </div>
-
+        <div>
+            <x-input-label for="nombre" :value="__('Nombre')" />
+            <x-text-input id="nombre" name="nombre" type="text" class="mt-1 block w-full" :value="old('nombre', $user->nombre)" required autocomplete="nombre" />
+            <x-input-error class="mt-2" :messages="$errors->get('nombre')" />
+        </div>
+        <div>
+            <x-input-label for="documento" :value="__('Documento')" />
+            <x-text-input id="documento" name="documento" type="text" class="mt-1 block w-full" :value="old('documento', $user->documento)" required autocomplete="documento" />
+            <x-input-error class="mt-2" :messages="$errors->get('documento')" />
+        </div>
+        <div>
+            <x-input-label for="temas" :value="__('Temas')" />
+            <x-text-input id="temas" name="temas" type="text" class="mt-1 block w-full" :value="old('temas', $user->temas)" required autocomplete="temas" />
+            <x-input-error class="mt-2" :messages="$errors->get('temas')" />
+        </div>
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
@@ -49,16 +71,6 @@
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Guardar') }}</x-primary-button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Guardado.') }}</p>
-            @endif
         </div>
     </form>
 </section>
