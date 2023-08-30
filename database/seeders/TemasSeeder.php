@@ -40,9 +40,10 @@ class TemasSeeder extends Seeder
                     'descripcion' => fake()->sentence(20)
                 ];
             };    
+            
             foreach ($temas as $tema) {
                 Tema::create($tema);
-            }
+            };
 
         }
         else{
