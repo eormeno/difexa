@@ -24,7 +24,7 @@
             </a>
         </div>
 
-        <div class="w-auto mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden rounded-lg">
+        <div class="w-auto mt-6 m-3 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden rounded-md">
             {{ $slot }}
         </div>
     </div>
