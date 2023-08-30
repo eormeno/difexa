@@ -12,7 +12,9 @@ class TemasController extends Controller
      */
     public function index()
     {
-        //
+        $temas= Tema::paginate(10);
+
+        return view('temas.index', compact('temas'));
     }
 
     /**
@@ -36,7 +38,7 @@ class TemasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

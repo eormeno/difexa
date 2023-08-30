@@ -33,10 +33,16 @@ class TemasSeeder extends Seeder
                     'descripcion' => fake()->sentence(20)
                 ]
             ];
-    
+            for ($i = 0; $i < 70; $i++) {
+                $temas[] = [
+                    'slug' => fake()->slug(),
+                    'titulo' => fake()->text(50),
+                    'descripcion' => fake()->sentence(20)
+                ];
+            };    
             foreach ($temas as $tema) {
-                  Tema::create($tema);  
-            };
+                Tema::create($tema);
+            }
 
         }
         else{
