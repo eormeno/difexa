@@ -12,8 +12,8 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos = Dispositivo::all();
-        return response()->json($dispositivos);
+        $dispositivos = Dispositivo::paginate(8);
+        return view('dispositivos.index', compact('dispositivos'));
     }
 
     /**

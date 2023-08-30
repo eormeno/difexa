@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemasController;
+use App\Http\Controllers\DispositivoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,5 +35,8 @@ Route::get('/temas', function () {
 })->name('temas');
 
 Route::resource('tema', TemasController::class);
+
+Route::resource('dispositivo', DispositivoController::class);
+
 
 require __DIR__.'/auth.php';
