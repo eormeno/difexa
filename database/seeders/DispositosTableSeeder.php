@@ -2,25 +2,20 @@
 
 namespace Database\Seeders;
 
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Dispositivo;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class DispositosTableSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      */
     public function run(): void
     {
-        if (!app()->isLocal()) {
-            exit('This seed is only for local environments.' . PHP_EOL);
+        if (Dispositivo::count()>0){
+            return;
         }
-
-        if (Dispositivo::count() > 0) {
-            exit('Table is not empty, therefore NOT seeding' . PHP_EOL);
-        }
-        
-        Dispositivo::factory()->count(20)->create();
+        Dispositivo::factory(8)->create();
     }
 }
