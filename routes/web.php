@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TemasController;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +32,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/temas', function(){
-    return view('temas.index');
-})->name('temas.index');
+Route::get('temas',TemasController::class)->only(['index', 'show']);
 
 require __DIR__.'/auth.php';
