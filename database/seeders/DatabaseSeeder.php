@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $this->call(TemasSeeder::class); /*Sirve para ejecutar el teemasseeder que creamos*/
+        
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
