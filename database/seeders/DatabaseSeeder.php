@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\TemasTableSeeder;
+use Database\Seeders\DispositosTablesSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(TemasTableSeeder::class);
+        $this->call(DispositosTableSeeder::class);
         
     }
 }
