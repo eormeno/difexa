@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TemasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,6 @@ Route::get('/temas', function () {
     return view('temas.index');
 })->name('temas');
 
+Route::resource('tema', TemasController::class);
 
 require __DIR__.'/auth.php';
