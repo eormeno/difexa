@@ -5,7 +5,6 @@ use App\Http\Controllers\TemasController;
 use Illuminate\Support\Facades\Route;
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +31,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('temas',TemasController::class)->only(['index', 'show']);
+Route::resource('temas',TemasController::class)->only(['index', 'show']); /*Corregi un error aqui*/
 
 require __DIR__.'/auth.php';
