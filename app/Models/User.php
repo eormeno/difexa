@@ -26,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'tema_id',
     ];
 
     /**
@@ -51,5 +52,8 @@ class User extends Authenticatable
     public function tema()
     {
         return $this->belongsTo(Tema::class);
+    }
+    public function getFullName(): string{
+        return "{$this->apellido}, {$this->nombre}";
     }
 }
