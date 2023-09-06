@@ -30,13 +30,13 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, Tema $tema): RedirectResponse
     {
         $request->validate([
             'apellido' => ['required', 'string', 'max:255'],
             'nombre' => ['required', 'string', 'max:255'],
             'documento' => ['required', 'string', 'max:20'],
-            'tema' => ['required', 'integer', 'gt:0'],
+            'tema' => ['required', 'exists:temas,id'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -50,6 +50,10 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->tema()->associate($request->tema);
+
+        $user->save();
 
         event(new Registered($user));
 

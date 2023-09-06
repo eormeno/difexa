@@ -22,9 +22,12 @@ class User extends Authenticatable
         'nombre',
         'apellido',
         'documento',
-        'temas',
         'email',
         'password',
+        'tema_id',
+        'is_admin',
+        'is_publisher',
+
     ];
 
     /**
