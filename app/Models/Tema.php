@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tema extends Model
 {
@@ -13,4 +14,9 @@ class Tema extends Model
         'titulo',
         'descripcion',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
