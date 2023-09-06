@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'nombre' => ['required', 'string', 'max:255'],
             'documento' => ['required', 'string', 'max:20'],
-            'temas' => ['required', 'string', 'max:255'],
+            'tema' => ['required', 'exists: temas,id'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -42,11 +42,13 @@ class RegisteredUserController extends Controller
             'apellido' => $request->apellido,
             'nombre' => $request->nombre,
             'documento' => $request->documento,
-            'temas' => $request->temas,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        $user->tema()->associate($request->tema);
+        $user->save();
+        
         event(new Registered($user));
 
         Auth::login($user);

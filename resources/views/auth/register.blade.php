@@ -20,11 +20,11 @@
             <x-text-input id="documento" class="block mt-1 w-full" type="text" name="documento" :value="old('documento')" required autofocus autocomplete="documento" />
             <x-input-error :messages="$errors->get('documento')" class="mt-2" />
         </div>
-        <!-- Temas -->
+        <!-- Tema -->
         <div class="mt-4">
-            <x-input-label for="temas" :value="__('Solicito publicar en los siguientes temas')" />
-            <x-text-input id="temas" class="block mt-1 w-full" type="text" name="temas" :value="old('temas')" required autofocus autocomplete="temas" />
-            <x-input-error :messages="$errors->get('temas')" class="mt-2" />
+            <x-input-label for="tema" :value="__('Solicito publicar en el siguiente tema')" />
+            <x-text-input id="tema" class="block mt-1 w-full" type="text" name="tema" :value="old('tema')" required autofocus autocomplete="tema" />
+            <x-input-error :messages="$errors->get('tema')" class="mt-2" />
         </div>
         <!-- Email Address -->
         <div class="mt-4">

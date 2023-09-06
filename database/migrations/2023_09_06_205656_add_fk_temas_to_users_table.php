@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('apellido')->default('');
-            $table->string('nombre')->default('');
-            $table->string('documento')->default('');
-            $table->string('tema')->default('');
+            $table->foreignId('tema_id')->nullable()->constrained('temas');
         });
     }
 
@@ -25,7 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['apellido','nombre','documento','tema']);
+            $table->dropForeign(['tema_id']);
+            $table->dropColumn('tema_id');
         });
     }
 };
