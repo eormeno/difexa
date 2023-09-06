@@ -18,12 +18,32 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'nombre' => fake()->name(),
+            'apellido' => fake()->lastName(),
+            'documento' => fake()->unique()->randomNumber(8),
+            'es_admininstrador' => false,
+            'es_publicador' => false,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
+    }
+    public function rootAdmin(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'id' => 1,
+            'nombre' => env('ADMIN_NOMBRE'),
+            'apellido' => env('ADMIN_APELLIDO'),
+            'documento' => env('ADMIN_DOCUMENTO'),
+            'es_admininstrador' => true,
+            'es_publicador' => false,
+            'email' => env('ADMIN_EMAIL'),
+            'email_verified_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'password' => bcrypt(env('ADMIN_PASSWORD')),
+        ]);
     }
 
     /**

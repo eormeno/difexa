@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TemasSeeder::class);
         $this->call(DispositosTableSeeder::class);
-        
+        $this->call(UsersTableSeeder::class);
+
     }
 }
