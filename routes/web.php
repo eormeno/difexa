@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemasController;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('temas',TemasController::class)->only(['index', 'show']); /*Corregi un error aqui*/
+
+Route::resource('dispositivos', DispositivoController::class); 
 
 require __DIR__.'/auth.php';
