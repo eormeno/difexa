@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\Tema;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $temas = Tema::all();
+        return view('auth.register', compact('temas'));
     }
 
     /**
@@ -31,18 +33,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nombre' => ['required', 'string', 'max:25','min:2'],
-            'apellido' => ['required', 'string', 'max:25','min:2'],
-            'documento' => ['required', 'string','regex:/^[0-9]+$/','max:255','min:6'],
+            'apellido' => ['required', 'string', 'max:255'],
+            'nombre' => ['required', 'string', 'max:255'],
+            'documento' => ['required', 'string', 'max:20'],
+            'tema' => ['required', 'integer', 'gt:0'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', 'max:15','min:5'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'nombre' => $request->nombre,
+        $tema = Tema::find($request->tema);
+
+        $user = $tema->users()->create([
             'apellido' => $request->apellido,
+            'nombre' => $request->nombre,
             'documento' => $request->documento,
-            'tema' => $request->tema,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
