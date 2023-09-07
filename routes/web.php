@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TemasController;
+use App\Http\Controllers\TemaController;
 use App\Http\Controllers\DispositivoController;
 
 /*
@@ -30,13 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/temas', function () {
-    return view('temas.index');
-})->name('temas');
 
-Route::resource('tema', TemasController::class);
+Route::resource('temas', TemaController::class);
 
-Route::resource('dispositivo', DispositivoController::class);
+Route::resource('dispositivos', DispositivoController::class);
 
 
 require __DIR__.'/auth.php';

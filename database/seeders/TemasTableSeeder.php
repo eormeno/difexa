@@ -42,18 +42,18 @@ class TemasTableSeeder extends Seeder
             'descripcion'   => 'Temas relacionados con el departamento de química'
         ];
 
-        for ($i = 0; $i <= 97; $i++) {
-            $id = $i + 4;
-            $titulo = fake()->sentence(3);
-            $slug = Str::slug($titulo, '_');
-            $descripcion = fake()->paragraph(3);
-            $temas[] = [
-                'id'            => $id,
-                'titulo'        => $titulo,
-                'slug'          => $slug,
-                'descripcion'   => $descripcion
-            ];
-        }
+        // for ($i = 0; $i <= 97; $i++) {
+        //     $id = $i + 4;
+        //     $titulo = fake()->sentence(3);
+        //     $slug = Str::slug($titulo, '_');
+        //     $descripcion = fake()->paragraph(3);
+        //     $temas[] = [
+        //         'id'            => $id,
+        //         'titulo'        => $titulo,
+        //         'slug'          => $slug,
+        //         'descripcion'   => $descripcion
+        //     ];
+        // }
 
         Tema::insert($temas);
     }

@@ -1,5 +1,5 @@
 <x-guest-layout>
-	<div>
+    <div>
         <div class="grid grid-cols-4 gap-5">
             @forelse ($temas as $tema)
                 <div class="rounded-xl bg-gray-300 shadow p-2">

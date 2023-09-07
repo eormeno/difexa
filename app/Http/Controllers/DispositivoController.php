@@ -13,6 +13,7 @@ class DispositivoController extends Controller
     public function index()
     {
         $dispositivos = Dispositivo::paginate(8);
+
         return view('dispositivos.index', compact('dispositivos'));
     }
 

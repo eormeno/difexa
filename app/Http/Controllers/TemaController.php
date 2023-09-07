@@ -12,7 +12,9 @@ class TemaController extends Controller
      */
     public function index()
     {
-        //
+        $temas = Tema::paginate(10);
+
+        return view('temas.index', compact('temas'));
     }
 
     /**
