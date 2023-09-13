@@ -19,4 +19,12 @@ class Publicacion extends Model
         'user_id',
         'tema_id'
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tema() {
+        return $this->belongsTo(Tema::class);
+    }
 }
