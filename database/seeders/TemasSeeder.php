@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Tema;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -13,23 +14,31 @@ class TemasSeeder extends Seeder
      */
     public function run(): void
     {
-        // Check if table is empty
         if (Tema::count() > 0) {
             return;
         }
 
-        $temas = [
-            [
-                'id' => 1,
-                'titulo' => 'Tema 1',
-                'slug' => 'tema_1',
-                'descripcion' => 'Descripción del tema 1'
-            ]
-            // Add more themes as needed
-        ];
+        Tema::factory()->create([
+            'id'            => 1,
+            'titulo'        => 'Departamento de informática',
+            'slug'          => 'depto-informatica',
+            'descripcion'   => 'Temas relacionados con el departamento de informática'
+        ]);
 
-        foreach ($temas as $tema) {
-            Tema::create($tema);
-        }
+        Tema::factory()->create([
+            'id'            => 2,
+            'titulo'        => 'Departamento de física',
+            'slug'          => 'depto-fisica',
+            'descripcion'   => 'Temas relacionados con el departamento de física'
+        ]);
+
+        Tema::factory()->create([
+            'id'            => 3,
+            'titulo'        => 'Departamento de química',
+            'slug'          => 'depto-quimica',
+            'descripcion'   => 'Temas relacionados con el departamento de química'
+        ]);
+
+        Tema::factory()->count(97)->create();
     }
 }

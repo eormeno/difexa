@@ -2,43 +2,20 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tema>
  */
-class TemaFactory extends Factory
-{
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
+class TemaFactory extends Factory {
+    public function definition(): array {
         $titulo = $this->faker->sentence();
+        $slug = Str::slug($titulo);
         return [
-            'slug' => Str::slug($titulo),
             'titulo' => $titulo,
-            'descripcion' => fake()->paragraph(),
-            'created_at' => now(),
-            'updated_at' => now(),
+            'slug' => $slug,
+            'descripcion' => $this->faker->paragraph(),
         ];
-    }
-
-    public function nuevoTema($titulo, $descripcion): static
-    { 
-        if (empty($descripcion)) {
-            $descripcion = "Descripción de $titulo";
-        }
-
-        return $this->state(fn(array $attributes) => [
-            'slug' => Str::slug($titulo),
-            'titulo' => $titulo,
-            'descripcion' => $descripcion,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
     }
 }

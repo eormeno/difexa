@@ -9,7 +9,8 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void {
+    public function up(): void
+    {
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
@@ -21,13 +22,13 @@ return new class extends Migration
             $table->foreignId('tema_id')->constrained();
             $table->timestamps();
         });
-     }
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('publicacions');
+        Schema::dropIfExists('publicaciones');
     }
 };
