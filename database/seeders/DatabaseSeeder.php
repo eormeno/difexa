@@ -14,6 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(UsersSeeder::class);
+        $this->call(TemasSeeder::class);
+        $this->call(DispositivosTableSeeder::class);
+        $this->call(PublicacionesSeeder::class);
+
+
+
         User::factory()->create([
             'apellido' => 'Admin',
             'nombre' => 'Admin',
