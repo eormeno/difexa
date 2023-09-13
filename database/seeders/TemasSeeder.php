@@ -15,40 +15,31 @@ class TemasSeeder extends Seeder
      */
     public function run(): void
     {
-        if ( !Tema::count() > 0) {
-            $temas = [
-                [
-                    'slug' => 'dpto-informatica',
-                    'titulo' => 'Departamento de Informática',
-                    'descripcion' => 'Temas relacionados con el departamento de informática'
-                ],
-                [
-                    'slug' => 'dpto-matematica',
-                    'titulo' => 'Departamento de Matemática',
-                    'descripcion' => 'Temas relacionados con el departamento de matemática'
-                ],
-                [
-                    'slug' => fake()->slug(),
-                    'titulo' => fake()->text(50),
-                    'descripcion' => fake()->sentence(20)
+        if (Tema::count() == 0) {
+            Tema::factory()->create([
+                'id' => 1,
+                'titulo'=> 'Departamento de informática',
+                'slug'=> 'depto-informatica',
+                'descripcion' => 'Temas del departamento de informática',
                 ]
-            ];
-            for ($i = 0; $i < 70; $i++) {
-                $temas[] = [
-                    'slug' => fake()->slug(),
-                    'titulo' => fake()->text(50),
-                    'descripcion' => fake()->sentence(20)
-                ];
-            };    
-            
-            foreach ($temas as $tema) {
-                Tema::create($tema);
-            };
+            );
+            Tema::factory()->create([
+                'id' => 2,
+                'titulo'=> 'Departamento de física',
+                'slug'=> 'depto-fisica',
+                'descripcion' => 'Temas del departamento de física',
+                ]
+            );
+            Tema::factory()->create([
+                'id' => 3,
+                'titulo'=> 'Departamento de química',
+                'slug'=> 'depto-quimica',
+                'descripcion' => 'Temas del departamento de química',
+                ]
+            );
 
+            Tema::factory()->count(97)->create();
         }
-        else{
-            return;
-        };
         
     }
 }
