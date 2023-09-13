@@ -8,40 +8,29 @@ use Illuminate\Database\Seeder;
 use PhpParser\Node\Stmt\For_;
 use PhpParser\Node\Stmt\Foreach_;
 
-class TemasSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        if ( !Tema::count() > 0) {
-            $temas = [
-                [
-                    'slug' => 'dpto-informatica',
-                    'titulo' => 'Departamento de Informática',
-                    'descripcion' => 'Temas relacionados con el departamento de informática'
-                ],
-                [
-                    'slug' => 'dpto-matematica',
-                    'titulo' => 'Departamento de Matemática',
-                    'descripcion' => 'Temas relacionados con el departamento de matemática'
-                ],
-                [
-                    'slug' => fake()->slug(),
-                    'titulo' => fake()->text(50),
-                    'descripcion' => fake()->sentence(20)
-                ]
-            ];
-
-            foreach ($temas as $tema) {
-                  Tema::create($tema);  
-            };
-
-        }
-        else{
+class TemasSeeder extends Seeder {
+    public function run(): void {
+        if (Tema::count() > 0) {
             return;
-        };
-
+        }
+        Tema::factory()->create([
+            'id'            => 1,
+            'titulo'        => 'Departamento de informática',
+            'slug'          => 'depto-informatica',
+            'descripcion'   => 'Temas del departamento de informática'
+        ]);
+        Tema::factory()->create([
+            'id'            => 2,
+            'titulo'        => 'Departamento de física',
+            'slug'          => 'depto-fisica',
+            'descripcion'   => 'Temas del departamento de física'
+        ]);
+        Tema::factory()->create([
+            'id'            => 3,
+            'titulo'        => 'Departamento de química',
+            'slug'          => 'depto-quimica',
+            'descripcion'   => 'Temas del departamento de química'
+        ]);
+        Tema::factory()->count(97)->create();
     }
 }
