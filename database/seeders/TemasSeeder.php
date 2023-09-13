@@ -17,43 +17,39 @@ class TemasSeeder extends Seeder
         if(Tema::count() > 0){
             return;
         }
-        $temas = [
-            [
+        $temas=[];
+        $temas[]=[
                 'id' => 1,
                 'titulo' => 'Departamento de Informática', 
                 'slug' => 'depto-informatica',
                 'descripcion' => 'Temas relacionados con el departamento de informática'
-            ],
-            [
+        ];
+        $temas[]=[
                 'id' => 2,
                 'titulo' => 'Departamento de Matemática',
                 'slug' => 'depto-matematica',
                 'descripcion' =>'Temas relacionados con el departamento de matemática'
-            ],
-            [
+        ];
+        $temas[]=[
                 'id' => 3,
                 'titulo' => fake()->sentence(3),
                 'slug' => fake()->slug(),
                 'descripcion' => fake()->sentence(10)
-            ]
-            // Add more themes as needed
         ];
+            // Add more themes as needed
 
-        foreach ($temas as $tema) {
-            Tema::create($tema);
-        }
         for($i=0; $i<=97; $i++) {
             $id=$i+4;
-            $titulo=fake()->sentence(3);
-            $slug =Str::slug($titulo,'_');
-            $descripcion=fake()->paragraph(3);
-            $tema = [
+            $titulo = fake()->sentence(3);
+            $slug = Str::slug($titulo,'_');
+            $descripcion = fake()->paragraph(3);
+            $temas[] = [
                 'id'        => $id,
                 'titulo'    => $titulo,
                 'slug'      => $slug,
                 'descripcion' => $descripcion
             ];
-            Tema::create($tema);
         }  
+        Tema::insert($temas);
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TemasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/temas', function () {
-    return view('temas.index');
-})->name('temas');
+Route::resource('temas',TemasController::class);
 
 require __DIR__.'/auth.php';
