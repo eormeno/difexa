@@ -12,8 +12,8 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas= Tema::all();
-        return response()->json($temas);
+        $temas= Tema::paginate(10);
+        return view('temas.index', compact('temas'));
     }
 
     /**
