@@ -25,6 +25,9 @@ class User extends Authenticatable
         'tema',
         'email',
         'password',
+        'tema_id',
+        'is_admin',
+        'is_publisher',
     ];
 
     /**
