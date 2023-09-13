@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Dispositivo;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Dispositivo;
 
-class DispositosTableSeeder extends Seeder
+class DispositivosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -23,6 +23,6 @@ class DispositosTableSeeder extends Seeder
             'descripcion' => 'Este monitor es un SmartTV marca LG de 32 pulgadas, ubicado en la sala de conferencias de la empresa. Se utiliza para mostrar información de la empresa, como por ejemplo, el estado de los servidores, el estado de los servicios, etc.',
         ]);
 
-        //Dispositivo::factory(10)->create();
+        Dispositivo::factory(10)->create();
     }
 }
