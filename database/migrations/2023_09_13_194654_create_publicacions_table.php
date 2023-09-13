@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo')->nullable();
+            $table->string('titulo');
             $table->string('contenido');
             $table->string('imagen');
             $table->date('desde');
@@ -22,13 +22,13 @@ return new class extends Migration
             $table->foreignId('tema_id')->constrained();
             $table->timestamps();
         });
-     }
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('publicacions');
+        Schema::dropIfExists('publicaciones');
     }
 };

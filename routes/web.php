@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PublicacionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemaController;
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
 Route::resource('temas', TemaController::class);
 
 Route::resource('dispositivos', DispositivoController::class);
+
+Route::resource('publicaciones', PublicacionController::class);
 
 
 require __DIR__.'/auth.php';
