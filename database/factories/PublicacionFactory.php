@@ -14,7 +14,7 @@ class PublicacionFactory extends Factory
     public function definition(): array
     {
         $randomUser = User::all()->random();
-        $randomTema = Tema::all()->random();
+
         return [
             'titulo' => $this->faker->sentence(),
             'contenido' => $this->faker->paragraph(),
@@ -22,7 +22,7 @@ class PublicacionFactory extends Factory
             'desde' => $this->faker->date(),
             'hasta' => $this->faker->date(),
             'user_id' => $randomUser->id,
-            'tema_id' => $randomTema->id,
+            'tema_id' => $randomUser->tema_id,
         ];
     }
 }
