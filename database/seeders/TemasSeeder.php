@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Tema;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use PhpParser\Node\Stmt\For_;
-use PhpParser\Node\Stmt\Foreach_;
 
 class TemasSeeder extends Seeder
 {

@@ -11,6 +11,8 @@ class Publicacion extends Model
 {
     use HasFactory;
 
+    protected $table = 'publicaciones';
+    
     protected $fillable = [
         'titulo',
         'contenido',
