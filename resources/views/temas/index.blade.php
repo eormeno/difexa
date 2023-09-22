@@ -10,14 +10,11 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div>
-                        <div class="grid grid-cols-4 gap-5">
+                        <div class="grid grid-cols-4 gap-5 it ">
                             @forelse ($temas as $tema)
-                                <div class="rounded-xl bg-gray-300 shadow p-2">
-                                    <p
-                                        class="text-white bg-gray-700 hover:bg-gray-600 cursor-pointer rounded-md text-center p-1 my-2 font-semibold">
+                                    <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
                                         {{ $tema->titulo }}
                                     </p>
-                                </div>
                             @empty
                                 <p>No hay temas</p>
                             @endforelse

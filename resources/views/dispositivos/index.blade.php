@@ -15,18 +15,18 @@
                             @forelse ($dispositivos as $dispositivo)
                                 <div class="rounded-xl bg-gray-300 shadow p-2">
                                     <p
-                                        class="text-white bg-gray-700 hover:bg-gray-600 cursor-pointer rounded-md text-center p-1 my-2 font-semibold">
+                                        class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
                                         {{ $dispositivo->nombre }}
                                     </p>
                                     <p
-                                        class="text-gray-700 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md text-center p-1 my-2">
+                                        class="text-gray-700 bg-gray-300 hover:bg-gray-400 rounded-md text-center p-1 my-2">
                                         {{ $dispositivo->descripcion }}
                                     </p>
                                 </div>
                             @empty
                                 <div class="rounded-xl bg-gray-300 shadow p-2">
                                     <p
-                                        class="text-white bg-gray-700 hover:bg-gray-600 cursor-pointer rounded-md text-center p-1 my-2 font-semibold">
+                                        class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
                                         No hay dispositivos
                                     </p>
                                 </div>

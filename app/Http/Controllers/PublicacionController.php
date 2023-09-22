@@ -12,7 +12,7 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $publicaciones = Publicacion::paginate(10);
+        $publicaciones = Publicacion::paginate(8);
 
         return view('publicaciones.index', compact('publicaciones'));
     }
