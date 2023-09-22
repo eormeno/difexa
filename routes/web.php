@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::resource('temas', TemaController::class);
+Route::resource('temas', TemaController::class)->middleware('auth')->name('index', 'temas.index');
 
 Route::resource('dispositivos', DispositivoController::class);
 
