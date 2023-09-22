@@ -36,7 +36,7 @@ Route::resource('temas', TemaController::class)->middleware('auth')->name('index
 
 Route::resource('dispositivos', DispositivoController::class)->middleware('auth')->name('index', 'dispositivos.index');
 
-Route::resource('publicaciones', PublicacionController::class);
+Route::resource('publicaciones', PublicacionController::class)->middleware('auth')->name('index', 'publicaciones.index');
 
 
 require __DIR__.'/auth.php';
