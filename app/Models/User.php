@@ -55,4 +55,9 @@ class User extends Authenticatable
         return $this->belongsTo(Tema::class);
     }
 
+    public function getFullName()
+    {
+        return $this->nombre . ' ' . $this->apellido;
+    }
+
 }
