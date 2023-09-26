@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('temas', TemasController::class)->middleware('auth')->name('index', 'temas.index');
 
-Route::resource('dispositivos', DispositivoController::class); 
+Route::resource('dispositivos', DispositivoController::class)->middleware('auth')->name('index', 'dispositivos.index');
 
 Route::resource('publicaciones', PublicacionController::class);
 
