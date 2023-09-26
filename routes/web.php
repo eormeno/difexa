@@ -32,8 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::resource('temas',TemasController::class)->only(['index', 'show']); /*Corregi un error aqui*/
+Route::resource('temas', TemasController::class)->middleware('auth')->name('index', 'temas.index');
 
 Route::resource('dispositivos', DispositivoController::class); 
 
