@@ -58,4 +58,14 @@ class User extends Authenticatable
     {
         return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function isPublisher(): bool
+    {
+        return $this->is_publisher;
+    }
 }
