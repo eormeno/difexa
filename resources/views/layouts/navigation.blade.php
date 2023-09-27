@@ -16,10 +16,16 @@
                         {{ __('Panel') }}
                     </x-nav-link>
                 </div>
-                
+
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('temas.index')" :active="request()->routeIs('temas.index')">
                         {{ __('Temas') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dispositivos.index')" :active="request()->routeIs('dispositivos.index')">
+                        {{ __('Dispositivos') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -76,6 +82,18 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Panel') }}
             </x-responsive-nav-link>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('temas.index')" :active="request()->routeIs('temas.index')">
+                    {{ __('Temas') }}
+                </x-responsive-nav-link>
+            </div>
+    
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('dispositivos.index')" :active="request()->routeIs('dispositivos.index')">
+                    {{ __('Dispositivos') }}
+                </x-responsive-nav-link>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->
