@@ -60,4 +60,14 @@ class User extends Authenticatable
         return $this->nombre . ' ' . $this->apellido;
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function isPublisher(): bool
+    {
+        return $this->is_publisher;
+    }
+
 }

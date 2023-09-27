@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicacionController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,10 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('temas', TemasController::class)->middleware('auth')->name('index', 'temas.index');
+Route::resource('temas', TemasController::class)->middleware(['auth', 'is_admin'])->name('index', 'temas.index');
 
-Route::resource('dispositivos', DispositivoController::class)->middleware('auth')->name('index', 'dispositivos.index');
+Route::resource('dispositivos', DispositivoController::class)->middleware(['auth', 'is_admin'])->name('index', 'dispositivos.index');
 
-Route::resource('publicaciones', PublicacionController::class)->middleware('auth')->name('index', 'publicaciones.index');
+Route::resource('publicaciones', PublicacionController::class)->middleware(['auth', 'is_publisher'])->name('index', 'publicaciones.index');
 
 require __DIR__.'/auth.php';
