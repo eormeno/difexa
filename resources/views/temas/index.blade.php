@@ -19,7 +19,7 @@
                                     </p>
                                 </div>
                             @empty
-                                <p>No hay temas</p>
+                                  <p>No hay temas</p>
                             @endforelse
                         </div>
 
