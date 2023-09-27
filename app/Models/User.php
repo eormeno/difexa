@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Tema;
+use App\Models\Publicacion;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,6 +51,9 @@ class User extends Authenticatable
     ];
     public function getFullName(){
         return ucfirst($this->apellido) . ' ' . ucfirst($this->nombre);
+    }
+    public function publicaciones(){
+        return $this->hasMany(Publicacion::class);
     }
     public function tema(){
         return $this->belongsTo(Tema::class);

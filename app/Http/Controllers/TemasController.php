@@ -41,7 +41,7 @@ class TemasController extends Controller
     public function show(string $id)
     {
         $tema= Tema::find($id);
-        
+        return response()->json($tema);
     }
 
     /**

@@ -24,6 +24,15 @@ class UsersSeeder extends Seeder
                 'password' => Hash::make('12345678'),
                 'is_admin' => true
             ]);
+            User::factory()->create([
+                'apellido' => 'User',
+                'nombre' => 'Test',
+                'documento' => '12345678',
+                'email' => 'user@user.com',
+                'password' => Hash::make('123'),
+                'is_admin' => false,
+                'is_publisher' => true
+            ]);
             User::factory(8)->create();
         }
     }
