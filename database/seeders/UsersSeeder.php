@@ -7,11 +7,17 @@ use Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UsersSeeder extends Seeder {
-    public function run(): void {
+class UsersSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
         if (User::count() > 0) {
             return;
         }
+
         User::factory()->create([
             'apellido' => 'Admin',
             'nombre' => 'Admin',
@@ -20,6 +26,18 @@ class UsersSeeder extends Seeder {
             'password' => Hash::make('111'),
             'is_admin' => true,
         ]);
-        User::factory(100)->create();
+
+        User::factory()->create([
+            'apellido' => 'Test',
+            'nombre' => 'Publisher',
+            'documento' => '12345678',
+            'email' => 'test@publisher.com',
+            'password' => Hash::make('111'),
+            'is_admin' => false,
+            'is_publisher' => true,
+         ]);
+
+        User::factory(7)->create();
+
     }
 }
