@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tema;
 use Illuminate\Http\Request;
 
+use function Pest\Laravel\json;
+
 class TemasController extends Controller
 {
     /**
@@ -38,6 +40,7 @@ class TemasController extends Controller
      */
     public function show(string $id)
     {
+        $tema= Tema::find($id);
         
     }
 
