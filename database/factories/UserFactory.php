@@ -35,7 +35,14 @@ class UserFactory extends Factory
     public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'is_admin' => true,
+            'es_administrador' => true,
+        ]);
+    }
+
+    public function publisher(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'es_publicador' => true,
         ]);
     }
 

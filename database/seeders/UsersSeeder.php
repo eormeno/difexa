@@ -27,6 +27,16 @@ class UsersSeeder extends Seeder
             'es_admininstrador' => true,
         ]);
 
+        User::factory()->create([
+            'apellido' => 'Publisher',
+            'nombre' => 'Publisher',
+            'documento' => '123456789',
+            'email' => 'test@publisher.com',
+            'password' => Hash::make('111'),
+            'es_publicador' => true,
+            'es_admininstrador' => false,
+        ]);
+
         User::factory(8)->create();
 
     }

@@ -12,6 +12,6 @@ class CheckIsPublisher {
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect('dashboard');
     }
 }

@@ -31,14 +31,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/temas', function () {
-    return view('temas.index');
-})->name('temas');
+Route::middleware(['auth', 'es_admininstrador'])->group(function() {
+    Route::get('/tema', [TemasController::class, 'index'])->name('tema.index');
+    Route::get('/tema/{id}', [TemasController::class, 'show'])->name('tema.show');
+    Route::get('/dispositivo', [DispositivoController::class, 'index'])->name('dispositivo.index');
+    Route::get('/dispositivo/{id}', [DispositivoController::class, 'show'])->name('dispositivo.show');
+});
 
-Route::resource('tema', TemasController::class)->middleware(['auth', 'es_admininstrador'])->name('index', 'tema.index');
-
-Route::resource('dispositivo', DispositivoController::class)->middleware(['auth', 'es_admininstrador'])->name('index', 'dispositivo.index');
-
-Route::resource('publicaciones', PublicacionController::class)->middleware(['auth', 'es_publicador'])->name('index', 'publicaciones.index');
+Route::middleware(['auth', 'es_publicador'])->group(function() {
+    Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
+    Route::get('/publicaciones/{id}', [PublicacionController::class, 'show'])->name('publicaciones.show');
+});
 
 require __DIR__.'/auth.php';

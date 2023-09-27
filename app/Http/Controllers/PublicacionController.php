@@ -12,7 +12,7 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $publicaciones = Publicacion::paginate(10);
+        $publicaciones = auth()->user()->publicaciones()->paginate(10);
 
         return view('publicaciones.index', compact('publicaciones'));
     }
@@ -36,9 +36,10 @@ class PublicacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Publicacion $publicacion)
+    public function show($id)
     {
-        //
+        $publicacion = Publicacion::findOrFail($id);
+        return view('publicaciones.show', compact('publicacion'));
     }
 
     /**

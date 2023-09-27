@@ -12,6 +12,6 @@ class CheckIsAdmin {
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect('dashboard');
     }
 }
