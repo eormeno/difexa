@@ -9,7 +9,7 @@
                         </p>
                         {{-- una clase tailwind con un border redondeado y un fondo color de gris --}}
                         
-                        <p class=" mt-2 text-gray-700 p-2">
+                        <p class=" mt-2 text-gray-700 p-2 text-center">
                             {{ $publicacion->tema->titulo }}
                         </p>
                         <p class="mt-2 text-gray-700 rounded-xl border-red-500 bg-gray-400 shadow p-2">
