@@ -12,7 +12,8 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $publicaciones = Publicacion::paginate(10);
+
+        $publicaciones = auth()->user()->publicaciones()->paginate(10);
 
         return view('publicaciones.index', compact('publicaciones'));
     }

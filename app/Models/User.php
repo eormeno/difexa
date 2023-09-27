@@ -52,6 +52,10 @@ class User extends Authenticatable
     public function tema() {
         return $this->belongsTo(Tema::class);
     }
+    public function publicaciones()
+    {
+        return $this->hasMany(Publicacion::class);
+    }
 
     public function getFullName(): string
     {
