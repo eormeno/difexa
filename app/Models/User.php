@@ -22,11 +22,11 @@ class User extends Authenticatable
         'apellido',
         'nombre',
         'documento',
-        'temas',
-        'name',
         'email',
         'password',
         'tema_id',
+        'es_admininstrador',
+        'es_publicador',
     ];
 
     /**
@@ -49,11 +49,22 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function tema()
-    {
+    public function tema() {
         return $this->belongsTo(Tema::class);
     }
-    public function getFullName(): string{
-        return "{$this->apellido}, {$this->nombre}";
+
+    public function getFullName(): string
+    {
+        return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
+    }
+
+    public function es_admininstrador(): bool
+    {
+        return $this->es_admininstrador;
+    }
+
+    public function es_publicador(): bool
+    {
+        return $this->es_publicador;
     }
 }
