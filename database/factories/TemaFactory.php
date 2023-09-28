@@ -10,11 +10,6 @@ use Illuminate\Support\Str;
  */
 class TemaFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array {
         $titulo = $this->faker->sentence();
         $slug = Str::slug($titulo);
@@ -24,5 +19,4 @@ class TemaFactory extends Factory
             'descripcion' => $this->faker->paragraph(),
         ];
     }
-
 }

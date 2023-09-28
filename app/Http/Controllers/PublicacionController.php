@@ -7,12 +7,9 @@ use Illuminate\Http\Request;
 
 class PublicacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $publicaciones = Publicacion::paginate(8);
+        $publicaciones = auth()->user()->publicaciones()->latest()->paginate(8);
 
         return view('publicaciones.index', compact('publicaciones'));
     }
@@ -36,9 +33,10 @@ class PublicacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Publicacion $publicacion)
+    public function show($id)
     {
-        //
+        $publicacion = Publicacion::where('id', $id)->firstOrFail();
+        return view('publicaciones.show', compact('publicacion'));
     }
 
     /**

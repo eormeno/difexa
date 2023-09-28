@@ -23,6 +23,16 @@ class UsersSeeder extends Seeder
             'is_admin' => true,
             'is_publisher' => true,
         ]);
+
+        User::factory()->create([
+            'apellido' => 'Publisher',
+            'nombre' => 'Publisher',
+            'documento' => '12345678',
+            'email' => 'publisher@publisher.com',
+            'password' => Hash::make('111'),
+            'is_publisher' => true,
+        ]);
+
         User::factory(8)->create();
     }
 }

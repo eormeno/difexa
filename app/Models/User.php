@@ -59,6 +59,10 @@ class User extends Authenticatable
         return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
     }
 
+    public function publicaciones(){
+        return $this->hasMany(Publicacion::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->is_admin;

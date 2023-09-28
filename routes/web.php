@@ -31,11 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth', 'is.admin'])->group(function() {
+    Route::get('/temas', [TemaController::class, 'index'])->name('temas.index');
+    Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
+});
 
-Route::resource('temas', TemaController::class)->middleware(['auth', 'is_admin'])->name('index', 'temas.index');
-
-Route::resource('dispositivos', DispositivoController::class)->middleware(['auth', 'is_admin'])->name('index', 'dispositivos.index');
-
-Route::resource('publicaciones', PublicacionController::class)->middleware(['auth', 'is_publisher'])->name('index', 'publicaciones.index');
+Route::middleware(['auth', 'is.publisher'])->group(function() {
+    Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
+    Route::get('/publicaciones/{id}', [PublicacionController::class, 'show'])->name('publicaciones.show');
+});
 
 require __DIR__.'/auth.php';
