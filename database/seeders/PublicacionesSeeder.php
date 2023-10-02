@@ -12,6 +12,6 @@ class PublicacionesSeeder extends Seeder
         if (Publicacion::count() > 0) {
             return;
         }
-        Publicacion::factory()->count(10)->create();
+        Publicacion::factory()->count(100)->create();
     }
 }
