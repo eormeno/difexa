@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('contenido');
-            $table->string('imagen');
+            $table->text('contenido');
+            $table->text('imagen');
             $table->date('desde');
             $table->date('hasta');
             $table->foreignId('user_id')->constrained();
