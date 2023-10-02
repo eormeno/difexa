@@ -15,8 +15,8 @@ class PublicacionFactory extends Factory
         $randomUser = User::all()->random();
 
         return [
-            'titulo' => $this->faker->sentence(),
-            'contenido' => $this->faker->paragraph(),
+            'titulo' => $this->faker->sentence(10),
+            'contenido' => $this->faker->paragraph(10),
             'imagen' => $this->faker->imageUrl(),
             'desde' => $this->faker->date(),
             'hasta' => $this->faker->date(),
