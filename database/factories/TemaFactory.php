@@ -11,12 +11,12 @@ use Illuminate\Support\Str;
 class TemaFactory extends Factory
 {
     public function definition(): array {
-        $titulo = $this->faker->sentence();
+        $titulo = $this->faker->sentence(3);
         $slug = Str::slug($titulo);
         return [
             'titulo' => $titulo,
             'slug' => $slug,
-            'descripcion' => $this->faker->paragraph(),
+            'descripcion' => $this->faker->sentence(5),
         ];
     }
 }

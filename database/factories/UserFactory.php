@@ -23,7 +23,7 @@ class UserFactory extends Factory
         $randomTema = Tema::all()->random();
         return [
             'apellido' => $this->faker->lastName(),
-            'nombre' => $this->faker->name(),
+            'nombre' => $this->faker->firstName(),
             'documento' => $this->faker->numberBetween(10000000,99999999),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),

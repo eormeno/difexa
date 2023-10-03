@@ -20,8 +20,8 @@ class DispositivoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->word,
-            'descripcion' => $this->faker->text,
+            'nombre' => $this->faker->sentence(2),
+            'descripcion' => $this->faker->sentence(5),
         ];
     }
 }
