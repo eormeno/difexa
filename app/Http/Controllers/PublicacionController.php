@@ -45,17 +45,30 @@ class PublicacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Publicacion $publicacion)
+    public function edit(string $id)
     {
-        //
+        $publicacion=Publicacion::find($id);
+        return view('publicaciones.edit', compact('publicacion'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Publicacion $publicacion)
+    public function update(Request $request,string $id)
     {
-        //
+        $validated = $request->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'contenido' => 'required | min:10 | max:255',
+            'desde' => 'required | date |after:now',
+            'hasta'=> 'required | date | after:desde',
+           ]);
+           $publicacion = Publicacion::find($id);
+           $publicacion->titulo = $validated['titulo'];
+           $publicacion->contenido = $validated['contenido'];
+           $publicacion->desde = $validated['desde'];
+           $publicacion->hasta = $validated['hasta'];
+           $publicacion->save();
+           return redirect()->route('publicaciones.index');
     }
 
     /**

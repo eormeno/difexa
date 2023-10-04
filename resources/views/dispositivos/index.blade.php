@@ -21,7 +21,7 @@
                                     </p>
                                     </a>
                                     <p
-                                        class="text-gray-700 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md text-center p-1 my-2">
+                                        class="text-gray-700 bg-gray-300 rounded-md text-center p-1 my-2">
                                         {{ $dispositivo->descripcion }}
                                     </p>
                                 </div>
