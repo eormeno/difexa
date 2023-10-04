@@ -45,7 +45,8 @@ class TemasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tema = Tema::find($id);
+        return view('temas.edit', compact('tema'));
     }
 
     /**
@@ -53,7 +54,17 @@ class TemasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'titulo' => 'required | min:3 | max:50' ,
+            'descripcion' => 'required | min:12 | max:200',
+            'slug' => 'required | unique:temas,slug,' . $id . ' | min:3 | max:30' . $id
+        ]);
+        $tema = Tema::find($id);
+        $tema->titulo = $validated['titulo'];
+        $tema->descripcion = $validated['descripcion'];
+        $tema->slug = $validated['slug'];
+        $tema->save();
+        return redirect()->route('temas.index');
     }
 
     /**
