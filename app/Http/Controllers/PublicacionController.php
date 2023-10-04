@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
 use Illuminate\Http\Request;
-//import pagination
-use Illuminate\Pagination\Paginator;
 
 class PublicacionController extends Controller
 {
@@ -38,8 +36,9 @@ class PublicacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Publicacion $publicacion)
+    public function show($id)
     {
+        $publicacion=Publicacion::findOrFail($id);
         return view('publicaciones.show', compact('publicacion'));
     }
 

@@ -35,7 +35,8 @@ Route::middleware('auth')->group(function () {
     
 Route::middleware(['auth','is.admin'])->group(function () {
     Route::get('/temas', [TemasController::class, 'index'])->name('temas.index');
-    Route::get('/temas/{id}', [TemasController::class, 'show'])->name('temas.show');
+    Route::get('/temas/{id}', [TemasController::class, 'edit'])->name('temas.edit');
+    Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/{id}', [DispositivoController::class, 'show'])->name('dispositivos.show');
 });
