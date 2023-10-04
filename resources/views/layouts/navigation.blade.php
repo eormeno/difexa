@@ -29,6 +29,12 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('publicaciones.index')" :active="request()->routeIs('publicaciones.index')">
+                        {{ __('Publicaciones') }}
+                    </x-nav-link>
+                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -94,6 +100,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dispositivos.index')" :active="request()->routeIs('dispositivos.index')">
                 {{ __('Dispositivos') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('publicaciones.index')" :active="request()->routeIs('publicaciones.index')">
+                {{ __('Publicaciones') }}
             </x-responsive-nav-link>
         </div>
 
