@@ -12,12 +12,12 @@
                     <div class="grid grid-cols-4 gap-5">
                         @forelse ($temas as $tema)
                             <div class="rounded-xl bg-gray-300 shadow p-2">
-                                 <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
-                                    {{ $tema->titulo }}
-                                </p>
-                                <p class="text-gray-700 bg-gray-300 hover:bg-gray-400 rounded-md text-center p-1 my-2">
-                                    {{ $tema->descripcion }}
-                                </p>
+                                <a href="{{ route('temas.edit', $tema) }}">
+                                    <p
+                                        class="text-white bg-gray-700 hover:bg-gray-600 cursor-pointer rounded-md text-center p-1 my-2 font-semibold">
+                                        {{ $tema->titulo }}
+                                    </p>
+                                </a>
                             </div>
                             @empty
                             <div class="rounded-xl bg-gray-300 shadow p-2">

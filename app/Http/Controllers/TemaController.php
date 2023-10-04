@@ -44,17 +44,28 @@ class TemaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tema $tema)
+    public function edit(string $id)
     {
-        //
+        $tema = Tema::find($id);
+        return view('temas.edit', compact('tema'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tema $tema)
+    public function update(Request $request, string $id)
     {
-        //
+        $tema_validado = $request->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:10 | max:255',
+            'slug' => 'required | unique:temas,slug,' . $id . ' | min:3 | max:50',
+        ]);
+        $tema = Tema::find($id);
+        $tema->titulo = $tema_validado['titulo'];
+        $tema->descripcion = $tema_validado['descripcion'];
+        $tema->slug = $tema_validado['slug'];
+        $tema->save();
+        return redirect()->route('temas.index');
     }
 
     /**
