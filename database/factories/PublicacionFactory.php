@@ -17,7 +17,7 @@ class PublicacionFactory extends Factory
 
         return [
             'titulo' => $this->faker->sentence(),
-            'contenido' => $this->faker->paragraph(),
+            'contenido' => $this->faker->paragraph(2),
             'imagen' => $this->faker->imageUrl(),
             'desde' => $this->faker->date(),
             'hasta' => $this->faker->date(),
