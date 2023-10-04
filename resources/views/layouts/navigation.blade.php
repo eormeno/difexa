@@ -16,24 +16,28 @@
                         {{ __('Panel') }}
                     </x-nav-link>
                 </div>
+                
+                @if(Auth::user()->is_admin)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('temas.index')" :active="request()->routeIs('temas.index')">
+                            {{ __('Temas') }}
+                        </x-nav-link>
+                    </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('temas.index')" :active="request()->routeIs('temas.index')">
-                        {{ __('Temas') }}
-                    </x-nav-link>
-                </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('dispositivos.index')" :active="request()->routeIs('dispositivos.index')">
+                            {{ __('Dispositivos') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dispositivos.index')" :active="request()->routeIs('dispositivos.index')">
-                        {{ __('Dispositivos') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('publicaciones.index')" :active="request()->routeIs('publicaciones.index')">
-                        {{ __('Publicaciones') }}
-                    </x-nav-link>
-                </div>
+                @if(Auth::user()->is_publisher)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('publicaciones.index')" :active="request()->routeIs('publicaciones.index')">
+                            {{ __('Publicaciones') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
             </div>
 
