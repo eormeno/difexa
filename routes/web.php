@@ -35,20 +35,20 @@ Route::middleware('auth')->group(function () {
     
 });
 
+Route::middleware(['auth', 'is.admin'])->group(function() {
+    Route::get('/temas', [TemasController::class, 'index'])->name('temas.index');
+    Route::get('/temas/{id}', [TemasController::class, 'edit'])->name('temas.edit');
+    Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
+    Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
+    Route::get('/dispositivos/{id}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
+    Route::patch('/dispositivos/{id}', [DispositivoController::class, 'update'])->name('dispositivos.update');
+});
+
 Route::middleware(['auth', 'is.publisher'])->group(function()
 {
     Route::get('/publicaciones',[PublicacionController::class,'index'])->name('publicaciones.index');
     Route::get('/publicaciones/{id}',[PublicacionController::class,'show'])->name('publicaciones.show');
-
-
+    Route::get('/publicaciones/{id}',[PublicacionController::class,'edit'])->name('publicaciones.edit');
+    Route::patch('/publicaciones/{id}',[PublicacionController::class,'update'])->name('publicaciones.update');
 });
-
-Route::middleware(['auth', 'is.admin'])->group(function() {
-    Route::get('/temas', [TemasController::class, 'index'])->name('temas.index');
-    Route::get('/temas/{id}', [TemasController::class, 'show'])->name('temas.show');
-
-    Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
-    Route::get('/dispositivos/{id}', [DispositivoController::class, 'show'])->name('dispositivos.show');
-});
-
 require __DIR__ . '/auth.php';
