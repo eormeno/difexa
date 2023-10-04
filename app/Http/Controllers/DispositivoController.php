@@ -44,17 +44,26 @@ class DispositivoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dispositivo $dispositivo)
+    public function edit(string $id)
     {
-        //
+        $dispositivo=Dispositivo::find($id);
+        return view('dispositivos.edit', compact('dispositivo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dispositivo $dispositivo)
+    public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:10 | max:255',
+           ]);
+           $dispositivo = Dispositivo::find($id);
+           $dispositivo->nombre = $validated['nombre'];
+           $dispositivo->descripcion = $validated['descripcion'];
+           $dispositivo->save();
+           return redirect()->route('dispositivos.index');
     }
 
     /**
