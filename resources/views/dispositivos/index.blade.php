@@ -13,12 +13,21 @@
                     <div class="grid grid-cols-4 gap-5">
                         @forelse ($dispositivos as $dispositivo)
                             <div class="rounded-xl bg-gray-300 shadow p-2">
-                                <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
-                                    {{ $dispositivo->nombre }}
-                                </p>
-                                <p class="text-gray-700 bg-gray-300 hover:bg-gray-400 rounded-md text-center p-1 my-2">
-                                    {{ $dispositivo->descripcion }}
-                                </p>
+                                    <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
+                                        {{ $dispositivo->nombre }}
+                                    </p>
+                                <div class="flex justify-evenly m-0 a-0">
+                                    <a href="{{ route('dispositivos.show', $dispositivo->id) }}">
+                                        <div class="text-gray-900 bg-white rounded-md px-3 py-1 hover:bg-gray-600 hover:text-gray-200">
+                                            Ver
+                                        </div>
+                                    </a>
+                                    <a href="{{ route('dispositivos.edit', $dispositivo->id) }}">
+                                        <div class="text-gray-900 bg-white rounded-md px-3 py-1 hover:bg-gray-600 hover:text-gray-200">
+                                            Editar
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                             @empty
                             <div class="rounded-xl bg-gray-300 shadow p-2">

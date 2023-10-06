@@ -13,7 +13,6 @@ class TemaController extends Controller
     public function index()
     {
         $temas = Tema::paginate(8);
-
         return view('temas.index', compact('temas'));
     }
 
@@ -36,15 +35,16 @@ class TemaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tema $tema)
+    public function show($id)
     {
-        //
+        $tema = Tema::find($id);
+        return view('temas.show', compact('tema'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         $tema = Tema::find($id);
         return view('temas.edit', compact('tema'));
@@ -53,7 +53,7 @@ class TemaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $tema_validado = $request->validate([
             'titulo' => 'required | min:3 | max:50',
@@ -61,10 +61,11 @@ class TemaController extends Controller
             'slug' => 'required | unique:temas,slug,' . $id . ' | min:3 | max:50',
         ]);
         $tema = Tema::find($id);
-        $tema->titulo = $tema_validado['titulo'];
-        $tema->descripcion = $tema_validado['descripcion'];
-        $tema->slug = $tema_validado['slug'];
-        $tema->save();
+        $tema->update($tema_validado);
+        // $tema->titulo = $tema_validado['titulo'];
+        // $tema->descripcion = $tema_validado['descripcion'];
+        // $tema->slug = $tema_validado['slug'];
+        // $tema->save();
         return redirect()->route('temas.index');
     }
 

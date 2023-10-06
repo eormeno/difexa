@@ -13,16 +13,26 @@
                     <div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($publicaciones as $publicacion)
-                                <div class="rounded-xl bg-gray-300 shadow p-2 hover:bg-gray-600">
-                                    <a href="{{ route('publicaciones.show', $publicacion->id) }}">
+                                    <div class="rounded-xl bg-gray-300 shadow p-2 ">
                                         <p class="text-white bg-gray-700 rounded-md text-center p-1 my-2 font-semibold">
                                             {{ $publicacion->titulo }}
                                         </p>
                                         <p class="text-gray-700 bg-gray-300 rounded-md text-center p-1 my-2">
                                             {{ $publicacion->tema->titulo }}
                                         </p>
-                                    </a>
-                                </div>
+                                        <div class="flex justify-evenly m-0 a-0">
+                                            <a href="{{ route('publicaciones.show', $publicacion->id) }}">
+                                                <div class="text-gray-900 bg-white rounded-md px-3 py-1 hover:bg-gray-600 hover:text-gray-200">
+                                                    Ver
+                                                </div>
+                                            </a>
+                                            <a href="{{ route('publicaciones.edit', $publicacion->id) }}">
+                                                <div class="text-gray-900 bg-white rounded-md px-3 py-1 hover:bg-gray-600 hover:text-gray-200">
+                                                    Editar
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
                                 @empty
                                 <div class="rounded-xl bg-gray-300 shadow p-2">
                                     <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">

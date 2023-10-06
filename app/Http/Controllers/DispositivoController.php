@@ -13,7 +13,6 @@ class DispositivoController extends Controller
     public function index()
     {
         $dispositivos = Dispositivo::paginate(8);
-
         return view('dispositivos.index', compact('dispositivos'));
     }
 
@@ -36,25 +35,36 @@ class DispositivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show($id)
     {
-        //
+        $dispositivo = Dispositivo::find($id);
+        return view('dispositivos.show', compact('dispositivo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dispositivo $dispositivo)
+    public function edit($id)
     {
-        //
+        $dispositivo = Dispositivo::find($id);
+        return view('dispositivos.edit', compact('dispositivo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dispositivo $dispositivo)
+    public function update(Request $request,$id)
     {
-        //
+        $dispositivo_validado = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:10 | max:255',
+        ]);
+        $dispositivo = Dispositivo::find($id);
+        $dispositivo->update($dispositivo_validado);
+        // $dispositivo->titulo = $dispositivo_validado['titulo'];
+        // $dispositivo->descripcion = $dispositivo_validado['descripcion'];
+        // $dispositivo->save();
+        return redirect()->route('dispositivos.index');
     }
 
     /**
