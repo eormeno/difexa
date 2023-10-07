@@ -45,7 +45,7 @@ class DispositivoController extends Controller
      */
     public function edit(Dispositivo $dispositivo)
     {
-        //
+        return view('dispositivos.edit', compact('dispositivo'));
     }
 
     /**
@@ -53,8 +53,14 @@ class DispositivoController extends Controller
      */
     public function update(Request $request, Dispositivo $dispositivo)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:3 | max:1000',
+        ]);
+        $dispositivo->update($validated);
+        return redirect()->route('dispositivo.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

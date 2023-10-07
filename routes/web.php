@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemasController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\PublicacionController;
 
@@ -33,14 +33,18 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'es_admininstrador'])->group(function() {
     Route::get('/tema', [TemasController::class, 'index'])->name('tema.index');
-    Route::get('/tema/{id}', [TemasController::class, 'show'])->name('tema.show');
+    Route::get('/tema/{id}', [TemasController::class, 'edit'])->name('tema.edit');
+    Route::patch('/tema/{id}', [TemasController::class, 'update'])->name('tema.update');
     Route::get('/dispositivo', [DispositivoController::class, 'index'])->name('dispositivo.index');
-    Route::get('/dispositivo/{id}', [DispositivoController::class, 'show'])->name('dispositivo.show');
+    Route::get('/dispositivo/{dispositivo}', [DispositivoController::class, 'edit'])->name('dispositivo.edit');
+    Route::patch('/dispositivo/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivo.update');
 });
 
 Route::middleware(['auth', 'es_publicador'])->group(function() {
     Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
-    Route::get('/publicaciones/{id}', [PublicacionController::class, 'show'])->name('publicaciones.show');
+    Route::get('/publicaciones/{id}', [PublicacionController::class, 'edit'])->name('publicaciones.edit');
+    Route::patch('/publicaciones/{id}', [PublicacionController::class, 'update'])->name('publicaciones.update');
 });
+
 
 require __DIR__.'/auth.php';
