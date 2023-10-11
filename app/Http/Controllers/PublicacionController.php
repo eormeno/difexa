@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PublicacionController extends Controller
 {
@@ -23,7 +25,7 @@ class PublicacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('publicaciones.create');
     }
 
     /**
@@ -31,7 +33,30 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $atributos= $request->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'contenido' => 'required',
+            'imagen' => 'required|image|mimes:png,jpeg,jpg,gif|max:2048',
+            'desde' => 'required|date|after:now',
+            'hasta' => 'required |date|after:desde'
+           ]);
+           $atributos['imagen']='imagen';
+
+           $user=User::find(Auth::id());
+           $atributos['user_id']=$user->id;
+           $atributos['tema_id']=$user->tema_id;
+           $publicacion=Publicacion::create($atributos);
+           $publicacion->save();
+          
+           //$publicacion->update($atributos);
+
+          
+
+
+
+
+           
+           return redirect()->route('publicaciones.index');
     }
 
     /**
@@ -62,6 +87,7 @@ class PublicacionController extends Controller
             'desde' => 'required|date|after:now',
             'hasta' => 'required |date|after:desde'
            ]);
+           
            $publicacion = Publicacion::find($id);
            /////////////////////////////////////////////////
            $publicacion->update($publicaciones_validadas);

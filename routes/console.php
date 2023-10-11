@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Publicacion;
 use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -31,3 +32,8 @@ Artisan::command('users', function () {
     $users = User::all(['email', 'is_admin', 'is_publisher'])->toArray();
     $this->table(['email', 'is_admin', 'is_publisher'], $users);
 })->purpose('Display users');
+
+Artisan::command('publicaciones', function () {
+    $users = Publicacion::all(['id','titulo', 'user_id','tema_id'])->toArray();
+    $this->table(['id','titulo', 'user_id','tema_id'], $users);
+})->describe('Lista todos las publicaciones');
