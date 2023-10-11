@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
+use App\Models\Tema;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ class PublicacionController extends Controller
     {
 
         $publicaciones = auth()->user()->publicaciones()->paginate(10);
+        $publicaciones=auth()->user()->publicaciones()->orderBy('updated_at','desc')->paginate(10);
 
         return view('publicaciones.index', compact('publicaciones'));
     }
@@ -47,15 +49,7 @@ class PublicacionController extends Controller
            $atributos['tema_id']=$user->tema_id;
            $publicacion=Publicacion::create($atributos);
            $publicacion->save();
-          
-           //$publicacion->update($atributos);
-
-          
-
-
-
-
-           
+                      
            return redirect()->route('publicaciones.index');
     }
 

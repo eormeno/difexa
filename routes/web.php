@@ -53,3 +53,5 @@ Route::middleware(['auth', 'is.publisher'])->group(function()
     Route::patch('/publicaciones/{id}',[PublicacionController::class,'update'])->name('publicaciones.update');
 });
 require __DIR__ . '/auth.php';
+
+//1ro Creamos la Ruta a CREATE y STORE
