@@ -10,6 +10,13 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div>
+                        <div class="pb-10  flex justify-center">
+                            <a href="{{ route('temas.create') }}">
+                                <x-primary-button>
+                                    {{ __('Crear nuevo tema') }}
+                                </x-primary-button>
+                            </a>
+                        </div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($temas as $tema)
                                 <div class="rounded-xl bg-gray-300 shadow p-2">
