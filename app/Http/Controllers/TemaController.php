@@ -12,7 +12,7 @@ class TemaController extends Controller
      */
     public function index()
     {
-        $temas = Tema::paginate(8);
+        $temas = Tema::Orderby('updated_at', 'desc')->paginate(8);
         return view('temas.index', compact('temas'));
     }
 
@@ -68,11 +68,7 @@ class TemaController extends Controller
         ]);
         $tema = Tema::find($id);
         $tema->update($tema_validado);
-        // $tema->titulo = $tema_validado['titulo'];
-        // $tema->descripcion = $tema_validado['descripcion'];
-        // $tema->slug = $tema_validado['slug'];
-        // $tema->save();
-        return redirect()->route('temas.index');
+        return redirect()->route('temas.index') -> with('success', 'Tema actualizado exitosamente');
     }
 
     /**
