@@ -36,6 +36,8 @@ Route::middleware(['auth', 'es_admininstrador'])->group(function() {
     Route::get('/tema/{id}', [TemasController::class, 'edit'])->name('tema.edit');
     Route::patch('/tema/{id}', [TemasController::class, 'update'])->name('tema.update');
     Route::get('/dispositivo', [DispositivoController::class, 'index'])->name('dispositivo.index');
+    Route::get('/dispositivo/create', [DispositivoController::class, 'create'])->name('dispositivo.create');
+    Route::post('/dispositivo', [DispositivoController::class, 'store'])->name('dispositivo.store');
     Route::get('/dispositivo/{dispositivo}', [DispositivoController::class, 'edit'])->name('dispositivo.edit');
     Route::patch('/dispositivo/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivo.update');
 });
