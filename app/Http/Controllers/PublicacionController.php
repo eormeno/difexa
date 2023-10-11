@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
+use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class PublicacionController extends Controller
 {
     /**
@@ -22,7 +23,7 @@ class PublicacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('publicaciones.create');
     }
 
     /**
@@ -30,7 +31,28 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $atributos=request()->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'contenido' => 'required | min:3 | max:255',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif | max:2048',
+            'desde' => 'required | date | after:now',
+            'hasta' => 'required | date | after:desde',
+        ]);
+        $atributos['imagen']='imagen';
+
+        $user=User::find(Auth::id());
+        $atributos['user_id']=$user->id;
+        $atributos['tema_id']=$user->tema_id;
+        $publicacion=Publicacion::create($atributos);
+
+        $publicacion->save();
+        //if ($request->hasFile('imagen')) {
+        //    $imagen = $request->file('imagen');
+        //    $nombreArchivo = time() . '_' . $imagen->getClientOriginalName();
+        //    $imagen->move(public_path('uploads'), $nombreArchivo);
+        //}
+        
+        return redirect()->route('publicaciones.index');
     }
 
     /**

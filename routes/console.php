@@ -37,6 +37,6 @@ Artisan::command('users', function () {
 })->describe('Lista todos los usuarios');
 
 Artisan::command('publicaciones', function () {
-    $users = Publicacion::all(['id','titulo', 'user_id','tema_id'])->toArray();
-    $this->table(['id','titulo', 'user_id','tema_id'], $users);
+    $users = Publicacion::all(['id','titulo','contenido','user_id','tema_id'])->toArray();
+    $this->table(['id','titulo', 'contenido','user_id','tema_id'], $users);
 })->describe('Lista todos las publicaciones');
