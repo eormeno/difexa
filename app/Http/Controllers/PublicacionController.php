@@ -38,24 +38,32 @@ class PublicacionController extends Controller
      */
     public function show($id)
     {
-        $publicacion=Publicacion::findOrFail($id);
-        return view('publicaciones.show', compact('publicacion'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Publicacion $publicacion)
+    public function edit(string $id)
     {
-        //
+        $publicacion=Publicacion::findOrFail($id);
+        return view('publicaciones.edit', compact('publicacion'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Publicacion $publicacion)
+    public function update(Request $request, string $id)
     {
-        //
+        $validar=request()->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'contenido' => 'required | min:3 | max:255',
+            'desde' => 'required | date | after:now',
+            'hasta' => 'required | date | after:desde',
+        ]);
+        $publicacion=Publicacion::find($id);
+        $publicacion->update($validar);
+        return redirect()->route('publicaciones.index');
     }
 
     /**

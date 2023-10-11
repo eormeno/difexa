@@ -11,7 +11,7 @@
                     <div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($temas as $tema)
-                                <div class="rounded-xl bg-gray-300 shadow p-2">
+                                <div class="rounded-xl bg-gray-200 shadow p-2">
                                     <a href="{{ route('temas.edit', $tema) }}">
                                         <p
                                             class="text-white bg-gray-700 hover:bg-gray-600 cursor-pointer rounded-md text-center p-1 my-2 font-semibold">
