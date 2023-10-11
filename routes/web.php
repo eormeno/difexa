@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::get('/temas', [TemaController::class, 'index'])->name('temas.index');
+    Route::get('/temas/create', [TemaController::class, 'create'])->name('temas.create');
+    Route::post('/temas', [TemaController::class, 'store'])->name('temas.store');
     Route::get('/temas/{id}', [TemaController::class, 'show'])->name('temas.show');
     Route::get('/temas/{id}/edit', [TemaController::class, 'edit'])->name('temas.edit');
     Route::patch('/temas/{id}', [TemaController::class, 'update'])->name('temas.update');

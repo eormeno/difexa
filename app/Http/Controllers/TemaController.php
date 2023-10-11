@@ -21,7 +21,7 @@ class TemaController extends Controller
      */
     public function create()
     {
-        //
+        return view('temas.create');
     }
 
     /**
@@ -29,7 +29,13 @@ class TemaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tema_validado = $request->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:10 | max:255',
+            'slug' => 'required | unique:temas,slug | min:3 | max:50',
+        ]);
+        Tema::create($tema_validado);
+        return redirect()->route('temas.index') -> with('success', 'Tema creado exitosamente');
     }
 
     /**
