@@ -46,7 +46,7 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     
 });
 
-Route::middleware(['auth','is.publisher'])->group(function () {
+Route::middleware(['auth','is_publisher'])->group(function () {
     Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
     Route::get('/publicaciones/{id}', [PublicacionController::class, 'show'])->name('publicaciones.show');
     Route::get('/publicaciones/{id}', [PublicacionController::class, 'edit'])->name('publicaciones.edit');
