@@ -13,7 +13,6 @@ class PublicacionController extends Controller
     public function index()
     {
         $publicaciones = auth()->user()->publicaciones()->paginate(10);
-
         return view('publicaciones.index', compact('publicaciones'));
     }
 
@@ -36,32 +35,39 @@ class PublicacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(string $id)
     {
-        $publicacion = Publicacion::findOrFail($id);
-        return view('publicaciones.show', compact('publicacion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Publicacion $publicacion)
+    public function edit(string $id)
     {
-        //
+        $publicacion = Publicacion::findOrFail($id);
+        return view('publicaciones.edit', compact('publicacion'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Publicacion $publicacion)
+    public function update(Request $request, string $id)
     {
-        //
+        $publicacion_validada = $request->validate([
+            'titulo' => 'required',
+            'contenido' => 'required',
+            'desde' => 'required|date|after:now',
+            'hasta' => 'required|date|after:desde',
+        ]);
+        $publicacion = Publicacion::find($id);
+        $publicacion->update($publicacion_validada);
+        return redirect()->route('publicaciones.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Publicacion $publicacion)
+    public function destroy(string $id)
     {
         //
     }

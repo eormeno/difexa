@@ -46,6 +46,13 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     
 });
 
+Route::middleware(['auth','is.publisher'])->group(function () {
+    Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
+    Route::get('/publicaciones/{id}', [PublicacionController::class, 'show'])->name('publicaciones.show');
+    Route::get('/publicaciones/{id}', [PublicacionController::class, 'edit'])->name('publicaciones.edit');
+    Route::patch('/publicaciones/{id}', [PublicacionController::class, 'update'])->name('publicaciones.update');
+});
+
 Route::resource('temas', TemasController::class)->middleware(['auth', 'is_admin'])->name('index', 'temas.index');
 
 Route::resource('dispositivos', DispositivoController::class)->middleware(['auth', 'is_admin'])->name('index', 'dispositivos.index');
