@@ -12,7 +12,7 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos = Dispositivo::paginate(8);
+        $dispositivos = Dispositivo::orderBy('created_at', 'desc')->paginate(10);
         return view('dispositivos.index', compact('dispositivos'));
     }
 
@@ -21,7 +21,7 @@ class DispositivoController extends Controller
      */
     public function create()
     {
-        //
+        return view('dispositivos.create');
     }
 
     /**
@@ -29,7 +29,12 @@ class DispositivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:3 | max:1000',
+        ]);
+        Dispositivo::create($validated);
+        return redirect()->route('dispositivos.index');
     }
 
     /**

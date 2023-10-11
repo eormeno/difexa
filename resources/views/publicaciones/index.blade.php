@@ -10,6 +10,13 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div>
+                        <div class="flex justify-between items-center">
+                            <a href="{{ route('publicaciones.create') }}"
+                                class="text-white bg-gray-700 hover:bg-gray-600 cursor-pointer rounded-md text-center p-1 my-2 font-semibold">
+                                Nueva publicación
+                            </a>
+                        </div>
+
                         <div class="grid grid-cols-4 gap-5">
                             @if (session('success'))
                                 <div class="col-span-4 mb-5">
