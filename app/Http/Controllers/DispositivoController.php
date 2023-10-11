@@ -12,7 +12,7 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos = Dispositivo::paginate(8);
+        $dispositivos = Dispositivo::orderBy('updated_at','desc')->paginate(8);
 
         return view('dispositivos.index', compact('dispositivos'));
     }
