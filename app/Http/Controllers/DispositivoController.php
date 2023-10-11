@@ -22,7 +22,7 @@ class DispositivoController extends Controller
      */
     public function create()
     {
-        //
+        return view('dispositivos.create');
     }
 
     /**
@@ -30,7 +30,12 @@ class DispositivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:10 | max:255',
+        ]);
+        Dispositivo::create($validated);
+        return redirect()->route('dispositivos.index') -> with('success', 'Dispositivo creado exitosamente');
     }
 
     /**
