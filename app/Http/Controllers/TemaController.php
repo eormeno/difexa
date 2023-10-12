@@ -12,7 +12,7 @@ class TemaController extends Controller
      */
     public function index()
     {
-        $temas = Tema::Orderby('updated_at', 'desc')->paginate(8);
+        $temas = Tema::Orderby('updated_at', 'desc')->paginate(12);
         return view('temas.index', compact('temas'));
     }
 
@@ -27,12 +27,12 @@ class TemaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Tema $tema)
     {
         $tema_validado = $request->validate([
             'titulo' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
-            'slug' => 'required | unique:temas,slug | min:3 | max:50',
+            'slug' => 'required | unique:temas,slug, ' . $tema . ' | min:3 | max:50',
         ]);
         Tema::create($tema_validado);
         return redirect()->route('temas.index') -> with('success', 'Tema creado exitosamente');
