@@ -9,7 +9,7 @@ class PublicacionController extends Controller
 {
     public function index()
     {
-        $publicaciones = auth()->user()->publicaciones()->latest()->paginate(8);
+        $publicaciones = Publicacion::Orderby('updated_at', 'desc')->paginate(8);
         return view('publicaciones.index', compact('publicaciones'));
     }
 
@@ -18,7 +18,7 @@ class PublicacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('publicaciones.create');
     }
 
     /**
@@ -26,7 +26,17 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $publicacion_validada = $request->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'contenido' => 'required | min:10 | max:255',
+            'desde' => 'required | date | before:hasta' ,
+            'hasta' => 'required | date | after:desde',
+        ]);
+        $publicacion_validada['imagen'] = 'https://via.placeholder.com/640x480.png/0077ff?text=eius';
+        $publicacion_validada['user_id'] = auth()->user()->id;
+        $publicacion_validada['tema_id'] = auth()->user()->tema_id;
+        Publicacion::create($publicacion_validada);
+        return redirect()->route('publicaciones.index') -> with('success', 'Publicacion creada exitosamente');
     }
 
     /**
@@ -60,12 +70,7 @@ class PublicacionController extends Controller
         ]);
         $publicacion = Publicacion::find($id);
         $publicacion->update($publicacion_validada);
-        // $publicacion->titulo = $publicacion_validada['titulo'];
-        // $publicacion->contenido = $publicacion_validada['contenido'];
-        // $publicacion->desde = $publicacion_validada['desde'];
-        // $publicacion->hasta = $publicacion_validada['hasta'];
-        // $publicacion->save();
-        return redirect()->route('publicaciones.index');
+        return redirect()->route('publicaciones.index')->with('success', 'Publicacion actualizada exitosamente');
     }
 
     /**

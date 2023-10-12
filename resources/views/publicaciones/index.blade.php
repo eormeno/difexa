@@ -7,10 +7,23 @@
     </x-slot>
 
     <div class="py-12">
+        @if (session()->has('success'))
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-green-400 text-gray-800 font-extrabold p-4 rounded-lg mb-6">
+                {{ session('success') }}
+            </div>
+        </div>
+        @endif
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div>
+                    <div class="pb-5">
+                        <a href="{{ route('publicaciones.create') }}">
+                            <x-primary-button>
+                                {{ __('Crear publicacion') }}
+                            </x-primary-button>
+                        </a>
+                    </div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($publicaciones as $publicacion)
                                     <div class="rounded-xl bg-gray-300 shadow p-2 ">
@@ -18,18 +31,18 @@
                                             {{ $publicacion->titulo }}
                                         </p>
                                         <p class="text-gray-700 bg-gray-300 rounded-md text-center p-1 my-2">
-                                            {{ $publicacion->tema->titulo }}
+                                            Tema:<br>{{ $publicacion->tema->titulo }}
                                         </p>
                                         <div class="flex justify-evenly m-0 a-0">
-                                            <a href="{{ route('publicaciones.show', $publicacion->id) }}">
-                                                <div class="text-gray-900 bg-white rounded-md px-3 py-1 hover:bg-gray-600 hover:text-gray-200 border border-gray-600">
-                                                    Ver
-                                                </div>
+                                            <a href="{{ route ('publicaciones.show', $publicacion->id )}}">
+                                                <x-secondary-button>
+                                                    {{ __('Ver') }}
+                                                </x-secondary-button>
                                             </a>
                                             <a href="{{ route('publicaciones.edit', $publicacion->id) }}">
-                                                <div class="text-gray-900 bg-white rounded-md px-3 py-1 hover:bg-gray-600 hover:text-gray-200 border border-gray-600">
-                                                    Editar
-                                                </div>
+                                                <x-secondary-button>
+                                                    {{ __('Editar') }}
+                                                </x-secondary-button>
                                             </a>
                                         </div>
                                     </div>
