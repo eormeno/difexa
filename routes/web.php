@@ -41,7 +41,7 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::get('/dispositivo/create', [DispositivoController::class, 'create'])->name('dispositivos.create');
     Route::post('/dispositivo', [DispositivoController::class, 'store'])->name('dispositivos.store');
     Route::patch('/dispositivos/{id}', [DispositivoController::class, 'update'])->name('dispositivos.update');
-
+    Route::delete('/dispositivos/{dispositivo}',[DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
 });
 
 Route::middleware(['auth', 'is.publisher'])->group(function() {

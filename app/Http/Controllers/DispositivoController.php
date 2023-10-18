@@ -76,6 +76,7 @@ class DispositivoController extends Controller
      */
     public function destroy(Dispositivo $dispositivo)
     {
-        //
+        $dispositivo->delete();
+        return redirect()->route('dispositivos.index');
     }
 }
