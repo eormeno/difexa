@@ -68,7 +68,7 @@ class TemasController extends Controller
            $tema->descripcion = $validated['descripcion'];
            $tema->slug = $validated['slug'];
            $tema->save();
-           return redirect()->route('temas.index');
+           return redirect()->route('temas.index')->with('success', 'Tema modificado correctamente');
     }
 
     /**

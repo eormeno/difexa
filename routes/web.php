@@ -49,6 +49,7 @@ Route::middleware(['auth', 'is.publisher'])->group(function() {
     Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
     Route::get('/publicaciones/{id}', [PublicacionController::class, 'edit'])->name('publicaciones.edit');
     Route::patch('/publicaciones/{id}', [PublicacionController::class, 'update'])->name('publicaciones.update');
+    Route::delete('/publicaciones/{publicacion}',[PublicacionController::class, 'destroy'])->name('publicaciones.destroy');
 });
 
 require __DIR__ . '/auth.php';

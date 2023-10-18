@@ -12,7 +12,7 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $publicaciones = auth()->user()->publicaciones()->paginate(10);
+        $publicaciones = auth()->user()->publicaciones()->where('deleted',false)->paginate(10);
 
         return view('publicaciones.index', compact('publicaciones'));
     }
@@ -68,7 +68,7 @@ class PublicacionController extends Controller
            $publicacion->desde = $validated['desde'];
            $publicacion->hasta = $validated['hasta'];
            $publicacion->save();
-           return redirect()->route('publicaciones.index');
+           return redirect()->route('publicaciones.index')->with('success', 'Publicación modificada correctamente');
     }
 
     /**
@@ -76,6 +76,8 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        //
+        $publicacion->deleted = true;
+        $publicacion->save();
+        return redirect()->route('publicaciones.index')->with('success', 'Publicación eliminada correctamente');
     }
 }
