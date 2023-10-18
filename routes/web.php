@@ -44,6 +44,7 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::get('/dispositivos/{id}', [DispositivoController::class, 'show'])->name('dispositivos.show');
     Route::get('/dispositivos/{id}', [DispositivoControllerController::class, 'edit'])->name('dispositivos.edit');
     Route::patch('/dispositivos/{id}', [DispositivoController::class, 'update'])->name('dispositivos.update');
+    Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
     
 });
 
