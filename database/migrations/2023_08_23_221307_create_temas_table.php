@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('titulo', 50);
             $table->string('descripcion', 255);
             $table->string('slug', 50);
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }
