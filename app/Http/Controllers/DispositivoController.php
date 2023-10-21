@@ -63,8 +63,9 @@ class DispositivoController extends Controller
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:3 | max:1000',
         ]);
+        $nombre = $validated['nombre'];
         $dispositivo->update($validated);
-        return redirect()->route('dispositivo.index');
+        return redirect()->route('dispositivo.index') -> with('success', "$nombre actualizado exitosamente");
     }
 
 

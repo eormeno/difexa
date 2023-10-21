@@ -12,7 +12,7 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas = Tema::orderBy('updated_at', 'desc')->paginate(10);
+        $temas = Tema::Orderby('updated_at', 'desc')->paginate(12);
         return view('temas.index', compact('temas'));
     }
 
@@ -27,32 +27,31 @@ class TemasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Tema $tema)
     {
-        $temas_validados = $request->validate([
+        $tema_validado = $request->validate([
             'titulo' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
-            'slug' => 'required | unique:temas,slug | min:3 | max:50',
+            'slug' => 'required | unique:temas,slug, ' . $tema . ' | min:3 | max:50',
         ]);
-        $tema = new Tema();
-        $tema->titulo = $temas_validados['titulo'];
-        $tema->descripcion = $temas_validados['descripcion'];
-        $tema->slug = $temas_validados['slug'];
-        $tema->save();
-        return redirect()->route('tema.index') -> with('success', "$tema->titulo creado exitosamente");
+        $titulo = $tema_validado['titulo'];
+        Tema::create($tema_validado);
+        return redirect()->route('tema.index') -> with('success', "$titulo creado exitosamente");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
+        $tema = Tema::find($id);
+        return view('temas.show', compact('tema'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         $tema = Tema::find($id);
         return view('temas.edit', compact('tema'));
@@ -61,25 +60,23 @@ class TemasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $temas_validados = $request->validate([
+        $tema_validado = $request->validate([
             'titulo' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
             'slug' => 'required | unique:temas,slug,' . $id . ' | min:3 | max:50',
         ]);
+        $titulo = $tema_validado['titulo'];
         $tema = Tema::find($id);
-        $tema->titulo = $temas_validados['titulo'];
-        $tema->descripcion = $temas_validados['descripcion'];
-        $tema->slug = $temas_validados['slug'];
-        $tema->save();
-        return redirect()->route('tema.index');
+        $tema->update($tema_validado);
+        return redirect()->route('tema.index') -> with('success', "$titulo actualizado exitosamente");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tema $tema)
     {
         //
     }

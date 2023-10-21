@@ -26,13 +26,6 @@
                         </div>
 
                         <div class="grid grid-cols-4 gap-5">
-                            @if (session('success'))
-                                <div class="col-span-4 mb-5">
-                                    <p>
-                                        {{ session('success') }}
-                                    </p>
-                                </div>
-                            @endif
                             @forelse ($publicaciones as $publicacion)
                                 <div class="rounded-xl bg-gray-300 shadow p-2">
                                     <a href="{{ route('publicaciones.edit', $publicacion) }}">
