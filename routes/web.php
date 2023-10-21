@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'es_admininstrador'])->group(function() {
     Route::get('/tema', [TemasController::class, 'index'])->name('tema.index');
+    Route::get('/tema/create', [TemasController::class, 'create'])->name('tema.create');
+    Route::post('/tema', [TemasController::class, 'store'])->name('tema.store');
     Route::get('/tema/{id}', [TemasController::class, 'edit'])->name('tema.edit');
     Route::patch('/tema/{id}', [TemasController::class, 'update'])->name('tema.update');
     Route::get('/dispositivo', [DispositivoController::class, 'index'])->name('dispositivo.index');
@@ -44,6 +46,8 @@ Route::middleware(['auth', 'es_admininstrador'])->group(function() {
 
 Route::middleware(['auth', 'es_publicador'])->group(function() {
     Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
+    Route::get('/publicaciones/create', [PublicacionController::class, 'create'])->name('publicaciones.create');
+    Route::post('/publicaciones', [PublicacionController::class, 'store'])->name('publicaciones.store');
     Route::get('/publicaciones/{id}', [PublicacionController::class, 'edit'])->name('publicaciones.edit');
     Route::patch('/publicaciones/{id}', [PublicacionController::class, 'update'])->name('publicaciones.update');
 });

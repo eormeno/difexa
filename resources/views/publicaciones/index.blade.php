@@ -6,10 +6,25 @@
     </x-slot>
 
     <div class="py-12">
+        @if (session()->has('success'))
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-green-400 text-gray-800 font-extrabold p-4 rounded-lg mb-6">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @endif
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div>
+                        <div class="pb-5">
+                            <a href="{{ route('publicaciones.create') }}"
+                            <x-primary-button>
+                                {{ __('Crear publicación') }}
+                            </x-primary-button>
+                            </a>
+                        </div>
+
                         <div class="grid grid-cols-4 gap-5">
                             @if (session('success'))
                                 <div class="col-span-4 mb-5">
