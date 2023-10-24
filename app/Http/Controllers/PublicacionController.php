@@ -80,6 +80,7 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        //
+        $publicacion->delete();
+        return redirect()->route('publicaciones.index');
     }
 }

@@ -37,11 +37,13 @@ Route::middleware(['auth', 'es_admininstrador'])->group(function() {
     Route::post('/tema', [TemasController::class, 'store'])->name('tema.store');
     Route::get('/tema/{id}', [TemasController::class, 'edit'])->name('tema.edit');
     Route::patch('/tema/{id}', [TemasController::class, 'update'])->name('tema.update');
+    Route::delete('/tema/{tema}',[TemasController::class, 'destroy'])->name('tema.destroy');
     Route::get('/dispositivo', [DispositivoController::class, 'index'])->name('dispositivo.index');
     Route::get('/dispositivo/create', [DispositivoController::class, 'create'])->name('dispositivo.create');
     Route::post('/dispositivo', [DispositivoController::class, 'store'])->name('dispositivo.store');
     Route::get('/dispositivo/{dispositivo}', [DispositivoController::class, 'edit'])->name('dispositivo.edit');
     Route::patch('/dispositivo/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivo.update');
+    Route::delete('/dispositivo/{dispositivo}',[DispositivoController::class, 'destroy'])->name('dispositivo.destroy');
 });
 
 Route::middleware(['auth', 'es_publicador'])->group(function() {
@@ -50,6 +52,7 @@ Route::middleware(['auth', 'es_publicador'])->group(function() {
     Route::post('/publicaciones', [PublicacionController::class, 'store'])->name('publicaciones.store');
     Route::get('/publicaciones/{id}', [PublicacionController::class, 'edit'])->name('publicaciones.edit');
     Route::patch('/publicaciones/{id}', [PublicacionController::class, 'update'])->name('publicaciones.update');
+    Route::delete('/publicaciones/{publicacion}',[PublicacionController::class, 'destroy'])->name('publicaciones.destroy');
 });
 
 

@@ -78,6 +78,7 @@ class TemasController extends Controller
      */
     public function destroy(Tema $tema)
     {
-        //
+        $tema->delete();
+        return redirect()->route('tema.index');
     }
 }
