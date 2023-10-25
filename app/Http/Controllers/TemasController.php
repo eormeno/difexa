@@ -12,7 +12,7 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas = Tema::paginate(10);
+        $temas = Tema::where('delete', false)->paginate(10);
 
         return view('temas.index', compact('temas'));
     }
@@ -50,7 +50,7 @@ class TemasController extends Controller
     {
         $tema = Tema::find($id);
         return view('temas.edit', compact('temas'));
-        
+
     }
 
     /**
@@ -68,7 +68,7 @@ class TemasController extends Controller
            $tema->descripcion = $temas_validados['descripcion'];
            $tema->slug = $temas_validados['slug'];
            $tema->save();
-           return redirect()->route('temas.index');         
+           return redirect()->route('temas.index');
     }
 
     /**
@@ -76,8 +76,8 @@ class TemasController extends Controller
      */
     public function destroy(Tema $tema)
     {
-        $tema->deleted = true;
+        $tema->delete = true;
         $tema->save();
-    
+        return redirect()->route('temas.index');
     }
 }

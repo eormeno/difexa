@@ -49,7 +49,7 @@ class PublicacionController extends Controller
            $atributos['tema_id']=$user->tema_id;
            $publicacion=Publicacion::create($atributos);
            $publicacion->save();
-                      
+
            return redirect()->route('publicaciones.index');
     }
 
@@ -81,7 +81,7 @@ class PublicacionController extends Controller
             'desde' => 'required|date|after:now',
             'hasta' => 'required |date|after:desde'
            ]);
-           
+
            $publicacion = Publicacion::find($id);
            /////////////////////////////////////////////////
            $publicacion->update($publicaciones_validadas);
@@ -101,6 +101,6 @@ class PublicacionController extends Controller
     public function destroy(Publicacion $publicacion)
     {
         $publicacion->delete();
-        $publicacion->save();
+        return redirect()->route('publicaciones.index');
     }
 }
