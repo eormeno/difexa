@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TemasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\PublicacionController;
 
@@ -38,6 +39,8 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::get('/temas/{id}', [TemasController::class, 'edit'])->name('temas.edit');
     Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
     Route::delete('/temas/{tema}', [TemasController::class, 'destroy'])->name('temas.destroy');
+
+    Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
 
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/create', [DispositivoController::class, 'create'])->name('dispositivos.create');
