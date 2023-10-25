@@ -14,7 +14,7 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas = Tema::orderBy('updated_at', 'desc')->paginate(10);
+        $temas = Tema::where('deleted', false)->orderBy('updated_at', 'desc')->paginate(10);
         return view('temas.index', compact('temas'));
     }
 
@@ -79,6 +79,8 @@ class TemasController extends Controller
      */
     public function destroy(Tema $tema)
     {
-        //
+        $tema->deleted=true;
+        $tema->save();
+        return redirect()->route('temas.index')->with('exito',"Se elimino el tema $tema->titulo correctamente.");
     }
 }

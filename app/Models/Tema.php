@@ -12,7 +12,8 @@ class Tema extends Model
     protected $fillable=[
         'slug',
         'titulo',
-        'descripcion'
+        'descripcion',
+        'deleted'
     ];
     public function users(){
         return $this->hasMany(User::class);

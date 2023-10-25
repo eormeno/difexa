@@ -14,7 +14,7 @@ class PublicacionController extends Controller
     public function index()
     {
         
-        $publicaciones=auth()->user()->publicaciones()->orderBy('updated_at','desc')->paginate(10);
+        $publicaciones=auth()->user()->publicaciones()->where('deleted', false)->orderBy('updated_at','desc')->paginate(10);
         return view('publicaciones.index', compact('publicaciones'));
     }
 
@@ -93,6 +93,8 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        //
+        $publicacion->deleted=true;
+        $publicacion->save();
+        return redirect()->route('publicaciones.index')->with('exito',"Se elimino la publicación $publicacion->titulo correctamente.");
     }
 }
