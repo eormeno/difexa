@@ -12,7 +12,7 @@ class TemaController extends Controller
      */
     public function index()
     {
-        $temas = Tema::Orderby('updated_at', 'desc')->paginate(12);
+        $temas = Tema::Orderby('updated_at', 'desc')->paginate(8);
         return view('temas.index', compact('temas'));
     }
 
@@ -41,32 +41,29 @@ class TemaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Tema $tema)
     {
-        $tema = Tema::find($id);
         return view('temas.show', compact('tema'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Tema $tema)
     {
-        $tema = Tema::find($id);
         return view('temas.edit', compact('tema'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tema $tema)
     {
         $tema_validado = $request->validate([
             'titulo' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
-            'slug' => 'required | unique:temas,slug,' . $id . ' | min:3 | max:50',
+            'slug' => 'required | unique:temas,slug, ' . $tema->saveQuietly . ' | min:3 | max:50',
         ]);
-        $tema = Tema::find($id);
         $tema->update($tema_validado);
         return redirect()->route('temas.index') -> with('success', 'Tema actualizado exitosamente');
     }
@@ -76,6 +73,7 @@ class TemaController extends Controller
      */
     public function destroy(Tema $tema)
     {
-        //
+        $tema->delete();
+        return redirect()->route('temas.index') -> with('success', 'Tema eliminado exitosamente');
     }
 }

@@ -9,7 +9,7 @@ class PublicacionController extends Controller
 {
     public function index()
     {
-        $publicaciones = Publicacion::Orderby('updated_at', 'desc')->paginate(8);
+        $publicaciones = auth()->user()->publicaciones()->Orderby('updated_at', 'desc')->paginate(8);
         return view('publicaciones.index', compact('publicaciones'));
     }
 
@@ -42,25 +42,23 @@ class PublicacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Publicacion $publicacion)
     {
-        $publicacion = Publicacion::find($id);
         return view('publicaciones.show', compact('publicacion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Publicacion $publicacion)
     {
-        $publicacion = Publicacion::find($id);
         return view('publicaciones.edit', compact('publicacion'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, Publicacion $publicacion)
     {
         $publicacion_validada = $request->validate([
             'titulo' => 'required | min:3 | max:50',
@@ -68,7 +66,6 @@ class PublicacionController extends Controller
             'desde' => 'required | date | before:hasta' ,
             'hasta' => 'required | date | after:desde',
         ]);
-        $publicacion = Publicacion::find($id);
         $publicacion->update($publicacion_validada);
         return redirect()->route('publicaciones.index')->with('success', 'Publicacion actualizada exitosamente');
     }
@@ -78,6 +75,7 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        //
+        $publicacion->delete();
+        return redirect()->route('publicaciones.index')->with('success', 'Publicacion eliminada exitosamente');
     }
 }

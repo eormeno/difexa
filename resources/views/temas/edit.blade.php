@@ -13,6 +13,7 @@
                         @csrf
                         @method('patch')
 
+                        <!-- Título -->
                         <div>
                             <x-input-label for="titulo" :value="__('Título')" />
                             <x-text-input id="titulo" class="block mt-1 w-full" type="text" name="titulo"

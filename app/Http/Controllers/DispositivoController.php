@@ -40,31 +40,28 @@ class DispositivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Dispositivo $dispositivo)
     {
-        $dispositivo = Dispositivo::find($id);
         return view('dispositivos.show', compact('dispositivo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Dispositivo $dispositivo)
     {
-        $dispositivo = Dispositivo::find($id);
         return view('dispositivos.edit', compact('dispositivo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, Dispositivo $dispositivo)
     {
         $dispositivo_validado = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
         ]);
-        $dispositivo = Dispositivo::find($id);
         $dispositivo->update($dispositivo_validado);
         return redirect()->route('dispositivos.index')->with('success', 'Dispositivo actualizado exitosamente');
     }
@@ -74,6 +71,7 @@ class DispositivoController extends Controller
      */
     public function destroy(Dispositivo $dispositivo)
     {
-        //
+        $dispositivo->delete();
+        return redirect()->route('dispositivos.index')->with('success', 'Dispositivo eliminado exitosamente');
     }
 }
