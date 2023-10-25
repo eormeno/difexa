@@ -12,7 +12,7 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos= Dispositivo::paginate(8);
+        $dispositivos = Dispositivo::orderBy('created_at', 'desc')->paginate(10);
         return view('dispositivos.index', compact('dispositivos'));
     }
 
@@ -21,7 +21,7 @@ class DispositivoController extends Controller
      */
     public function create()
     {
-        //
+        return view('dispositivos.create');
     }
 
     /**
@@ -29,7 +29,12 @@ class DispositivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:3 | max:1000',
+        ]);
+        $dispositivo=Dispositivo::create($validated);
+        return redirect()->route('dispositivos.index')->with('exito',"Se creo el dispositivo $dispositivo->nombre correctamente.");;
     }
 
     /**
@@ -43,26 +48,24 @@ class DispositivoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Dispositivo $dispositivo)
     {
-        $dispositivo=Dispositivo::find($id);
         return view('dispositivos.edit', compact('dispositivo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Dispositivo $dispositivo)
     {
         $dispositivosValidados= $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
         ]);
-        $dispositivo=Dispositivo::find($id);
         $dispositivo->nombre=$dispositivosValidados['nombre'];
         $dispositivo->descripcion=$dispositivosValidados['descripcion'];
         $dispositivo->save();
-        return redirect()->route('dispositivos.index');
+        return redirect()->route('dispositivos.index')->with('exito',"Se actualizo el dispositivo $dispositivo->nombre correctamente.");
     }
 
     /**
@@ -70,6 +73,7 @@ class DispositivoController extends Controller
      */
     public function destroy(Dispositivo $dispositivo)
     {
-        //
+        $dispositivo->delete();
+        return redirect()->route('dispositivos.index');
     }
 }

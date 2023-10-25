@@ -52,7 +52,7 @@ class PublicacionController extends Controller
         //    $imagen->move(public_path('uploads'), $nombreArchivo);
         //}
         
-        return redirect()->route('publicaciones.index');
+        return redirect()->route('publicaciones.index')->with('exito','Se creo una publicación correctamente.');
     }
 
     /**
@@ -85,7 +85,7 @@ class PublicacionController extends Controller
         ]);
         $publicacion=Publicacion::find($id);
         $publicacion->update($validar);
-        return redirect()->route('publicaciones.index');
+        return redirect()->route('publicaciones.index')->with('exito','Se actualizo la publicación correctamente.');
     }
 
     /**

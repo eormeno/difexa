@@ -14,8 +14,7 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas= Tema::paginate(10);
-
+        $temas = Tema::orderBy('updated_at', 'desc')->paginate(10);
         return view('temas.index', compact('temas'));
     }
 
@@ -24,7 +23,7 @@ class TemasController extends Controller
      */
     public function create()
     {
-        //
+        return view('temas.create');
     }
 
     /**
@@ -32,7 +31,14 @@ class TemasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $temas_validados = $request->validate([
+            'titulo' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:10 | max:255',
+            'slug' => 'required | min:3 | max:50 |unique:temas,slug,',
+        ]);
+        $tema=Tema::create($temas_validados);
+        $tema->save();
+        return redirect()->route('temas.index')->with('exito',"Se creo el tema $tema->titulo correctamente.");
     }
 
     /**
@@ -46,34 +52,32 @@ class TemasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tema $tema)
     {
-        $tema=Tema::find($id);
         return view('temas.edit', compact('tema'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tema $tema)
     {
         $temasValidados= $request->validate([
             'titulo' => 'required | min:3 | max:50',
-            'slug' => 'required | min:3 | max:50 | unique:temas,slug,'.$id,
+            'slug' => 'required | min:3 | max:50 | unique:temas,slug,'.$tema->id,
             'descripcion' => 'required | min:10 | max:255',
         ]);
-        $tema=Tema::find($id);
         $tema->titulo=$temasValidados['titulo'];
         $tema->descripcion=$temasValidados['descripcion'];
-        $tema->slug=$request->$temasValidados['slug'];
+        $tema->slug=$temasValidados['slug'];
         $tema->save();
-        return redirect()->route('temas.index');
+        return redirect()->route('temas.index')->with('exito',"Se actualizo el tema $tema->titulo correctamente.");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tema $tema)
     {
         //
     }
