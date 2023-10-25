@@ -9,7 +9,7 @@
      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
        <div class="p-6 text-gray-900 dark:text-gray-100">
-        <form method="POST" action="{{ route('publicaciones.update', $publicacion) }}" novalidate>
+        <form method="POST" action="{{ route('publicaciones.update', $publicacion) }}" enctype="multipart/form-data" novalidate>
          @csrf
          @method('patch')
 
@@ -28,7 +28,14 @@
            :value="old('contenido', $publicacion->contenido)" required autofocus autocomplete="contenido" />
           <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
          </div>
-   
+         <!-- Imagen -->
+         <div class="mt-4">
+            <x-input-label for="imagen" :value="__('Imágen')" />
+            <img src="data:;base64,{{ $publicacion->imagen }}" alt="Imagen del Producto" class="max-w-40 max-h-40">
+            <x-text-input id="imagen" class="block mt-1" type="file" name="imagen" :value="old('imagen')" required autocomplete="imagen" />
+            <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
+         </div>
+         
          <!-- Desde -->
          <div class="mt-4">
           <x-input-label for="desde" :value="__('Desde')" />

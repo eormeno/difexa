@@ -40,11 +40,16 @@
                                         </button>
                                     </div>
                                     <p class=" text-gray-700 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md text-center p-1 my-2">
-                                        {{ $publicacion->tema->titulo }}
+                                        {{ $publicacion->contenido }}
                                     </p>
-                                    <p class="mt-2 text-gray-700 rounded-xl  bg-gray-300 shadow p-2">
-                                        {{ $publicacion->user->getFullName() }}
-                                    </p>
+                                    <div class="mt-2 text-gray-700 rounded-xl  bg-gray-300 shadow p-2">
+                                        <p>
+                                           <span class="font-semibold">Desde </span> {{ $publicacion->desde }}
+                                        </p>
+                                        <p>
+                                            <span class="font-semibold"> Hasta </span> {{ $publicacion->hasta }}
+                                        </p>
+                                    </div>
                                 </div>
                                 <x-modal name="confirmar-eliminacion-{{$publicacion->id}}" :show="$errors->userDeletion->isNotEmpty()" focusable>
                                     <form method="post" action="{{ route('publicaciones.destroy', $publicacion) }}" class="p-6">

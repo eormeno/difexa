@@ -6,10 +6,12 @@ use App\Models\User;
 use App\Models\Tema;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Publicacion extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'publicaciones';
     
@@ -21,7 +23,6 @@ class Publicacion extends Model
         'hasta',
         'user_id',
         'tema_id',
-        'deleted',
     ];
 
     public function user() {

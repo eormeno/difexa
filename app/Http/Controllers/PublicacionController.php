@@ -14,7 +14,7 @@ class PublicacionController extends Controller
     public function index()
     {
         
-        $publicaciones=auth()->user()->publicaciones()->where('deleted', false)->orderBy('updated_at','desc')->paginate(10);
+        $publicaciones=auth()->user()->publicaciones()->orderBy('updated_at','desc')->paginate(10);
         return view('publicaciones.index', compact('publicaciones'));
     }
 
@@ -38,7 +38,8 @@ class PublicacionController extends Controller
             'desde' => 'required | date | after:now',
             'hasta' => 'required | date | after:desde',
         ]);
-        $atributos['imagen']='imagen';
+        $rutaImagen = $request->file('imagen')->getRealPath();
+        $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
 
         $user=User::find(Auth::id());
         $atributos['user_id']=$user->id;
@@ -77,14 +78,24 @@ class PublicacionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validar=request()->validate([
+        $validaciones=[
             'titulo' => 'required | min:3 | max:50',
-            'contenido' => 'required | min:3 | max:255',
+            'contenido' => 'required | min:3 | max:255',   
             'desde' => 'required | date | after:now',
             'hasta' => 'required | date | after:desde',
-        ]);
+        ];
+        if ($request->hasFile('imagen')) {
+            $validaciones['imagen'] = 'image|mimes:jpeg,png|max:2048';
+            $atributos=$request->validate($validaciones);
+            $rutaImagen = $request->file('imagen')->getRealPath();
+            $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
+        }
+        else{
+            $atributos=$request->validate($validaciones);
+        }
+
         $publicacion=Publicacion::find($id);
-        $publicacion->update($validar);
+        $publicacion->update($atributos);
         return redirect()->route('publicaciones.index')->with('exito','Se actualizo la publicación correctamente.');
     }
 
@@ -93,8 +104,7 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        $publicacion->deleted=true;
-        $publicacion->save();
+        $publicacion->delete();
         return redirect()->route('publicaciones.index')->with('exito',"Se elimino la publicación $publicacion->titulo correctamente.");
     }
 }
