@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TemasController;
 use App\Http\Controllers\ProfileController;
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
 
     Route::delete('/temas/{tema}', [TemasController::class,'destroy'])->name('temas.destroy');
+
+    Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
 
 
     

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'tema_id',
         'is_admin',
         'is_publisher',
+        'mensaje'
     ];
 
     /**
