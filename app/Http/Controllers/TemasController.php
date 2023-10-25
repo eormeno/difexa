@@ -12,7 +12,7 @@ class TemasController extends Controller
      */
     public function index()
     {
-        $temas = Tema::orderBy('updated_at', 'desc')->paginate(10);
+        $temas = Tema::orderBy('updated_at', 'desc')->where('deleted', false)->paginate(10);
         return view('temas.index', compact('temas'));
     }
 
@@ -79,8 +79,10 @@ class TemasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tema $tema)
     {
-        //
+        $tema->deleted = true;
+        $tema->save();
+        return redirect()->route('temas.index');
     }
 }

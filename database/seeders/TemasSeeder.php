@@ -39,6 +39,6 @@ class TemasSeeder extends Seeder
             'descripcion'   => 'Temas relacionados con el departamento de química'
         ]);
 
-        Tema::factory()->count(97)->create();
+        Tema::factory()->count(7)->create();
     }
 }
