@@ -100,6 +100,7 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        //
+        $publicacion->delete();
+        $publicacion->save();
     }
 }
