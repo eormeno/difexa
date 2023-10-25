@@ -39,9 +39,15 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::get('/temas', [TemasController::class, 'index'])->name('temas.index');
     Route::get('/temas/{id}', [TemasController::class, 'edit'])->name('temas.edit');
     Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
+
+    Route::delete('/temas/{tema}', [TemasController::class,'destroy'])->name('temas.destroy');
+
+
+    
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/{id}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
     Route::patch('/dispositivos/{id}', [DispositivoController::class, 'update'])->name('dispositivos.update');
+    Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
 });
 
 Route::middleware(['auth', 'is.publisher'])->group(function()
@@ -51,6 +57,8 @@ Route::middleware(['auth', 'is.publisher'])->group(function()
     Route::post('/publicaciones/crear',[PublicacionController::class,'store'])->name('publicaciones.store');
     Route::get('/publicaciones/{id}',[PublicacionController::class,'edit'])->name('publicaciones.edit');
     Route::patch('/publicaciones/{id}',[PublicacionController::class,'update'])->name('publicaciones.update');
+
+    Route::delete('/publicaciones/{publicacion}',[PublicacionController::class, 'destroy'])->name('publicaciones.destroy');
 });
 require __DIR__ . '/auth.php';
 
