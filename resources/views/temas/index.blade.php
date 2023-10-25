@@ -15,6 +15,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="pb-5">
+                        <a href="{{ route('temas.create') }}">
+                            <x-primary-button>
+                                {{ __('Crear tema') }}
+                            </x-primary-button>
+                        </a>
+                    </div>
                     <div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($temas as $tema)
