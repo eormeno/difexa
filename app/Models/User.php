@@ -27,6 +27,7 @@ class User extends Authenticatable
         'tema_id',
         'es_admininstrador',
         'es_publicador',
+        "mensaje",
     ];
 
     /**
@@ -61,13 +62,13 @@ class User extends Authenticatable
         return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
     }
 
-    public function es_admininstrador(): bool
-    {
-        return $this->es_admininstrador;
-    }
+    // public function es_admininstrador(): bool
+    // {
+    //     return $this->es_admininstrador;
+    // }
 
-    public function es_publicador(): bool
-    {
-        return $this->es_publicador;
-    }
+    // public function es_publicador(): bool
+    // {
+    //     return $this->es_publicador;
+    // }
 }

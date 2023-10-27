@@ -33,23 +33,30 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'apellido' => ['required', 'string', 'max:255'],
-            'nombre' => ['required', 'string', 'max:255'],
-            'documento' => ['required', 'string', 'max:20'],
-            'tema' => ['required', 'integer', 'gt:0'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'apellido' => ['required', 'string', 'max:15', 'min:2'],
+            'nombre' => ['required', 'string', 'max:25', 'min:2'],
+            'documento' => ['required', 'string', 'regex:/^[0-9]+$/', 'max:12', 'min:6'],
+            'tema' => ['required', 'exists:temas,id'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' .User::class],
+            'password' => ['required', 'confirmed', 'min:3', 'max:10'],
         ]);
 
-        $tema = Tema::find($request->tema);
+        $mensaje = "Bienvenido a Difexa, " . $request->nombre . ". Su usuario es: " . $request->email;
+        $mensaje .= " Para validar su registro, deberá asistir a la oficina de Difexa con su DNI.";
 
-        $user = $tema->users()->create([
+
+        $user = User::create([
             'apellido' => $request->apellido,
             'nombre' => $request->nombre,
             'documento' => $request->documento,
             'email' => $request->email,
+            'mensaje' => $mensaje,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->tema()->associate($request->tema);
+
+        $user->save();
 
         event(new Registered($user));
 

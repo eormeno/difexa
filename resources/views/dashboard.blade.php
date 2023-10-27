@@ -9,7 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("¡Estás conectado!") }}
+                    @if (Auth::user()->es_admininstrador)
+                        {{ __('Usted es administrador!') }}
+                    @elseif(Auth::user()->es_publicador)
+                        {{ __('Usted ya puede publicar!') }}
+                    @else
+                        {{ Auth::user()->mensaje }}
+                    @endif
                 </div>
             </div>
         </div>

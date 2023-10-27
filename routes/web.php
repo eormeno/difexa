@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TemasController;
 use App\Http\Controllers\ProfileController;
@@ -44,6 +45,7 @@ Route::middleware(['auth', 'es_admininstrador'])->group(function() {
     Route::get('/dispositivo/{dispositivo}', [DispositivoController::class, 'edit'])->name('dispositivo.edit');
     Route::patch('/dispositivo/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivo.update');
     Route::delete('/dispositivo/{dispositivo}',[DispositivoController::class, 'destroy'])->name('dispositivo.destroy');
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 });
 
 Route::middleware(['auth', 'es_publicador'])->group(function() {
