@@ -23,9 +23,9 @@ class UsuariosController extends Controller
     {
         $usuario->is_publisher = true;
         $usuario -> mensaje = 'Ya podes publicar en';
-        $usuario->email = $usuario->getOriginal('email');
+        
         $usuario->save();
-        return redirect()->route('usuarios.index')->with('success','Usuario verificado');
+        return redirect()->route('usuarios.index')->with('exito',"El Usuario $usuario->nombre fue verificado.");
 
     }
 }
