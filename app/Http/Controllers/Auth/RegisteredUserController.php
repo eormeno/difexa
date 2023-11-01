@@ -40,12 +40,17 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $mensaje = '¡Bienvenido a la comunidad de '. config('app.name'). '!';
+        $mensaje .= ' Tu usuario es: ' . $request->email . '\n';
+        $mensaje .= ' Para verificarte, debes asistir con tu documento al área de comunicación de la FCEFN';
+        
         $user = User::create([
             'apellido' => $request->apellido,
             'nombre' => $request->nombre,
             'documento' => $request->documento,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'mensaje'=>$mensaje
         ]);
 
         $user->tema()->associate($request->tema);

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TemasController;
 use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\PublicacionController;
+use App\Http\Controllers\UsuariosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +46,11 @@ Route::middleware(['auth','is.admin'])->group(function () {
     Route::post('/dispositivos/crear', [DispositivoController::class, 'store'])->name('dispositivos.store');
     Route::get('/dispositivos/{dispositivo}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
     Route::patch('/dispositivos/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivos.update'); 
-    Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy'); 
+    Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
+    Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
+    Route::patch('/usuarios/{usuario}', [UsuariosController::class, 'verificado'])->name('usuarios.verificado');
+ 
+
 });
 Route::middleware(['auth','is.publisher'])->group(function () {
     Route::get('/publicaciones', [PublicacionController::class, 'index'])->name('publicaciones.index');
