@@ -3,34 +3,42 @@
 namespace Database\Seeders;
 
 use App\Models\Tema;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use PhpParser\Node\Stmt\For_;
-use PhpParser\Node\Stmt\Foreach_;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class TemasSeeder extends Seeder {
-    public function run(): void {
+class TemasSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
         if (Tema::count() > 0) {
             return;
         }
+
         Tema::factory()->create([
             'id'            => 1,
             'titulo'        => 'Departamento de informática',
             'slug'          => 'depto-informatica',
-            'descripcion'   => 'Temas del departamento de informática'
+            'descripcion'   => 'Temas relacionados con el departamento de informática'
         ]);
+
         Tema::factory()->create([
             'id'            => 2,
             'titulo'        => 'Departamento de física',
             'slug'          => 'depto-fisica',
-            'descripcion'   => 'Temas del departamento de física'
+            'descripcion'   => 'Temas relacionados con el departamento de física'
         ]);
+
         Tema::factory()->create([
             'id'            => 3,
             'titulo'        => 'Departamento de química',
             'slug'          => 'depto-quimica',
-            'descripcion'   => 'Temas del departamento de química'
+            'descripcion'   => 'Temas relacionados con el departamento de química'
         ]);
-        Tema::factory()->count(97)->create();
+
+        Tema::factory()->count(7)->create();
     }
 }

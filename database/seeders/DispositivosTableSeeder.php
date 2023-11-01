@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Dispositivo;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DispositivosTableSeeder extends Seeder
 {
@@ -13,14 +13,17 @@ class DispositivosTableSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!app()->isLocal()) {
-            exit('This seed is only for local environments.' . PHP_EOL);
-        }
-
         if (Dispositivo::count() > 0) {
-            exit('Table is not empty, therefore NOT seeding' . PHP_EOL);
+            return;
         }
 
-        Dispositivo::factory()->count(20)->create(); /**Creamos 20 datos fakes */
+        Dispositivo::factory()->create([
+            'id' => 1,
+            'nombre' => 'Monitor sala de conferencias',
+            'descripcion' => 'Este monitor es un SmartTV marca LG de 32 pulgadas, ubicado en la sala de conferencias de la empresa. Se utiliza para mostrar información de la empresa, como por ejemplo, el estado de los servidores, el estado de los servicios, etc.',
+        ]);
+
+        Dispositivo::factory(10)->create();
+
     }
 }

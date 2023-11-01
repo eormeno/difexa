@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dispositivos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('descripcion')->nullable();
+            $table->string('descripcion');
             $table->timestamps();
         });
     }

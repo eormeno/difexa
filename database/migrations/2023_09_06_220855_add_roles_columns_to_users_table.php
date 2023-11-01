@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('temas', function (Blueprint $table) {
-            $table->boolean('obsoleto')->default(false)->after('descripcion');
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_publisher')->default(false);
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('temas', function (Blueprint $table) {
-            $table->dropColumn('obsoleto');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['is_admin', 'is_publisher']);
         });
     }
 };
