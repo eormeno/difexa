@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Tema;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
-
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -34,21 +33,24 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'apellido' => ['required', 'string', 'max:20', 'min:2'],
-            'nombre' => ['required', 'string', 'max:20', 'min:2'],
-            'documento' => ['required', 'string','max:20'],
-            'tema' => ['required', 'exists:temas,id'],
+            'apellido' => ['required', 'string', 'max:15', 'min:2'],
+            'nombre' => ['required', 'string', 'max:25', 'min:2'],
+            'documento' => ['required', 'string', 'regex:/^[0-9]+$/', 'max:12', 'min:6'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'tema' => ['required', 'exists:temas,id'],
+            'password' => ['required', 'confirmed', 'min:3', 'max:10'],
         ]);
 
-        $tema = Tema::find($request->tema);
+        $mensaje = '¡Bienvenido a la comunidad de '. config('app.name'). '!';
+        $mensaje .= ' Tu usuario es: ' . $request->email . '\n';
+        $mensaje .= ' Para verificarte, debes asistir con tu documento al área de comunicación de la FCEFN';
 
-        $user = $tema->users()->create([
+        $user = User::create([
             'apellido' => $request->apellido,
             'nombre' => $request->nombre,
             'documento' => $request->documento,
             'email' => $request->email,
+            'mensaje' => $mensaje,
             'password' => Hash::make($request->password),
         ]);
 
