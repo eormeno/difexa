@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tema;
 use App\Models\Dispositivo;
 use Illuminate\Http\Request;
 
@@ -50,7 +51,8 @@ class DispositivoController extends Controller
      */
     public function edit(Dispositivo $dispositivo)
     {
-        return view('dispositivos.edit', compact('dispositivo'));
+        $temas = Tema::orderBy('created_at', 'desc');
+        return view('dispositivos.edit', compact('dispositivo', 'temas'));
     }
 
     /**

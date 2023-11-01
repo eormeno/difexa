@@ -26,7 +26,7 @@
                                         </div>
                                         <button
                                             class="hidden group-hover:block cursor-pointer
-                   absolute top-0 right-8 p-2 text-green-700 hover:text-green-500"
+                   absolute top-0 right-0 p-2 text-green-700 hover:text-green-500"
                                             x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'confirm-usuario-aprobar-{{ $usuario->id }}')">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"

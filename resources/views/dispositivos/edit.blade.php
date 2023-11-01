@@ -20,12 +20,27 @@
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
 
-                        <!-- Descripción -->
-                        <div class="mt-4">
-                            <x-input-label for="descripcion" :value="__('Descripción')" />
-                            <textarea id="descripcion" class="block mt-1 w-full" type="text" name="descripcion" required autofocus rows="5"
-                                cols="50" autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion) }}</textarea>
-                            <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                        <div class="flex">
+                            <!-- Descripción -->
+                            <div class="mt-4 w-1/2 pr-4">
+                                <x-input-label for="descripcion" :value="__('Descripción')" />
+                                <textarea id="descripcion"
+                                    class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                    type="text" name="descripcion" required autofocus rows="5" cols="50" autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion) }}</textarea>
+                                <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                            </div>
+                            <div class="mt-4 w-1/2">
+                                <div class="relative group">
+                                    <button class="bg-blue-500 text-white p-2">Abrir Menú</button>
+                                    <ul
+                                        class="absolute hidden mt-2 p-2 border border-gray-300 bg-white group-hover:block">
+                                        <!-- Coloca aquí tus elementos de menú -->
+                                        <li><a href="#">Opción 1</a></li>
+                                        <li><a href="#">Opción 2</a></li>
+                                        <li><a href="#">Opción 3</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
