@@ -7,11 +7,13 @@ use App\Models\Tema;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -23,11 +25,11 @@ class User extends Authenticatable
         'nombre',
         'documento',
         'email',
+        'mensaje',
         'password',
         'tema_id',
         'es_admininstrador',
         'es_publicador',
-        "mensaje",
     ];
 
     /**
@@ -53,6 +55,7 @@ class User extends Authenticatable
     public function tema() {
         return $this->belongsTo(Tema::class);
     }
+
     public function publicaciones() {
         return $this->hasMany(Publicacion::class);
     }
@@ -61,14 +64,4 @@ class User extends Authenticatable
     {
         return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
     }
-
-    // public function es_admininstrador(): bool
-    // {
-    //     return $this->es_admininstrador;
-    // }
-
-    // public function es_publicador(): bool
-    // {
-    //     return $this->es_publicador;
-    // }
 }

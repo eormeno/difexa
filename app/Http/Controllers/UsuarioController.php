@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UsuarioController extends Controller
 {
@@ -15,5 +15,17 @@ class UsuarioController extends Controller
             orderBy('nombre')->
             paginate(10);
         return view('usuarios.index', compact('usuarios'));
+    }
+
+    public function verificado(Request $request, User $usuario){
+        $usuario->es_publicador = true;
+        $usuario->save();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario verificado');
+    }
+
+    public function destroy(User $usuario)
+    {
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado exitosamente');
     }
 }

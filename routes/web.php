@@ -46,6 +46,13 @@ Route::middleware(['auth', 'es_admininstrador'])->group(function() {
     Route::patch('/dispositivo/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivo.update');
     Route::delete('/dispositivo/{dispositivo}',[DispositivoController::class, 'destroy'])->name('dispositivo.destroy');
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
+    Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
+    Route::get('/usuarios/{usuario}', [UsuarioController::class, 'show'])->name('usuarios.show');
+    Route::get('/usuarios/{usuario}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
+    Route::patch('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('usuarios.update');
+    Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+    Route::patch('/usuarios/{usuario}/verificado', [UsuarioController::class, 'verificado'])->name('usuarios.verificado');
 });
 
 Route::middleware(['auth', 'es_publicador'])->group(function() {
