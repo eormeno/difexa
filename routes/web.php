@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TemaController;
 use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\PublicacionController;
@@ -47,6 +48,15 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::get('/dispositivos/{dispositivo}/edit', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
     Route::patch('/dispositivos/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivos.update');
     Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
+
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
+    Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
+    Route::get('/usuarios/{usuario}', [UsuarioController::class, 'show'])->name('usuarios.show');
+    Route::get('/usuarios/{usuario}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
+    Route::patch('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('usuarios.update');
+    Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+    Route::patch('/usuarios/{usuario}/verificar', [UsuarioController::class, 'verificar'])->name('usuarios.verificar');
 });
 
 Route::middleware(['auth', 'is.publisher'])->group(function() {

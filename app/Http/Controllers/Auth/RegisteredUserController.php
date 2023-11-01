@@ -41,6 +41,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+
         $tema = Tema::find($request->tema);
 
         $user = $tema->users()->create([

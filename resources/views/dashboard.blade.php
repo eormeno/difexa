@@ -9,7 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("¡Estás conectado!") }}
+                    @if (Auth::user()->is_admin)
+                        {{ __('Usted es administrador') }}
+                    @elseif (Auth::user()->is_publisher)
+                        {{ __('Usted puede publicar') }}
+                    @else
+                        Bienvenido a Difexa {{ Auth::user()->getFullName() }}! <br>
+                        Tu usuario es {{Auth::user()->email}}. <br>
+                        Para verificarte, debes asistir con tu documento al area de comunicaciones de la FCEFN.
+                    @endif
                 </div>
             </div>
         </div>
