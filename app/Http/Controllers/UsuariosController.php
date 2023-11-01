@@ -9,10 +9,10 @@ class UsuariosController extends Controller
 {
     public function index()
     {
-        $usuarios = User::whare('is_admin', false)-> 
+        $usuarios = User::where('is_admin', false)-> 
         where('is_publisher',false)->
-        orderby('apellido')->
-        orderby('nombre')->
+        orderBy('apellido')->
+        orderBy('nombre')->
         paginate(10);
         return view('usuarios.index', compact('usuarios'));
 
@@ -23,6 +23,7 @@ class UsuariosController extends Controller
     {
         $usuario->is_publisher = true;
         $usuario -> mensaje = 'Ya podes publicar en';
+        $usuario->email = $usuario->getOriginal('email');
         $usuario->save();
         return redirect()->route('usuarios.index')->with('success','Usuario verificado');
 

@@ -44,6 +44,7 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::delete('/temas/{tema}', [TemasController::class,'destroy'])->name('temas.destroy');
 
     Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
+    Route::patch('/usuarios', [UsuariosController::class, 'verificado'])->name('usuarios.verificado');
 
 
     

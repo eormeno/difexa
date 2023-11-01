@@ -24,6 +24,19 @@
                         <p><span>email: </span>{{ $usuario->email }}</p>
                         <p><span>documento: </span>{{ $usuario->documento }}</p>
                       </div>
+
+                                      
+                      <button
+                        class="hidden group-hover:block cursor-pointer
+                       absolute top-0 right-8 p-2 text-green-400 hover:text-green-500"
+                       x-data=""
+                        x-on:click.prevent="$dispatch('open-modal', 'confirm-usuario-verificacion-{{ $usuario->id }}')"
+                       >
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                        </svg>                        
+                      </button>
                       <button
                         class="hidden group-hover:block cursor-pointer
                        absolute top-0 right-0 p-2 text-red-400 hover:text-red-500"
@@ -42,9 +55,34 @@
                       {{ $usuario->tema->titulo }}
                     </p>
                   </div>
+                  <x-modal name="confirm-usuario-verificacion-{{ $usuario->id }}" :show="$errors->userDeletion->isNotEmpty()"
+                    focusable>
+                    <form method="post" action="" class="p-6">
+                      @csrf
+                      @method('patch')
+                      <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        {{ __('Se verificara el usuario') }}
+                        <span class="font-extrabold"> {{ $usuario->nombre }}</span>
+                      </h1>
+    
+                      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        {{ __('¿Está seguro?') }}
+                      </h2>
+    
+                      <div class="mt-6 flex justify-end">
+                        <x-secondary-button x-on:click="$dispatch('close')">
+                          {{ __('No') }}
+                        </x-secondary-button>
+    
+                        <x-primary-button class="ml-3">
+                          {{ __('Sí, verificar') }}
+                        </x-primary-button>
+                      </div>
+                    </form>
+                  </x-modal>
                   <x-modal name="confirm-usuario-deletion-{{ $usuario->id }}" :show="$errors->userDeletion->isNotEmpty()"
                     focusable>
-                    <form method="post" action="llenar aqui" class="p-6">
+                    <form method="post" action="" class="p-6">
                       @csrf
                       @method('delete')
                       <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">
