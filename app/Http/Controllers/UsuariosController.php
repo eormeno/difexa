@@ -17,7 +17,7 @@ class UsuariosController extends Controller
         return view('usuarios.index', compact('usuarios'));
     }
 
-    public function verificado(Request $request, User $usuario)
+    public function aprobar(Request $request, User $usuario)
     {
         $usuario->is_publisher = true;
         $usuario->mensaje = "Ya podés publicar en ";

@@ -41,6 +41,7 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::delete('/temas/{tema}', [TemasController::class, 'destroy'])->name('temas.destroy');
 
     Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
+    Route::patch('/usuarios/{usuario}/aprobar', [UsuariosController::class, 'aprobar'])->name('usuarios.aprobar');
 
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/create', [DispositivoController::class, 'create'])->name('dispositivos.create');
