@@ -5,6 +5,7 @@ use App\Http\Controllers\TemasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\PublicacionController;
+use App\Http\Controllers\UsuariosController;
 
 
 /*
@@ -39,6 +40,10 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
     Route::post('/temas', [TemasController::class, 'store'])->name('temas.store');
     Route::delete('/temas/{tema}', [TemasController::class, 'destroy'])->name('temas.destroy');
+
+    Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
+    Route::patch('/usuarios/{usuario}',[UsuariosController::class, 'verificado'])->name('usuarios.verificado');
+
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/{id}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
     Route::get('/dispositivo/create', [DispositivoController::class, 'create'])->name('dispositivos.create');

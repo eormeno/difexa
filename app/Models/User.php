@@ -23,6 +23,7 @@ class User extends Authenticatable
         'nombre',
         'documento',
         'email',
+        'mensaje',
         'password',
         'tema_id',
         'is_admin',
