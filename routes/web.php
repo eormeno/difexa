@@ -43,6 +43,7 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
 
     Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
     Route::patch('/usuarios/{usuario}',[UsuariosController::class, 'verificado'])->name('usuarios.verificado');
+    Route::delete('/usuarios/{usuario}',[UsuariosController::class, 'destroy'])->name('usuarios.destroy');
 
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/{id}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');

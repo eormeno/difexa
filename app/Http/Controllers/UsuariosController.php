@@ -23,4 +23,10 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario verificado');
     }
 
+    public function destroy(User $usuario)
+    {
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado exitosamente');
+    }
+
 }
