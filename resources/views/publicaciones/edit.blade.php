@@ -28,6 +28,14 @@
        <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
       </div>
 
+      <!-- Imagen -->
+        <div class="mt-4">
+            <x-input-label for="imagen" :value="__('Imágen')" />
+            <img src="data:;base64,{{ $publicacion->imagen }}" alt="Imagen del Producto" class="max-w-40 max-h-40">
+            <x-text-input id="imagen" class="block mt-1" type="file" name="imagen" :value="old('imagen')" required autocomplete="imagen" />
+            <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
+        </div>
+
       <!-- Desde -->
       <div class="mt-4">
        <x-input-label for="desde" :value="__('Desde')" />

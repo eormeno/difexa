@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('hasta');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('tema_id')->constrained();
-            $table->boolean('deleted')->default(false);
             $table->timestamps();
         });
     }

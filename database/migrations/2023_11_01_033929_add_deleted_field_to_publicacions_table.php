@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('temas', function (Blueprint $table) {
-            $table->id();
-            $table->string('titulo', 50);
-            $table->string('descripcion', 255);
-            $table->string('slug', 50);
-            $table->timestamps();
+        Schema::table('publicaciones', function (Blueprint $table) {
+            $table->boolean('deleted')->default(false);
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('temas');
+        Schema::table('publicaciones', function (Blueprint $table) {
+            $table->dropColumn('deleted');
+        });
     }
 };

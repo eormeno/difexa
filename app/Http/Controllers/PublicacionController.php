@@ -40,11 +40,8 @@ class PublicacionController extends Controller
             'hasta' => 'required | date | after:desde',
         ]);
 
-        $imagen = $request->file('imagen');
-        $nombreImagen = time() . '_' . $imagen->getClientOriginalName();
-        $imagen->move(public_path('imagenes'), $nombreImagen);
-        $urlImagen = asset('imagenes/' . $nombreImagen);
-        $atributos['imagen']=$urlImagen;
+        $rutaImagen = $request->file('imagen')->getRealPath();
+        $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
 
         $user=User::find(Auth::id());
         $atributos['user_id']=$user->id;
@@ -76,18 +73,24 @@ class PublicacionController extends Controller
      */
     public function update(Request $request,string $id)
     {
-        $validated = $request->validate([
+        $validaciones=[
             'titulo' => 'required | min:3 | max:50',
-            'contenido' => 'required | min:10 | max:255',
-            'desde' => 'required | date |after:now',
-            'hasta'=> 'required | date | after:desde',
-           ]);
-           $publicacion = Publicacion::find($id);
-           $publicacion->titulo = $validated['titulo'];
-           $publicacion->contenido = $validated['contenido'];
-           $publicacion->desde = $validated['desde'];
-           $publicacion->hasta = $validated['hasta'];
-           $publicacion->save();
+            'contenido' => 'required | min:3 | max:255',   
+            'desde' => 'required | date | after:now',
+            'hasta' => 'required | date | after:desde',
+        ];
+        if ($request->hasFile('imagen')) {
+            $validaciones['imagen'] = 'image|mimes:jpeg,png|max:2048';
+            $atributos=$request->validate($validaciones);
+            $rutaImagen = $request->file('imagen')->getRealPath();
+            $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
+        }
+        else{
+            $atributos=$request->validate($validaciones);
+        }
+
+        $publicacion=Publicacion::find($id);
+        $publicacion->update($atributos);
            return redirect()->route('publicaciones.index')->with('success', 'Publicación modificada correctamente');
     }
 
