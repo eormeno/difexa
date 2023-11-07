@@ -8,6 +8,32 @@
             {{ __("Actualice la información de perfil y la dirección de correo electrónico de su cuenta.") }}
         </p>
     </header>
+    @if (session('cambiarTema'))
+    
+    <x-modal name="confirmar-eliminacion-{{session('cambiarTema')->id}}" :show="True" focusable>
+        <form method="post" action="{{ route('profile.cambiarTema', session('cambiarTema')) }}" class="p-6">
+           @csrf
+           @method('patch')
+           <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+              {{ __("Se cambiara el tema actual ") }}{{$user->tema->titulo}} al tema <span class="font-extrabold">{{session('cambiarTema')->titulo}}</span>
+           </h1>
+           <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+              {{ __('¿Está seguro?') }}
+           </h2>
+           <p class="text-md font-medium text-gray-800 dark:text-gray-100">
+            {{ __('Si modifica el tema, debera esperar un tiempo hasta que su solicitud de cambio de tema sea aprobada.') }}
+           </p>
+           <div class="mt-6 flex justify-end">
+              <x-secondary-button x-on:click="$dispatch('close')">
+                 {{ __('Cancelar') }}
+              </x-secondary-button>
+              <x-primary-button class="ml-3">
+                 {{ __('Cambiar Tema') }}
+              </x-primary-button>
+           </div>
+        </form>
+    </x-modal> 
+    @endif
 
     <form id="send-verification" method="post" action="{{ route('verification.send') }}">
         @csrf
@@ -40,11 +66,20 @@
             <x-text-input id="documento" name="documento" type="text" class="mt-1 block w-full" :value="old('documento', $user->documento)" required autocomplete="documento" />
             <x-input-error class="mt-2" :messages="$errors->get('documento')" />
         </div>
+
         <div>
-            <x-input-label for="temas" :value="__('Temas')" />
-            <x-text-input id="temas" name="temas" type="text" class="mt-1 block w-full" :value="old('temas', $user->temas)" required autocomplete="temas" />
-            <x-input-error class="mt-2" :messages="$errors->get('temas')" />
-        </div>
+            <x-input-label for="tema" :value="__('Tema')" />
+                <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                        @foreach ($temas as $tema)
+                            @if ( $tema->id==$user->tema->id)
+                                <option value="{{ $tema->id}}" selected>Tema Actual: {{ $tema->titulo }}</option>
+                            @else
+                                <option value="{{ $tema->id}}">{{ $tema->titulo }}</option>
+                            @endif
+                        @endforeach
+                </select>
+                <x-input-error class="mt-2" :messages="$errors->get('tema')" />
+        </div> 
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
@@ -68,7 +103,6 @@
                 </div>
             @endif
         </div>
-
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Guardar') }}</x-primary-button>
         </div>

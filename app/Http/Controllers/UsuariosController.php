@@ -15,6 +15,10 @@ class UsuariosController extends Controller
             paginate(10);
         return view('usuarios.index', compact('usuarios'));
     }
+    public function destroy(User $usuario){
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('exito',"El usuario $usuario->nombre fue eliminado.");
+    }
     public function verificado(User $usuario){
         $usuario->is_publisher=true;
         $usuario->mensaje='Usted ya es publicador';

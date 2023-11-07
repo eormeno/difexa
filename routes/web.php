@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+    Route::patch('/profile/{tema}', [ProfileController::class, 'cambiarTema'])->name('profile.cambiarTema');
 
 });
     
@@ -49,6 +49,7 @@ Route::middleware(['auth','is.admin'])->group(function () {
     Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
     Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
     Route::patch('/usuarios/{usuario}', [UsuariosController::class, 'verificado'])->name('usuarios.verificado');
+    Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
  
 
 });

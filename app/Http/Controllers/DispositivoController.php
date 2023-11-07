@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dispositivo;
+use App\Models\Tema;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DispositivoController extends Controller
 {
@@ -50,7 +52,9 @@ class DispositivoController extends Controller
      */
     public function edit(Dispositivo $dispositivo)
     {
-        return view('dispositivos.edit', compact('dispositivo'));
+        $temas = Tema::all();
+        $temasDisponibles = $temas->diff($dispositivo->temas);
+        return view('dispositivos.edit', compact('dispositivo','temasDisponibles'));
     }
 
     /**
@@ -62,9 +66,24 @@ class DispositivoController extends Controller
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
         ]);
+        
         $dispositivo->nombre=$dispositivosValidados['nombre'];
         $dispositivo->descripcion=$dispositivosValidados['descripcion'];
         $dispositivo->save();
+        
+        if($request->input('boton')=='Eliminar'){
+            $temasSeleccionados = $request->input('temas', []);
+            $dispositivo->temas()->detach($temasSeleccionados);
+        }
+        elseif ($request->input('boton')=='Agregar'){
+            if ($request['tema']){
+                $tema=Tema::find($request['tema']);
+                if (!$dispositivo->temas->contains($tema->id)) {
+                    $dispositivo->temas()->attach($tema->id);
+                }
+            }
+        }
+        
         return redirect()->route('dispositivos.index')->with('exito',"Se actualizo el dispositivo $dispositivo->nombre correctamente.");
     }
 
