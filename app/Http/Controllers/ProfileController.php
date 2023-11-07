@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Tema;
 
 class ProfileController extends Controller
 {
@@ -16,9 +17,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $temas = Tema::all();
         return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+            'user' => $request->user(), 'temas'=>$temas]);
     }
 
     /**
@@ -26,15 +27,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user=$request->user();
+        $user->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
         $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $parametros=[];
+        $parametros['status']='profile-updated';
+        if ($request['tema']!=$user->tema->id){
+            $tema = Tema::find($request['tema']);
+            $parametros['cambiarTema']=$tema;
+        }
+        return Redirect::route('profile.edit')->with($parametros);
     }
 
     /**
@@ -56,5 +62,17 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function cambiarTema(Request $request,Tema $tema){
+        $usuario = $request->user();
+        $usuario->tema_id=$tema->id;
+        $usuario->is_publisher=false;
+        $mensaje = '¡Bienvenido a la comunidad de '. config('app.name'). '!';
+        $mensaje .= ' Tu usuario es: ' . $usuario->email;
+        $mensaje .= '<br>Para verificarte, debes asistir con tu documento al área de comunicación de la FCEFN';
+        $usuario->mensaje=$mensaje;
+        $usuario->save();
+        return Redirect::to('/dashboard');
     }
 }

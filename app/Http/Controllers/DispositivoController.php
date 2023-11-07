@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Dispositivo;
 use Illuminate\Http\Request;
+use App\Models\Tema;
+use Illuminate\Support\Facades\DB;
 
 class DispositivoController extends Controller
 {
@@ -12,7 +14,7 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos = Dispositivo::orderBy('updated_at', 'desc')->paginate(8);
+        $dispositivos = Dispositivo::orderBy('created_at', 'desc')->paginate(8);
         return view('dispositivos.index', compact('dispositivos'));
     }
 
@@ -51,7 +53,9 @@ class DispositivoController extends Controller
      */
     public function edit(Dispositivo $dispositivo)
     {
-        return view('dispositivos.edit', compact('dispositivo'));
+        $temas = Tema::all();
+        $temasDisponibles = $temas->diff($dispositivo->temas);
+        return view('dispositivos.edit', compact('dispositivo','temasDisponibles'));
     }
 
     /**
@@ -59,13 +63,28 @@ class DispositivoController extends Controller
      */
     public function update(Request $request, Dispositivo $dispositivo)
     {
-        $validated = $request->validate([
+        $dispositivosValidados= $request->validate([
             'nombre' => 'required | min:3 | max:50',
-            'descripcion' => 'required | min:3 | max:1000',
+            'descripcion' => 'required | min:10 | max:255',
         ]);
-        $nombre = $validated['nombre'];
-        $dispositivo->update($validated);
-        return redirect()->route('dispositivo.index') -> with('success', "$nombre actualizado exitosamente");
+
+        $dispositivo->nombre=$dispositivosValidados['nombre'];
+        $dispositivo->descripcion=$dispositivosValidados['descripcion'];
+        $dispositivo->save();
+
+        if($request->input('boton')=='Eliminar'){
+            $temasSeleccionados = $request->input('temas', []);
+            $dispositivo->temas()->detach($temasSeleccionados);
+        }
+        elseif ($request->input('boton')=='Agregar'){
+            if ($request['tema']){
+                $tema=Tema::find($request['tema']);
+                if (!$dispositivo->temas->contains($tema->id)) {
+                    $dispositivo->temas()->attach($tema->id);
+                }
+            }
+        }
+        return redirect()->route('dispositivo.index')->with('success',"Se actualizo $dispositivo->nombre correctamente.");
     }
 
 

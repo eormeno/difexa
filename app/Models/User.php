@@ -60,8 +60,7 @@ class User extends Authenticatable
         return $this->hasMany(Publicacion::class);
     }
 
-    public function getFullName(): string
-    {
-        return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
+    public function getFullName(){
+        return ucfirst($this->apellido) . ' ' . ucfirst($this->nombre);
     }
 }

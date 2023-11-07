@@ -17,10 +17,11 @@ class UsuarioController extends Controller
         return view('usuarios.index', compact('usuarios'));
     }
 
-    public function verificado(Request $request, User $usuario){
-        $usuario->es_publicador = true;
+    public function verificado(User $usuario){
+        $usuario->es_publicador=true;
+        $usuario->mensaje='Usted ya es publicador';
         $usuario->save();
-        return redirect()->route('usuarios.index')->with('success', 'Usuario verificado');
+        return redirect()->route('usuarios.index')->with('exito',"El usuario $usuario->nombre fue verificado.");
     }
 
     public function destroy(User $usuario)
