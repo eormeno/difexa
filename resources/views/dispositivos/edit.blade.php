@@ -32,7 +32,7 @@
             <div class="mt-4 w-1/2">
                 <div class="flex items-center  space-x-4">
                     <div class="w-full">
-                        <x-input-label for="tema_nuevo" :value="__('Temas')" />
+                        <x-input-label for="tema_nuevo" :value="__(' Agregar Temas')" />
                         <select name="tema_nuevo" id="temas" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
                             <option value="" selected> </option>
                             @foreach ($temasDisponibles as $tema)
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <x-input-label for="temas_desvincular" :value="__('Temas asignados')" />
+                    <x-input-label for="temas_desvincular" :value="__('Temas asignados - Seleccione para desasignar')" />
                         @if ($dispositivo->temas->count()>0)
                             @foreach($dispositivo->temas as $tema)
                                 <input type="checkbox" name="temas_desvincular[]" value="{{ $tema->id }}" id="tema_desvincular_{{ $tema->id }}">

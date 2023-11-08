@@ -38,13 +38,13 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        $parametros=[];
-        $parametros['status']='profile-updated';
+        $p=[];
+        $p['status']='profile-updated';
         if ($request['tema']!=$user->tema->id and $user->is_publisher==True){
             $tema = Tema::find($request['tema']);
-            $parametros['cambiarTema']=$tema;
+            $p['nuevoTema']=$tema;
         }
-        return Redirect::route('profile.edit')->with($parametros);
+        return Redirect::route('profile.edit')->with($p);
     }
 
     /**

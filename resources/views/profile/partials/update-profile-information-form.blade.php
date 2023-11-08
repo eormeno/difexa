@@ -13,19 +13,19 @@
         @csrf
     </form>
 
-    @if (session('cambiarTema'))
-        <x-modal name="confirmar-eliminacion-{{session('cambiarTema')->id}}" :show="True" focusable>
-            <form method="post" action="{{ route('profile.cambiarTema', session('cambiarTema')) }}" class="p-6">
+    @if (session('nuevoTema'))
+        <x-modal name="confirmar-eliminacion-{{session('nuevoTema')->id}}" :show="True" focusable>
+            <form method="post" action="{{ route('profile.cambiarTema', session('nuevoTema')) }}" class="p-6">
             @csrf
             @method('patch')
             <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100 m-5">
-                {{ __("Se cambiara el tema actual ") }}{{$user->tema->titulo}} al tema <span class="font-extrabold">{{session('cambiarTema')->titulo}}</span>
+                {{ __("Se cambiara del tema ") }}{{$user->tema->titulo}} al tema <span class="font-extrabold">{{session('nuevoTema')->titulo}}</span>
             </h1>
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 {{ __('¿Está seguro?') }}
             </h2>
-            <p class="text-md font-medium text-gray-800 dark:text-gray-100">
-                {{ __('Si modifica el tema, debera esperar un tiempo hasta que su solicitud de cambio de tema sea aprobada.') }}
+            <p class="text-md font-medium text-gray-800 dark:text-gray-100 m-5">
+                {{ __('Si modifica el tema, debera verificarse de nuevo en la FCEFN.') }}
             </p>
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">

@@ -81,7 +81,7 @@ class DispositivoController extends Controller
         }
     
         if ($request->has('tema_nuevo') and $validated['tema_nuevo']!=null) {
-            $dispositivo->temas()->attach([$validated['tema_nuevo']]);
+            $dispositivo->temas()->attach($validated['tema_nuevo']);
         }
            return redirect()->route('dispositivos.index');
     }
