@@ -48,7 +48,7 @@
                     <x-input-label for="temas" :value="__('Temas asignados')" />
                         @if ($dispositivo->temas->count()>0)
                             @foreach($dispositivo->temas as $tema)
-                                <input type="checkbox" name="temas[]" value="{{ $tema->id }}" id="tema_{{ $tema->id }}">
+                                <input class="rounded  dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-orange-600 shadow-sm focus:ring-orange-500 dark:focus:ring-orange-600 dark:focus:ring-offset-gray-800" type="checkbox" name="temas[]" value="{{ $tema->id }}" id="tema_{{ $tema->id }}">
                                 <label for="tema_{{ $tema->id }}">{{ $tema->titulo }}</label><br>
                             @endforeach
                         @else
