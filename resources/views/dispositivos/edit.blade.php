@@ -22,8 +22,7 @@
                         <div class="mt-4">
                             <x-input-label for="codigo" :value="__('Código')" />
                             <x-text-input id="codigo" class="block mt-1 w-full" type="text" name="codigo"
-                                :value="old('codigo', $dispositivo->codigo)" required autofocus autocomplete="codigo"
-                                maxlength="5" />
+                                :value="old('codigo', $dispositivo->codigo)" required autofocus autocomplete="codigo" maxlength="5" />
                             <x-input-error :messages="$errors->get('codigo')" class="mt-2" />
                         </div>
 
@@ -37,35 +36,27 @@
                                 <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
                             </div>
                             <div class="mt-4 w-1/2">
-                                <x-dropdown align="left" width="100">
-                                    <x-slot name="trigger">
-                                        <x-secondary-button>
-                                            {{ __('Tema') }}
-                                            <svg class="w-5 h-5 ml-2 -mr-1" x-description="Heroicon name: chevron-down"
-                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                    d="M10.293 14.707a1 1 0 010-1.414L14.586 10A1 1 0 1116 11.414l-5.293 5.293a1 1 0 01-1.414 0L4 11.414A1 1 0 115.414 10l5.293 5.293z"
-                                                    clip-rule="evenodd"></path>
-                                            </svg>
-                                        </x-secondary-button>
-                                    </x-slot>
-                                    <x-slot name="content">
-                                        @forelse ($temas as $tema)
-                                            <x-dropdown-link :href="route('dispositivos.edit', [$dispositivo, 'add', $tema])">
-                                                {{ __($tema->titulo) }}
-                                            </x-dropdown-link>
-                                        @empty
-                                            <x-dropdown-link>
-                                                {{ __('No hay temas disponibles') }}
-                                            </x-dropdown-link>
-                                        @endforelse
-                                    </x-slot>
-                                </x-dropdown>
+                                <x-input-label for="temas" :value="__('Agregar temas')" />
+                                <select name="tema_nuevo" id="temas" required
+                                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full"
+                                    onchange="
+                                            window.location.href = '{{route('dispositivos.edit', [$dispositivo, 'add']) }}/' + this.value;
+                                        ">
+                                    <option value="">Seleccione un tema</option>
+                                    @forelse ($temas as $tema)
+                                        <option value="{{ $tema->id }}">{{ $tema->titulo }}</option>
+                                    @empty
+                                        <option value="">No hay temas disponibles</option>
+                                    @endforelse
+                                </select>
+
                                 <div>
                                     @forelse ($temas_dispositivo as $tema_dispositivo)
                                         <x-dropdown-link :href="route('dispositivos.edit', [
-                                            $dispositivo, 'remove', $tema_dispositivo])">
+                                            $dispositivo,
+                                            'remove',
+                                            $tema_dispositivo,
+                                        ])">
                                             {{ __($tema_dispositivo->titulo) }}
                                         </x-dropdown-link>
                                     @empty
