@@ -43,9 +43,30 @@ class DispositivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show(Dispositivo $dispositivo, string $pub = null)
     {
-        //
+        $orden = 0;
+        if ($pub){
+            $orden = intval($pub);
+        }
+        $temas = $dispositivo->temas()->orderBy('created_at', 'desc')->get();
+        // obtener publicaciones de los temas
+        $publicaciones = [];
+        foreach ($temas as $tema) {
+            $publicaciones_tema = $tema->publicaciones()->get();
+            foreach ($publicaciones_tema as $publicacion) {
+                if ($publicaciones[$publicacion->id] ?? false) {
+                    continue;
+                }
+                $publicaciones[$publicacion->id] = $publicacion->titulo;
+            }
+        }
+        if ($orden >= count($publicaciones)) {
+            $orden = 0;
+        }
+        $publicaciones = array_values($publicaciones);
+        $publicacion = $publicaciones[$orden] ?? "No hay publicaciones";
+        return view('dispositivos.show', compact('dispositivo', 'temas', 'orden', 'publicacion'));
     }
 
     /**

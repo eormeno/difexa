@@ -24,4 +24,8 @@ class Tema extends Model
     public function dispositivos() {
         return $this->belongsToMany(Dispositivo::class, 'dispositivos_temas');
     }
+
+    public function publicaciones() {
+        return $this->hasMany(Publicacion::class);
+    }
 }
