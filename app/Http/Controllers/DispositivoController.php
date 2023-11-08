@@ -33,7 +33,9 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:3 | max:1000',
+            'codigo'=> 'required | min:5 | max:5 | unique:dispositivos,codigo'
         ]);
+        $validated['codigo'] = strtoupper($validated['codigo']);
         Dispositivo::create($validated);
         return redirect()->route('dispositivos.index');
     }
@@ -49,10 +51,26 @@ class DispositivoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dispositivo $dispositivo)
+    public function edit(Dispositivo $dispositivo, string $action = null, Tema $tema = null)
     {
-        $temas = Tema::orderBy('created_at', 'desc');
-        return view('dispositivos.edit', compact('dispositivo', 'temas'));
+
+        if ($action == 'add') {
+            $dispositivo->temas()->attach($tema);
+        } elseif ($action == 'remove') {
+            $dispositivo->temas()->detach($tema);
+        }
+
+        $temas = Tema::whereDoesntHave('dispositivos', function ($query) use ($dispositivo) {
+            $query->where('dispositivo_id', $dispositivo->id);
+        })->orderBy('created_at', 'desc')->get();
+
+        $temas_dispositivo = $dispositivo->temas()->orderBy('created_at', 'desc')->get();
+
+        return view('dispositivos.edit', [
+            'dispositivo' => $dispositivo,
+            'temas' => $temas,
+            'temas_dispositivo' => $temas_dispositivo,
+        ]);
     }
 
     /**

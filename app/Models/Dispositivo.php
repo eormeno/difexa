@@ -13,9 +13,10 @@ class Dispositivo extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'codigo'
     ];
 
     public function temas() {
-        return $this->belongsToMany(Tema::class);
+        return $this->belongsToMany(Tema::class, 'dispositivos_temas');
     }
 }

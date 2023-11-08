@@ -22,6 +22,6 @@ class Tema extends Model
     }
 
     public function dispositivos() {
-        return $this->belongsToMany(Dispositivo::class);
+        return $this->belongsToMany(Dispositivo::class, 'dispositivos_temas');
     }
 }
