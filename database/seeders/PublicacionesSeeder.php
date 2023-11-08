@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Publicacion;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class PublicacionesSeeder extends Seeder
 {
@@ -13,10 +13,8 @@ class PublicacionesSeeder extends Seeder
      */
     public function run(): void
     {
-        if (Publicacion::count() > 0) {
-            return;
+        if (Publicacion::count() == 0) {
+            Publicacion::factory()->count(100)->create();
         }
-
-        Publicacion::factory()->count(100)->create();
     }
 }
