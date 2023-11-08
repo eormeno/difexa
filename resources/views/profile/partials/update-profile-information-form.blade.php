@@ -13,6 +13,32 @@
         @csrf
     </form>
 
+    @if (session('cambiarTema'))
+        <x-modal name="confirmar-eliminacion-{{session('cambiarTema')->id}}" :show="True" focusable>
+            <form method="post" action="{{ route('profile.cambiarTema', session('cambiarTema')) }}" class="p-6">
+            @csrf
+            @method('patch')
+            <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100 m-5">
+                {{ __("Se cambiara el tema actual ") }}{{$user->tema->titulo}} al tema <span class="font-extrabold">{{session('cambiarTema')->titulo}}</span>
+            </h1>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('¿Está seguro?') }}
+            </h2>
+            <p class="text-md font-medium text-gray-800 dark:text-gray-100">
+                {{ __('Si modifica el tema, debera esperar un tiempo hasta que su solicitud de cambio de tema sea aprobada.') }}
+            </p>
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancelar') }}
+                </x-secondary-button>
+                <x-primary-button class="ml-3">
+                    {{ __('Cambiar Tema') }}
+                </x-primary-button>
+            </div>
+            </form>
+        </x-modal>
+    @endif
+
     @if (session('status') === 'profile-updated')
         <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)"
             class="text-lg text-green-500 dark:text-gray-400">{{ __('Información actualizada.') }}</p>
@@ -44,9 +70,17 @@
         </div>
 
         <div>
+        <div>
             <x-input-label for="tema" :value="__('Tema')" />
-            <x-text-input id="tema" name="tema" type="text" class="mt-1 block w-full" :value="old('tema', $user->tema)"
-                required autofocus autocomplete="tema" />
+                <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                        @foreach ($temas as $tema)
+                            @if ( $tema->id==$user->tema->id)
+                                <option value="{{ $tema->id}}" selected>Tema Actual: {{ $tema->titulo }}</option>
+                            @else
+                                <option value="{{ $tema->id}}">{{ $tema->titulo }}</option>
+                            @endif
+                        @endforeach
+                </select>
             <x-input-error class="mt-2" :messages="$errors->get('tema')" />
         </div>
 
