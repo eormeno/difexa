@@ -63,16 +63,15 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
     public function cambiarTema(Request $request,Tema $tema){
         $usuario = $request->user();
         $usuario->tema_id=$tema->id;
-        $usuario->is_publisher=false;
+        $usuario->es_publicador=false;
         $mensaje = '¡Bienvenido a la comunidad de '. config('app.name'). '!';
         $mensaje .= ' Tu usuario es: ' . $usuario->email;
         $mensaje .= '<br>Para verificarte, debes asistir con tu documento al área de comunicación de la FCEFN';
         $usuario->mensaje=$mensaje;
-        $usuario->update();
+        $usuario->save();
         return Redirect::to('/dashboard');
     }
 }

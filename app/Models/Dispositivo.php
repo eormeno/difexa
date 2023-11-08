@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Dispositivo extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'nombre',
         'descripcion',
     ];
+
     public function temas(){
         return $this->belongsToMany(Tema::class,'dispositivos_temas');
     }

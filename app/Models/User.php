@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Tema;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
+use App\Models\Publicacion;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -25,11 +26,11 @@ class User extends Authenticatable
         'nombre',
         'documento',
         'email',
-        'mensaje',
         'password',
         'tema_id',
         'es_admininstrador',
         'es_publicador',
+        'mensaje',
     ];
 
     /**
@@ -51,16 +52,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function tema() {
-        return $this->belongsTo(Tema::class);
-    }
-
-    public function publicaciones() {
-        return $this->hasMany(Publicacion::class);
-    }
-
     public function getFullName(){
         return ucfirst($this->apellido) . ' ' . ucfirst($this->nombre);
+    }
+    public function publicaciones(){
+        return $this->hasMany(Publicacion::class);
+    }
+    public function tema(){
+        return $this->belongsTo(Tema::class);
     }
 }

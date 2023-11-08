@@ -29,10 +29,10 @@
             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
             </div>
             <div class="mt-4">
-                <div class="flex items-center  space-x-4">
+                <div class="flex items-center space-x-4">
                     <div class="w-full">
                         <x-input-label for="tema" :value="__('Temas')" />
-                        <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm block mt-1 w-full">
+                        <select name="tema" id="tema" required class="border-gray-300 dark:text-gray-300border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm block mt-1 w-full">
                                 <option value="" selected>Seleccionar un tema</option>
                                     @foreach ($temasDisponibles as $tema)
                                         <option value="{{ $tema->id}}">{{ $tema->titulo }}</option>
@@ -40,7 +40,7 @@
                         </select>
                         <x-input-error class="mt-2" :messages="$errors->get('tema')" />
                     </div>
-                    <div class="flex items-center">
+                    <div class="flex items-center mt-6">
                         <x-primary-button name="boton" value="Agregar">{{ __('Agregar') }} </x-primary-button>
                     </div>
                 </div>
@@ -54,14 +54,14 @@
                         @else
                             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">No hay temas asignados.</p>
                         @endif
-                    <x-danger-button class="mt-4" name="boton" value="Eliminar">{{ __('Eliminar') }} </x-danger-button>
+                    <div class="flex items-center justify-end mt-6">
+                        <x-danger-button class="" name="boton" value="Eliminar">{{ __('Eliminar') }} </x-danger-button>
+                        <x-primary-button class="ml-4">
+                         {{ __('Guardar') }}
+                        </x-primary-button>
+                    </div>
                 </div>
             </div>
-         </div>
-         <div class="flex items-center justify-end mt-4">
-          <x-primary-button class="ml-4">
-           {{ __('Guardar') }}
-          </x-primary-button>
          </div>
         </form>
        </div>
