@@ -19,14 +19,33 @@
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
 
-                        <!-- Descripción -->
-                        <div class="mt-4">
-                            <x-input-label for="descripcion" :value="__('Descripción')" />
-                            <x-text-input id="descripcion" class="block mt-1 w-full" type="text" name="descripcion" :value="old('descripcion')" required autofocus autocomplete="descripcion" />
-                            <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                        <div class="flex">
+                            <!-- Descripción -->
+                            <div class="mt-4 w-1/2 pr-4">
+                                <x-input-label for="descripcion" :value="__('Descripción')" />
+                                <textarea id="descripcion"
+                                    class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                    type="text" name="descripcion" :value="old('descripcion')" required autofocus rows="5" cols="50" autocomplete="descripcion"></textarea>
+                                <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                            </div>
+                            <div class="mt-4 w-1/2">
+                                <div class="flex items-center  space-x-4">
+                                <div class="w-full">
+                                    <x-input-label for="tema" :value="__('Temas')" />
+                                    <select name="tema" id="temas" :value="old('tema')" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                        <option value="" selected>Seleccionar un tema</option>    
+                                    @foreach ($temas as $tema)
+                                            <option value="{{ $tema->id }}">{{ $tema->titulo }}</option>
+                                        @endforeach
+                                    </select>
+                                    <x-input-error class="mt-2" :messages="$errors->get('tema')" />
+                                </div>
+                                </div>
+                            </div>
                         </div>
+        </div>
 
-                        <div class="flex items-center justify-end mt-4">
+                        <div class="flex items-center justify-end mt-4 p-5">
                             <x-primary-button class="ml-4">
                                 {{ __('Crear') }}
                             </x-primary-button>

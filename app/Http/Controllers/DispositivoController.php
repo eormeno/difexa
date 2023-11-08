@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dispositivo;
 use Illuminate\Http\Request;
+use App\Models\Tema;
 
 class DispositivoController extends Controller
 {
@@ -22,7 +23,8 @@ class DispositivoController extends Controller
      */
     public function create()
     {
-        return view('dispositivos.create');
+        $temas = Tema::all();
+        return view('dispositivos.create',compact('temas'));
     }
 
     /**
@@ -33,8 +35,10 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
+            'tema' => 'required | nullable | exists:temas,id'
         ]);
-        Dispositivo::create($validated);
+        $dispositivo = Dispositivo::create($validated);
+        $dispositivo->temas()->attach([$validated['tema']]);
         return redirect()->route('dispositivos.index') -> with('success', 'Dispositivo creado exitosamente');
     }
 
@@ -52,7 +56,9 @@ class DispositivoController extends Controller
     public function edit(string $id)
     {
         $dispositivo=Dispositivo::find($id);
-        return view('dispositivos.edit', compact('dispositivo'));
+        $temas = Tema::all();
+        $temasDisponibles = $temas->diff($dispositivo->temas);
+        return view('dispositivos.edit', compact('dispositivo','temasDisponibles'));
     }
 
     /**
@@ -63,11 +69,20 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
+            'tema_nuevo' => 'nullable|exists:temas,id'
            ]);
-           $dispositivo = Dispositivo::find($id);
-           $dispositivo->nombre = $validated['nombre'];
-           $dispositivo->descripcion = $validated['descripcion'];
-           $dispositivo->save();
+        $dispositivo = Dispositivo::find($id);
+        $dispositivo->nombre = $validated['nombre'];
+        $dispositivo->descripcion = $validated['descripcion'];
+        $dispositivo->save();
+        if ($request->has('temas_desvincular')) {
+            $temasDesvincular = $request->input('temas_desvincular', []);
+            $dispositivo->temas()->detach($temasDesvincular);
+        }
+    
+        if ($request->has('tema_nuevo') and $validated['tema_nuevo']!=null) {
+            $dispositivo->temas()->attach([$validated['tema_nuevo']]);
+        }
            return redirect()->route('dispositivos.index');
     }
 

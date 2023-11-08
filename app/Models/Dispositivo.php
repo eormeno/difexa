@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tema;
 
 class Dispositivo extends Model
 {
@@ -12,4 +13,8 @@ class Dispositivo extends Model
         'nombre',
         'descripcion',
     ];
+
+    public function temas(){
+        return $this->belongsToMany(Tema::class,'dispositivos_temas');
+    }
 }
