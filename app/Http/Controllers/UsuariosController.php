@@ -28,4 +28,15 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index')->with('exito',"El Usuario $usuario->nombre fue verificado.");
 
     }
+
+
+    public function aprobar(Request $request, User $usuario) 
+    {
+        $usuario->is_publisher = true;
+        $usuario->mensaje = "Ya podés publicar en ";
+        $usuario->save();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario verificado');
+    }
+
+
 }
