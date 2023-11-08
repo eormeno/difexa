@@ -24,7 +24,7 @@
             <!-- Descripción -->
             <div class="mt-4 pr-4">
             <x-input-label for="descripcion" :value="__('Descripción')" />
-            <textarea id="descripcion" class="block mt-1 w-full bg-gray-800" type="text" name="descripcion"
+            <textarea id="descripcion" class="block mt-1 w-full bg-gray-800 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm" type="text" name="descripcion"
             required autofocus autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion)}}</textarea>
             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
             </div>
@@ -32,7 +32,7 @@
                 <div class="flex items-center  space-x-4">
                     <div class="w-full">
                         <x-input-label for="tema" :value="__('Temas')" />
-                        <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                        <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm block mt-1 w-full">
                                 <option value="" selected>Seleccionar un tema</option>
                                     @foreach ($temasDisponibles as $tema)
                                         <option value="{{ $tema->id}}">{{ $tema->titulo }}</option>

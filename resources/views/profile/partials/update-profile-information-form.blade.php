@@ -69,7 +69,7 @@
 
         <div>
             <x-input-label for="tema" :value="__('Tema')" />
-                <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:text-gray-300border-gray-300 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm block mt-1 w-full">
                         @foreach ($temas as $tema)
                             @if ( $tema->id==$user->tema->id)
                                 <option value="{{ $tema->id}}" selected>Tema Actual: {{ $tema->titulo }}</option>
@@ -90,7 +90,7 @@
                     <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
                         {{ __('Su dirección de correo electrónico no está verificada.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 dark:focus:ring-offset-gray-800">
                             {{ __('Haga clic aquí para volver a enviar el correo electrónico de verificación.') }}
                         </button>
                     </p>

@@ -72,7 +72,7 @@ class ProfileController extends Controller
         $mensaje .= ' Tu usuario es: ' . $usuario->email;
         $mensaje .= '<br>Para verificarte, debes asistir con tu documento al área de comunicación de la FCEFN';
         $usuario->mensaje=$mensaje;
-        $usuario->save();
+        $usuario->update();
         return Redirect::to('/dashboard');
     }
 }

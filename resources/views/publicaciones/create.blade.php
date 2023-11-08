@@ -23,7 +23,7 @@
                         <!-- Contenido -->
                         <div class="mt-4">
                             <x-input-label for="contenido" :value="__('Contenido')" />
-                            <textarea id="contenido" rows="5" cols="50" class="block mt-1 w-full  dark:bg-gray-800" type="text" name="contenido"
+                            <textarea id="contenido" rows="5" cols="50" class="block mt-1 w-full  dark:bg-gray-800 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm" type="text" name="contenido"
                                 required autofocus autocomplete="contenido">{{old('contenido')}}</textarea>
                             <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
                         </div>
