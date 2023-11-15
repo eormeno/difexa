@@ -37,10 +37,7 @@
                             {{ __('Usuarios') }}
                         </x-nav-link>
                     </div>
-
-
                 @endif
-
                 @if (Auth::user()->is_publisher)
                     
                 

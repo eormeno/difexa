@@ -13,6 +13,8 @@
                         @csrf
                         @method('patch')
 
+                        <!-- NOMBRE -->
+
                         <div>
                             <x-input-label for="nombre" :value="__('Nombre')" />
                             <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre"
@@ -21,13 +23,44 @@
                         </div>
 
                         <!-- Descripción -->
-                        <div class="mt-4">
+                        <div class="grid grid-cols-2">
+                            <!-- Descripción -->
+                            <div class="mt-4 pr-4">
                             <x-input-label for="descripcion" :value="__('Descripción')" />
-                            <x-text-input id="descripcion" class="block mt-1 w-full" type="text" name="descripcion"
-                                :value="old('descripcion', $dispositivo->descripcion)" required autofocus autocomplete="descripcion" />
+                            <textarea id="descripcion" class="block mt-1 w-full" type="text" name="descripcion"
+                            required autofocus autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion)}}</textarea>
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                            </div>
+                            <div class="mt-4">
+                                <div class="flex items-center  space-x-4">
+                                    <div class="w-full">
+                                        <x-input-label for="tema" :value="__('Temas')" />
+                                        <select name="tema" id="tema" required class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full">
+                                                <option value="" selected>Seleccionar un tema</option>
+                                                    @foreach ($temasDisponibles as $tema)
+                                                        <option value="{{ $tema->id}}">{{ $tema->titulo }}</option>
+                                                    @endforeach         
+                                        </select>
+                                        <x-input-error class="mt-2" :messages="$errors->get('tema')" />
+                                    </div>
+                                    <div class="flex items-center"> 
+                                        <x-primary-button name="boton" value="Agregar">{{ __('Agregar') }} </x-primary-button>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <x-input-label for="temas" :value="__('Temas asignados')" />
+                                        @if ($dispositivo->temas->count()>0)
+                                            @foreach($dispositivo->temas as $tema)
+                                                <input type="checkbox" name="temas[]" value="{{ $tema->id }}" id="tema_{{ $tema->id }}">
+                                                <label for="tema_{{ $tema->id }}">{{ $tema->titulo }}</label><br>
+                                            @endforeach
+                                        @else
+                                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">No hay temas asignados.</p>
+                                        @endif
+                                    <x-danger-button class="mt-4" name="boton" value="Eliminar">{{ __('Eliminar') }} </x-danger-button>
+                                </div>
+                            </div> 
                         </div>
-
 
                         <div class="flex items-center justify-end mt-4">
                             <x-primary-button class="ml-4">

@@ -19,7 +19,12 @@ class UsuariosController extends Controller
 
     }
 
-    public function verificado(Request $request, User $usuario)
+    public function destroy(User $usuario){
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('exito',"El usuario $usuario->nombre fue eliminado.");
+    }
+
+    public function verificado(User $usuario)
     {
         $usuario->is_publisher = true;
         $usuario -> mensaje = 'Ya podes publicar en';

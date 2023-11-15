@@ -4,13 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Tema;
+use App\Models\Publicacion;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -49,17 +51,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function tema() {
-        return $this->belongsTo(Tema::class);
+    public function getFullName(): string
+    {
+        return ucfirst($this->apellido) . ', ' . ucfirst($this->nombre);
     }
     public function publicaciones()
     {
         return $this->hasMany(Publicacion::class);
     }
 
-    public function getFullName(): string
-    {
-        return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
-    }
+    public function tema() {
+        return $this->belongsTo(Tema::class);
+    }  
 }

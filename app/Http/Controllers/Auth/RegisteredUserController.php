@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
             'documento' => ['required', 'string', 'regex:/^[0-9]+$/', 'max:12', 'min:6'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'tema' => ['required', 'exists:temas,id'],
-            'password' => ['required', 'confirmed', 'min:3', 'max:10'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         
         $mensaje = '¡Bienvenido a la comunidad de '. config('app.name'). '!';
@@ -52,9 +52,11 @@ class RegisteredUserController extends Controller
             'documento' => $request->documento,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'mensaje'=>$mensaje,
         ]);
 
         $user->tema()->associate($request->tema);
+        
 
         $user->save();
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dispositivo;
+use App\Models\Tema;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DispositivoController extends Controller
 {
@@ -12,7 +14,7 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos = Dispositivo::paginate(8);
+        $dispositivos = Dispositivo::orderBy('created_at', 'desc')->paginate(10);
 
         return view('dispositivos.index', compact('dispositivos'));
     }
@@ -22,7 +24,7 @@ class DispositivoController extends Controller
      */
     public function create()
     {
-        //
+        return view('dispositivos.create');
     }
 
     /**
@@ -30,7 +32,12 @@ class DispositivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+            'nombre' => 'required | min:3 | max:50',
+            'descripcion' => 'required | min:3 | max:1000',
+        ]);
+        $dispositivo=Dispositivo::create($validated);
+        return redirect()->route('dispositivos.index')->with('exito',"Se creo el dispositivo $dispositivo->nombre correctamente.");;
     }
 
     /**
@@ -44,26 +51,44 @@ class DispositivoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Dispositivo $dispositivo)
     {
-        $dispositivo = Dispositivo::find($id);
-        return view('dispositivos.edit', compact('dispositivo'));
+        $temas = Tema::all();
+        $temasDisponibles = $temas->diff($dispositivo->temas);
+        return view('dispositivos.edit', compact('dispositivo','temasDisponibles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Dispositivo $dispositivo)
     {
         $dispositivos_validados = $request->validate([
             'nombre' => 'required | min:3 | max:50',
-            'descripcion' => 'required',
+            'descripcion' => 'required| min:10|max:255',
            ]);
-           $dispositivo = Dispositivo::find($id);
+
+           
            $dispositivo->nombre = $dispositivos_validados['nombre'];
            $dispositivo->descripcion = $dispositivos_validados['descripcion'];
            $dispositivo->save();
-           return redirect()->route('dispositivos.index'); 
+
+
+           if($request->input('boton')=='Eliminar'){
+            $temasSeleccionados = $request->input('temas', []);
+            $dispositivo->temas()->detach($temasSeleccionados);
+        }
+        elseif ($request->input('boton')=='Agregar'){
+            if ($request['tema'])
+            {
+                $tema=Tema::find($request['tema']);
+                if (!$dispositivo->temas->contains($tema->id)) {
+                    $dispositivo->temas()->attach($tema->id);
+                }
+            }
+        }
+
+           return redirect()->route('dispositivos.index')->with('exito',"Se actualizo el dispositivo $dispositivo->nombre correctamente."); 
     }
 
     /**
