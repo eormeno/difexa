@@ -76,7 +76,7 @@
                   </x-modal>
                   <x-modal name="confirm-usuario-deletion-{{ $usuario->id }}" :show="$errors->userDeletion->isNotEmpty()"
                     focusable>
-                    <form method="" action="{{ route('usuarios.index') }}" class="p-6">
+                    <form method="post" action="{{ route('usuarios.destroy', $usuario) }}" class="p-6">
                       @csrf
                       @method('delete')
                       <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">

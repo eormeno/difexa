@@ -12,4 +12,8 @@ class Dispositivo extends Model
         'nombre',
         'descripcion',
     ];
+
+    public function temas(){
+        return $this->belongsToMany(Tema::class,'dispositivos_temas');
+    }
 }

@@ -25,6 +25,7 @@ class UsersSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('111'),
             'is_admin' => true,
+            'mensaje'=> 'Usted es administrador',
         ]);
 
         User::factory()->create([
@@ -35,6 +36,7 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('111'),
             'is_admin' => false,
             'is_publisher' => true,
+            'mensaje'=> 'Usted aún no es publicador',
          ]);
 
         User::factory(7)->create();
