@@ -9,13 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                       <div class="pb-10 mb-4 flex justify-center">
-                            <a href="">
-                                <x-primary-button>
-                                    {{ __('Crear nuevo Dispositivo') }}
-                                </x-primary-button>
-                            </a>
-                        </div>
+                    <div class="pb-10 mb-4 flex justify-center">
+                        <a href="">
+                            <x-primary-button>
+                                {{ __('Crear nuevo Dispositivo') }}
+                            </x-primary-button>
+                        </a>
+                    </div>
                     <div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($dispositivos as $dispositivo)
@@ -23,12 +23,22 @@
                                     <div class="group relative">
                                         <a href="{{ route('dispositivos.edit', $dispositivo) }}">
                                             <div
-                                                class="bg-gray-800 text-white p-2 rounded-lg
-                                                 hover:bg-gray-600 transition duration-300">
-                                                {{ $dispositivo->nombre }}</div>
-                                        </a>
+                                                class="bg-gray-800 text-white p-2 rounded-lg hover:bg-gray-600 transition duration-200 flex items-center">
+                                                <span>{{ $dispositivo->nombre }}</span>
+                                                <span class="ml-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+
                                         <button
-                                            class="hidden group-hover:block cursor-pointer absolute top-0 right-0 p-2 text-red-400 hover:text-red-600" x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-dispositivo-deletion-{{ $dispositivo->id }}')">
+                                            class="hidden group-hover:block cursor-pointer absolute top-0 right-0 p-2 text-red-400 hover:text-red-600"
+                                            x-data=""
+                                            x-on:click.prevent="$dispatch('open-modal', 'confirm-dispositivo-deletion-{{ $dispositivo->id }}')">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                 fill="currentColor" class="w-6 h-6">
                                                 <path fill-rule="evenodd"
@@ -36,6 +46,8 @@
                                                     clip-rule="evenodd" />
                                             </svg>
                                         </button>
+                                        </a>
+
                                     </div>
                                     <p
                                         class="text-gray-700 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md text-center p-1 my-2">
@@ -51,7 +63,8 @@
                                         @method('delete')
                                         <h1 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                                             {{ __('Se eliminará el dispositivo') }}
-                                            <span class="font-extrabold"> <span class="text-red-400">"{{ $dispositivo->nombre }}"<span></span>
+                                            <span class="font-extrabold"> <span
+                                                    class="text-red-400">"{{ $dispositivo->nombre }}"<span></span>
                                         </h1>
 
                                         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -70,7 +83,7 @@
                                     </form>
                                 </x-modal>
 
-                                
+
                             @empty
                                 <div class="rounded-xl bg-gray-300 shadow p-2">
                                     <p

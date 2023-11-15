@@ -27,6 +27,6 @@ class UsuariosController extends Controller
 
     public function destroy(User $usuario){
         $usuario->delete();
-        return redirect()->route('usuarios.index')->with('exito',"El usuario $usuario->nombre fue eliminado con exito!");
+        return redirect()->route('usuarios.index')->with('Exito',"El usuario $usuario->nombre fue eliminado con exito!");
     }
 }
