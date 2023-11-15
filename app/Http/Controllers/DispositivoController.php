@@ -6,7 +6,7 @@ use App\Models\Dispositivo;
 use App\Models\Tema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class DispositivoController extends Controller
 {
     /**
@@ -32,21 +32,47 @@ class DispositivoController extends Controller
      */
     public function store(Request $request)
     {
-         $validated = $request->validate([
+        $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:3 | max:1000',
+            'codigo'=> 'required | min:5 | max:5 | unique:dispositivos,codigo'
         ]);
+        $validated['codigo'] = strtoupper($validated['codigo']);
+        
         $dispositivo=Dispositivo::create($validated);
-        return redirect()->route('dispositivos.index')->with('exito',"Se creo el dispositivo $dispositivo->nombre correctamente.");;
+        return redirect()->route('dispositivos.index')->with('exito',"Se creo el dispositivo $dispositivo->nombre correctamente.");
     }
-
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show(Dispositivo $dispositivo, string $pub = null)
     {
-        //
+        $orden = 0;
+        if ($pub){
+            $orden = intval($pub);
+        }
+        $temas = $dispositivo->temas()->orderBy('created_at', 'desc')-> get();
+        // obtener publicaciones de los temas
+        $publicaciones = [];
+        $fechaActual = Carbon::now();
+        foreach ($temas as $tema) {
+            $publicaciones_tema = $tema->publicaciones()->where('fecha_publicacion', '>=', $fechaActual)->orderBy('fecha_publicacion', 'asc')->get();
+            foreach ($publicaciones_tema as $publicacion) {
+                if ($publicaciones[$publicacion->id] ?? false)
+                {
+                    continue;
+                }
+                $publicaciones[$publicacion->id] = $publicacion;
+            }
+        }
+        if ($orden >= count($publicaciones)) {
+            $orden = 0;
+        }
+        $publicaciones = array_values($publicaciones);
+        $publicacion = $publicaciones[$orden] ?? "No hay publicaciones";
+        return view('dispositivos.show', compact('dispositivo', 'temas', 'orden', 'publicacion'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

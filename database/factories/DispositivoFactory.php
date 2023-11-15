@@ -19,6 +19,8 @@ class DispositivoFactory extends Factory
         return [
             'nombre' => $this->faker->word,
             'descripcion' => $this->faker->text,
+            'codigo' => $this->faker->unique()->regexify('[A-Z]{5}'),
         ];
+        
     }
 }

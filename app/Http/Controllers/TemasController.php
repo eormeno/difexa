@@ -49,7 +49,7 @@ class TemasController extends Controller
     public function edit(string $id)
     {
         $tema = Tema::find($id);
-        return view('temas.edit', compact('temas'));
+        return view('temas.edit', compact('tema'));
 
     }
 
