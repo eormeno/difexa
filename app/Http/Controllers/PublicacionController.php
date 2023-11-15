@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PublicacionController extends Controller
@@ -26,53 +28,64 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
-        $publicacion_validada = $request->validate([
+        $atributos=request()->validate([
             'titulo' => 'required | min:3 | max:50',
-            'contenido' => 'required | min:10 | max:255',
-            'desde' => 'required | date | before:hasta' ,
+            'contenido' => 'required | min:3 | max:255',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif | max:2048',
+            'desde' => 'required | date | after:now',
             'hasta' => 'required | date | after:desde',
         ]);
-        $titulo = $publicacion_validada['titulo'];
-        $publicacion_validada['imagen'] = 'https://via.placeholder.com/640x480.png/0077ff?text=eius';
-        $publicacion_validada['user_id'] = auth()->user()->id;
-        $publicacion_validada['tema_id'] = auth()->user()->tema_id;
-        Publicacion::create($publicacion_validada);
-        return redirect()->route('publicaciones.index') -> with('success', "$titulo creada exitosamente");
+
+        $rutaImagen = $request->file('imagen')->getRealPath();
+        $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
+
+        $user=User::find(Auth::id());
+        $atributos['user_id']=$user->id;
+        $atributos['tema_id']=$user->tema_id;
+        Publicacion::create($atributos);
+        return redirect()->route('publicaciones.index')->with('success', 'Publicación creada correctamente');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Publicacion $publicacion)
     {
-        $publicacion = Publicacion::find($id);
         return view('publicaciones.show', compact('publicacion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Publicacion $publicacion)
     {
-        $publicacion = Publicacion::find($id);
         return view('publicaciones.edit', compact('publicacion'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request,string $id)
     {
-        $publicacion_validada = $request->validate([
+        $validaciones=[
             'titulo' => 'required | min:3 | max:50',
-            'contenido' => 'required | min:10 | max:255',
-            'desde' => 'required | date | before:hasta' ,
+            'contenido' => 'required | min:3 | max:255',
+            'desde' => 'required | date | after:now',
             'hasta' => 'required | date | after:desde',
-        ]);
-        $titulo = $publicacion_validada['titulo'];
-        $publicacion = Publicacion::find($id);
-        $publicacion->update($publicacion_validada);
-        return redirect()->route('publicaciones.index')->with('success', "$titulo actualizada exitosamente");
+        ];
+        if ($request->hasFile('imagen')) {
+            $validaciones['imagen'] = 'image|mimes:jpeg,png|max:2048';
+            $atributos=$request->validate($validaciones);
+            $rutaImagen = $request->file('imagen')->getRealPath();
+            $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
+        }
+        else{
+            $atributos=$request->validate($validaciones);
+        }
+
+        $publicacion=Publicacion::find($id);
+        $publicacion->update($atributos);
+           return redirect()->route('publicaciones.index')->with('success', 'Publicación modificada correctamente');
     }
 
     /**
@@ -80,7 +93,7 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        $publicacion->delete();
-        return redirect()->route('publicaciones.index');
+         $publicacion->delete();
+        return redirect()->route('publicaciones.index')->with('exito',"Se elimino la publicación $publicacion->titulo correctamente.");
     }
 }

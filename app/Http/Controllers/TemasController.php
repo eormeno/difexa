@@ -42,18 +42,16 @@ class TemasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Tema $tema)
     {
-        $tema = Tema::find($id);
         return view('temas.show', compact('tema'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Tema $tema)
     {
-        $tema = Tema::find($id);
         return view('temas.edit', compact('tema'));
     }
 

@@ -19,6 +19,15 @@
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
 
+                        <!-- Código -->
+                        <div class="mt-4">
+                            <x-input-label for="codigo" :value="__('Código')" />
+                            <x-text-input id="codigo" class="block mt-1 w-full text-transform: uppercase" type="text" name="codigo"
+                                :value="old('codigo')" maxlength=5 required autofocus autocomplete="codigo"
+                                maxlength="5" />
+                            <x-input-error :messages="$errors->get('codigo')" class="mt-2" />
+                        </div>
+
                         <!-- Descripción -->
                         <div class="mt-4">
                             <x-input-label for="descripcion" :value="__('Descripción')" />

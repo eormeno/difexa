@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dispositivos_temas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dispositivo_id')->constrained();
+            $table->foreignId('dispositivo_id')->constrained()->onDelete('cascade');
             $table->foreignId('tema_id')->constrained();
             $table->timestamps();
             $table->softDeletes();

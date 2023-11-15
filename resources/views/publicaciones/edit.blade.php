@@ -24,9 +24,17 @@
                         <!-- Contenido -->
                         <div class="mt-4">
                             <x-input-label for="contenido" :value="__('Contenido')" />
-                            <textarea id="contenido" rows="5" cols="50" class="block mt-1 w-full dark:bg-gray-800 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm" type="text" name="contenido"
+                            <textarea id="contenido" rows="5" cols="50" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 dark:focus:border-orange-600 focus:ring-orange-500 dark:focus:ring-orange-600 rounded-md shadow-sm" type="text" name="contenido"
                                 required autofocus autocomplete="contenido">{{old('contenido', $publicacion->contenido)}}</textarea>
                             <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
+                        </div>
+
+                        <!-- Imagen -->
+                        <div class="mt-4">
+                            <x-input-label for="imagen" :value="__('Imágen')" />
+                            <img src="data:;base64,{{ $publicacion->imagen }}" alt="Imagen del Producto" class="max-w-40 max-h-40">
+                            <x-text-input id="imagen" class="block mt-1" type="file" name="imagen" :value="old('imagen')" required autocomplete="imagen" />
+                            <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
                         </div>
 
                         <!-- Desde -->

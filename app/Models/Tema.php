@@ -11,10 +11,9 @@ class Tema extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'slug',
         'titulo',
         'descripcion',
-        'deleted'
+        'slug',
     ];
     public function users(){
         return $this->hasMany(User::class);

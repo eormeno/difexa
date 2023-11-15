@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Dispositivo;
 use Illuminate\Http\Request;
 use App\Models\Tema;
-use Illuminate\Support\Facades\DB;
 
 class DispositivoController extends Controller
 {
@@ -14,7 +13,7 @@ class DispositivoController extends Controller
      */
     public function index()
     {
-        $dispositivos = Dispositivo::orderBy('created_at', 'desc')->paginate(8);
+        $dispositivos = Dispositivo::orderBy('updated_at','desc')->paginate(8);
         return view('dispositivos.index', compact('dispositivos'));
     }
 
@@ -23,7 +22,8 @@ class DispositivoController extends Controller
      */
     public function create()
     {
-        return view('dispositivos.create');
+        $temas = Tema::all();
+        return view('dispositivos.create',compact('temas'));
     }
 
     /**
@@ -34,25 +34,53 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
+            'tema' => 'required | nullable | exists:temas,id',
+            'codigo'=> 'required | min:5 | max:5 | unique:dispositivos,codigo'
         ]);
-        $nombre = $validated['nombre'];
-        Dispositivo::create($validated);
-        return redirect()->route('dispositivo.index') -> with('success', "$nombre creado exitosamente");
+        $validated['codigo'] = strtoupper($validated['codigo']);
+        $dispositivo = Dispositivo::create($validated);
+        $dispositivo->temas()->attach([$validated['tema']]);
+        return redirect()->route('dispositivo.index') -> with('success', 'Dispositivo creado exitosamente');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show(Dispositivo $dispositivo, string $pub=null)
     {
-        //
+        $orden = 0;
+        if ($pub){
+            $orden = intval($pub);
+        }
+        $temas = $dispositivo->temas()->orderBy('created_at', 'desc')->get();
+        // obtener publicaciones de los temas
+        $publicaciones = [];
+        foreach ($temas as $tema) {
+            $publicaciones_tema = $tema->publicaciones()->get();
+            foreach ($publicaciones_tema as $publicacion) {
+                $actual = date('Y-m-d'); // Obtener la fecha actual en el formato de la base de datos
+                if ($publicacion->hasta > $actual and $publicacion->deleted==false) {
+                    if ($publicaciones[$publicacion->id] ?? false) {
+                        continue;
+                    }
+                    $publicaciones[$publicacion->id] = $publicacion;
+                }
+            }
+        }
+        if ($orden >= count($publicaciones)) {
+            $orden = 0;
+        }
+        $publicaciones = array_values($publicaciones);
+        $publicacion = $publicaciones[$orden] ?? null;
+        return view('dispositivos.show', compact('dispositivo', 'temas', 'orden', 'publicacion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dispositivo $dispositivo)
+    public function edit(string $id)
     {
+        $dispositivo=Dispositivo::find($id);
         $temas = Tema::all();
         $temasDisponibles = $temas->diff($dispositivo->temas);
         return view('dispositivos.edit', compact('dispositivo','temasDisponibles'));
@@ -67,11 +95,9 @@ class DispositivoController extends Controller
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
         ]);
-
         $dispositivo->nombre=$dispositivosValidados['nombre'];
         $dispositivo->descripcion=$dispositivosValidados['descripcion'];
         $dispositivo->save();
-
         if($request->input('boton')=='Eliminar'){
             $temasSeleccionados = $request->input('temas', []);
             $dispositivo->temas()->detach($temasSeleccionados);
@@ -87,7 +113,6 @@ class DispositivoController extends Controller
         return redirect()->route('dispositivo.index')->with('success',"Se actualizo $dispositivo->nombre correctamente.");
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
@@ -96,5 +121,4 @@ class DispositivoController extends Controller
         $dispositivo->delete();
         return redirect()->route('dispositivo.index');
     }
-
 }

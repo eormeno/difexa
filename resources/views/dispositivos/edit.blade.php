@@ -20,6 +20,11 @@
            :value="old('nombre', $dispositivo->nombre)" required autofocus autocomplete="nombre" />
           <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
          </div>
+         <div class="mt-4">
+            <x-input-label for="codigo" :value="__('Código')" />
+            <x-text-input id="codigo" class="block mt-1 w-full" type="text" name="codigo" :value="old('codigo', $dispositivo->codigo)" required autofocus autocomplete="codigo" maxlength="5" />
+            <x-input-error :messages="$errors->get('codigo')" class="mt-2" />
+        </div>
          <div class="grid grid-cols-2">
             <!-- Descripción -->
             <div class="mt-4 pr-4">
