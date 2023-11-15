@@ -9,6 +9,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <div class="pb-10 mb-4 flex justify-center">
+                            <a href="">
+                                <x-primary-button>
+                                    {{ __('Crear nueva Publicacion') }}
+                                </x-primary-button>
+                            </a>
+                        </div>
                     <div>
                         <div class="grid grid-cols-4 gap-5">
                             @forelse ($publicaciones as $publicacion)
@@ -16,7 +23,7 @@
                                     <div class="group relative">
                                         <a href="{{ route('publicaciones.edit', $publicacion) }}">
                                             <div
-                                                class="bg-gray-500 text-white p-2 rounded-lg
+                                                class="bg-gray-800 text-white p-2 rounded-lg
                                                hover:bg-gray-700 transition duration-300">
                                                 {{ $publicacion->titulo }}</div>
                                         </a>

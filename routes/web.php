@@ -40,7 +40,7 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::patch('/temas/{id}', [TemasController::class, 'update'])->name('temas.update');
     Route::delete('/temas/{tema}', [TemasController::class, 'destroy'])->name('temas.destroy');
 
-    Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
+
 
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/create', [DispositivoController::class, 'create'])->name('dispositivos.create');
@@ -48,6 +48,8 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::get('/dispositivos/{dispositivo}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
     Route::patch('/dispositivos/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivos.update');
     Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
+    Route::patch('/usuarios/{usuario}', [UsuariosController::class, 'verificado'])->name('usuarios.verificado');
+    Route::match(['get', 'delete'], '/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
 });
 
 Route::middleware(['auth', 'is_publisher'])->group(function() {
