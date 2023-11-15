@@ -4,6 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="apple-touch-icon" sizes="192x192" href="/public/favicon.ico">
+        <link rel="icon" type="image/png" sizes="192x192" href="/public/favicon.ico">
+        <link rel="icon" type="image/png" sizes="192x192" href="/public/favicon.ico">
+        <link rel="manifest" href="/site.webmanifest">
+
+
         <title>Difexa</title>
 
         <!-- Fonts -->
