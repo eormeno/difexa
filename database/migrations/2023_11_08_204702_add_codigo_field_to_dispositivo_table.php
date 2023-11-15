@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dispositivos_temas', function (Blueprint $table){
-            $table->id();
-            $table->foreignId('dispositivo_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tema_id')->constrained();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('dispositivos', function (Blueprint $table) {
+            $table->string('codigo')->unique()->after('descripcion');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dispositivos_temas');
+        Schema::table('dispositivos', function (Blueprint $table) {
+            $table->dropColumn('codigo');
+        });
     }
 };

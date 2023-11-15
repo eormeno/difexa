@@ -18,6 +18,14 @@
                             <x-text-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required autofocus autocomplete="nombre" />
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
+                        <!-- Código -->
+                        <div class="mt-4">
+                            <x-input-label for="codigo" :value="__('Código')" />
+                            <x-text-input id="codigo" class="block mt-1 w-full text-transform: uppercase" type="text" name="codigo"
+                                :value="old('codigo')" maxlength=5 required autofocus autocomplete="codigo"
+                                maxlength="5" />
+                            <x-input-error :messages="$errors->get('codigo')" class="mt-2" />
+                        </div>
 
                         <div class="flex">
                             <!-- Descripción -->

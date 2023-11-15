@@ -15,14 +15,14 @@
          <!-- Título -->
          <div>
           <x-input-label for="titulo" :value="__('Título')" />
-          <x-text-input id="titulo" class="block mt-1 w-full" type="text" name="titulo" required autofocus autocomplete="titulo" />
+          <x-text-input id="titulo" class="block mt-1 w-full" type="text" name="titulo" :value="old('titulo')" required autofocus autocomplete="titulo" />
           <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
          </div>
 
          <!-- Contenido -->
          <div class="mt-4">
           <x-input-label for="contenido" :value="__('Contenido')" />
-          <x-text-input id="contenido" class="block mt-1 w-full" type="text" name="contenido" required autofocus autocomplete="contenido" />
+          <x-text-input id="contenido" class="block mt-1 w-full" type="text" name="contenido" :value="old('contenido')" required autofocus autocomplete="contenido" />
           <x-input-error :messages="$errors->get('contenido')" class="mt-2" />
          </div>
          <!-- Imagen -->
@@ -34,13 +34,13 @@
          <!-- Desde -->
          <div class="mt-4">
           <x-input-label for="desde" :value="__('Desde')" />
-          <x-text-input id="desde" class="block mt-1 w-full" type="date" name="desde" required autofocus autocomplete="desde" />
+          <x-text-input id="desde" class="block mt-1 w-full" type="date" name="desde" :value="old('desde')" required autofocus autocomplete="desde" />
           <x-input-error :messages="$errors->get('desde')" class="mt-2" />
          </div>
          <!-- Hasta -->
          <div class="mt-4">
             <x-input-label for="hasta" :value="__('Hasta')" />
-            <x-text-input id="hasta" class="block mt-1 w-full" type="date" name="hasta" required autofocus autocomplete="hasta" />
+            <x-text-input id="hasta" class="block mt-1 w-full" type="date" name="hasta" :value="old('hasta')" required autofocus autocomplete="hasta" />
             <x-input-error :messages="$errors->get('hasta')" class="mt-2" />
          </div>         
 

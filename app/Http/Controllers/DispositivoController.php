@@ -35,8 +35,10 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
-            'tema' => 'required | nullable | exists:temas,id'
+            'tema' => 'required | nullable | exists:temas,id',
+            'codigo'=> 'required | min:5 | max:5 | unique:dispositivos,codigo'
         ]);
+        $validated['codigo'] = strtoupper($validated['codigo']);
         $dispositivo = Dispositivo::create($validated);
         $dispositivo->temas()->attach([$validated['tema']]);
         return redirect()->route('dispositivos.index') -> with('success', 'Dispositivo creado exitosamente');
@@ -45,9 +47,33 @@ class DispositivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show(Dispositivo $dispositivo, string $pub=null)
     {
-        //
+        $orden = 0;
+        if ($pub){
+            $orden = intval($pub);
+        }
+        $temas = $dispositivo->temas()->orderBy('created_at', 'desc')->get();
+        // obtener publicaciones de los temas
+        $publicaciones = [];
+        foreach ($temas as $tema) {
+            $publicaciones_tema = $tema->publicaciones()->get();
+            foreach ($publicaciones_tema as $publicacion) {
+                $actual = date('Y-m-d'); // Obtener la fecha actual en el formato de la base de datos
+                if ($publicacion->hasta > $actual and $publicacion->deleted==false) {
+                    if ($publicaciones[$publicacion->id] ?? false) {
+                        continue;
+                    }
+                    $publicaciones[$publicacion->id] = $publicacion;
+                }
+            }
+        }
+        if ($orden >= count($publicaciones)) {
+            $orden = 0;
+        }
+        $publicaciones = array_values($publicaciones);
+        $publicacion = $publicaciones[$orden] ?? null;
+        return view('dispositivos.show', compact('dispositivo', 'temas', 'orden', 'publicacion'));
     }
 
     /**
@@ -69,7 +95,7 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
-            'tema_nuevo' => 'nullable|exists:temas,id'
+            'tema_nuevo' => 'nullable|exists:temas,id',
            ]);
         $dispositivo = Dispositivo::find($id);
         $dispositivo->nombre = $validated['nombre'];
