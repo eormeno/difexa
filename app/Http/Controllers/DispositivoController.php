@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dispositivo;
+use App\Models\Tema;
 use Illuminate\Http\Request;
 
 class DispositivoController extends Controller
@@ -32,7 +33,9 @@ class DispositivoController extends Controller
         $dispositivo_validado = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:10 | max:255',
+            'codigo' => 'required | min:5 | max:5 | unique:dispositivos,codigo',
         ]);
+        $dispositivo_validado['codigo'] = strtoupper($dispositivo_validado['codigo']);
         Dispositivo::create($dispositivo_validado);
         return redirect()->route('dispositivos.index') -> with('success', 'Dispositivo creado exitosamente');
     }
@@ -40,17 +43,54 @@ class DispositivoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show(Dispositivo $dispositivo, string $pub = null)
     {
-        return view('dispositivos.show', compact('dispositivo'));
+        $orden = 0;
+        if ($pub){
+            $orden = intval($pub);
+        }
+        $temas = $dispositivo->temas()->orderBy('created_at', 'desc')->get();
+        // obtener publicaciones de los temas
+        $publicaciones = [];
+        foreach ($temas as $tema) {
+            $publicaciones_tema = $tema->publicaciones()->get();
+            foreach ($publicaciones_tema as $publicacion) {
+                if ($publicaciones[$publicacion->id] ?? false) {
+                    continue;
+                }
+                $publicaciones[$publicacion->id] = $publicacion;
+            }
+        }
+        if ($orden >= count($publicaciones)) {
+            $orden = 0;
+        }
+        $publicaciones = array_values($publicaciones);
+        $publicacion = $publicaciones[$orden] ?? "No hay publicaciones";
+        return view('dispositivos.show', compact('dispositivo', 'temas', 'orden', 'publicacion'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dispositivo $dispositivo)
+    public function edit(Dispositivo $dispositivo, string $action = null, Tema $tema = null)
     {
-        return view('dispositivos.edit', compact('dispositivo'));
+        if ($action == 'add') {
+            $dispositivo->temas()->attach($tema);
+        } elseif ($action == 'remove') {
+            $dispositivo->temas()->detach($tema);
+        }
+
+        $temas = Tema::whereDoesntHave('dispositivos', function ($query) use ($dispositivo) {
+            $query->where('dispositivo_id', $dispositivo->id);
+        })->orderBy('titulo')->get();
+
+        $temas_dispositivo = $dispositivo->temas()->orderBy('titulo')->get();
+
+        return view('dispositivos.edit', [
+            'dispositivo' => $dispositivo,
+            'temas' => $temas,
+            'temas_dispositivo' => $temas_dispositivo,
+        ]);
     }
 
     /**

@@ -20,12 +20,50 @@
                             <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                         </div>
 
+                        <!-- Código -->
+                        <div class="mt-4">
+                            <x-input-label for="codigo" :value="__('Código')" />
+                            <x-text-input id="codigo" class="block mt-1 w-full" type="text" name="codigo"
+                                :value="old('codigo', $dispositivo->codigo)" required autofocus autocomplete="codigo" maxlength="5" />
+                            <x-input-error :messages="$errors->get('codigo')" class="mt-2" />
+                        </div>
+
                         <!-- Descripción -->
                         <div class="mt-4">
                             <x-input-label for="descripcion" :value="__('Descripción')" />
-                            <x-text-input id="descripcion" class="block mt-1 w-full" type="text" name="descripcion"
-                                :value="old('descripcion', $dispositivo->descripcion)" required autofocus autocomplete="descripcion" />
+                            <textarea id="descripcion" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" type="text" name="descripcion" required autofocus rows="5"
+                                cols="50" autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion) }}
+                            </textarea>
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                        </div>
+
+                        <!-- Temas -->
+                        <div class="mt-4">
+                            <x-input-label for="temas" :value="__('Agregar temas')" />
+                            <select name="tema_nuevo" id="temas" required
+                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full"
+                                onchange="window.location.href = '{{route('dispositivos.edit', [$dispositivo, 'add']) }}/' + this.value;">
+                                <option value="">Seleccione un tema</option>
+                                @forelse ($temas as $tema)
+                                    <option value="{{ $tema->id }}">{{ $tema->titulo }}</option>
+                                @empty
+                                    <option value="">No hay temas disponibles</option>
+                                @endforelse
+                            </select>
+
+                            <div class="m-3">
+                                <x-input-label for="temas" :value="__('Temas del dispositivo:')" />
+                                @forelse ($temas_dispositivo as $tema_dispositivo)
+                                    <a class="hover:text-red-500 block font-medium text-gray-700 dark:text-gray-300" href="{{route('dispositivos.edit', [$dispositivo, 'remove', $tema_dispositivo,])}}">
+                                        {{ __($tema_dispositivo->titulo) }}
+                                    </a>
+                                @empty
+                                    <p class="block font-medium text-gray-700 dark:text-gray-300">
+                                        No tiene temas seleccionados
+                                    </p>
+                                @endforelse
+                            </div>
+
                         </div>
 
 

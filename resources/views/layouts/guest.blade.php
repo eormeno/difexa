@@ -20,13 +20,13 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col pt-6 items-center justify-center bg-center bg-dots-darker bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900">
-        <div>
+    <div class="min-h-screen flex flex-col items-center justify-center bg-center bg-dots-darker bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900">
+        {{-- <div>
             <a href="/">
                 <x-application-logo class="block h-24 w-auto fill-current text-gray-700 dark:text-gray-200"/>
             </a>
-        </div>
-        <div class="w-auto mt-6 m-3 p-7 bg-white dark:bg-gray-800 shadow-md overflow-hidden rounded-lg">
+        </div> --}}
+        <div class="p-7 bg-white dark:bg-gray-800 shadow-md overflow-hidden rounded-lg">
             {{ $slot }}
         </div>
     </div>

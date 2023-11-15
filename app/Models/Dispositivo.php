@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Dispositivo extends Model
 {
@@ -14,5 +15,10 @@ class Dispositivo extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'codigo',
     ];
+
+    public function temas() {
+        return $this->belongsToMany(Tema::class, 'dispositivo_tema');
+    }
 }

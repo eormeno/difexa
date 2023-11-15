@@ -29,15 +29,15 @@
 
                     <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
                         @forelse ($dispositivos as $dispositivo)
-                            <div class="rounded-xl bg-gray-300 shadow p-2">
-                                <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 my-2 font-semibold">
+                            <div class="grid content-between rounded-xl bg-gray-300 shadow p-2">
+                                <p class="text-white bg-gray-700 hover:bg-gray-600 rounded-md text-center p-1 font-semibold">
                                     {{ $dispositivo->nombre }}
                                 </p>
-                                <p class="text-gray-700 bg-gray-300 rounded-md text-center p-1 my-2">
+                                <p class="text-gray-700 bg-gray-300 rounded-md text-center p-1">
                                     {{ $dispositivo->descripcion }}
                                 </p>
-                                <div class="flex justify-evenly m-0 a-0">
-                                    <a href="{{ route('dispositivos.show', $dispositivo) }}">
+                                <div class="flex justify-evenly p-1">
+                                    <a href="{{ route('dispositivos.show', $dispositivo->codigo) }}">
                                         <x-secondary-button>
                                             {{ __('Ver') }}
                                         </x-secondary-button>

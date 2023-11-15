@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Dispositivo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tema extends Model
 {
@@ -21,6 +22,14 @@ class Tema extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function publicaciones() {
+        return $this->hasMany(Publicacion::class);
+    }
+
+    public function dispositivos() {
+        return $this->belongsToMany(Dispositivo::class, 'dispositivo_tema');
     }
 }
 

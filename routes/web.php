@@ -26,6 +26,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/disp/{dispositivo:codigo}/{pub?}', [DispositivoController::class, 'show'])->name('dispositivos.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -44,8 +46,7 @@ Route::middleware(['auth', 'is.admin'])->group(function() {
     Route::get('/dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
     Route::get('/dispositivos/create', [DispositivoController::class, 'create'])->name('dispositivos.create');
     Route::post('/dispositivos', [DispositivoController::class, 'store'])->name('dispositivos.store');
-    Route::get('/dispositivos/{dispositivo}', [DispositivoController::class, 'show'])->name('dispositivos.show');
-    Route::get('/dispositivos/{dispositivo}/edit', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
+    Route::get('/dispositivos/{dispositivo:id}/edit/{action?}/{tema?}', [DispositivoController::class, 'edit'])->name('dispositivos.edit');
     Route::patch('/dispositivos/{dispositivo}', [DispositivoController::class, 'update'])->name('dispositivos.update');
     Route::delete('/dispositivos/{dispositivo}', [DispositivoController::class, 'destroy'])->name('dispositivos.destroy');
 

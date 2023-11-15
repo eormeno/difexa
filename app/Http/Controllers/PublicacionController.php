@@ -9,7 +9,7 @@ class PublicacionController extends Controller
 {
     public function index()
     {
-        $publicaciones = auth()->user()->publicaciones()->Orderby('updated_at', 'desc')->paginate(8);
+        $publicaciones = Publicacion::Orderby('updated_at', 'desc')->paginate(8);
         return view('publicaciones.index', compact('publicaciones'));
     }
 

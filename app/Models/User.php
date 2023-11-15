@@ -52,13 +52,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function tema() {
-        return $this->belongsTo(Tema::class);
-    }
-
     public function getFullName(): string
     {
         return strtoupper($this->apellido) . ', ' . ucfirst($this->nombre);
+    }
+
+    public function tema() {
+        return $this->belongsTo(Tema::class);
     }
 
     public function publicaciones(){
