@@ -23,6 +23,7 @@ class Publicacion extends Model
         'hasta',
         'user_id',
         'tema_id',
+        'duracion'
     ];
 
     public function user() {

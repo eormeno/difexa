@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Dispositivo;
 use App\Models\Tema;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 class DispositivoController extends Controller
 {
@@ -34,17 +35,41 @@ class DispositivoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required | min:3 | max:50',
             'descripcion' => 'required | min:3 | max:1000',
+            'codigo'=> 'required | min:5 | max:5 | unique:dispositivos,codigo'
         ]);
+        $validated['codigo'] = strtoupper($validated['codigo']);
         $dispositivo=Dispositivo::create($validated);
-        return redirect()->route('dispositivos.index')->with('exito',"Se creo el dispositivo $dispositivo->nombre correctamente.");;
+        return redirect()->route('dispositivos.index')->with('exito',"Se creo el dispositivo $dispositivo->nombre correctamente.");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Dispositivo $dispositivo)
+    public function show(Dispositivo $dispositivo, string $pub = null)
     {
-        //
+        $orden = 0;
+        if ($pub){
+            $orden = intval($pub);
+        }
+        $temas = $dispositivo->temas()->orderBy('created_at', 'desc')-> get();
+        // obtener publicaciones de los temas
+        $publicaciones = [];
+        $fechaActual = Carbon::now();
+        foreach ($temas as $tema) {
+            $publicaciones_tema = $tema->publicaciones()->where('fecha_publicacion', '>=', $fechaActual)->orderBy('fecha_publicacion', 'asc')->get();
+            foreach ($publicaciones_tema as $publicacion) {
+                if ($publicaciones[$publicacion->id] ?? false) {
+                    continue;
+                }
+                $publicaciones[$publicacion->id] = $publicacion;
+            }
+        }
+        if ($orden >= count($publicaciones)) {
+            $orden = 0;
+        }
+        $publicaciones = array_values($publicaciones);
+        $publicacion = $publicaciones[$orden] ?? "No hay publicaciones";
+        return view('dispositivos.show', compact('dispositivo', 'temas', 'orden', 'publicacion'));
     }
 
     /**
@@ -62,14 +87,7 @@ class DispositivoController extends Controller
      */
     public function update(Request $request, Dispositivo $dispositivo)
     {
-        $dispositivosValidados= $request->validate([
-            'nombre' => 'required | min:3 | max:50',
-            'descripcion' => 'required | min:10 | max:255',
-        ]);
-        
-        $dispositivo->nombre=$dispositivosValidados['nombre'];
-        $dispositivo->descripcion=$dispositivosValidados['descripcion'];
-        $dispositivo->save();
+
         
         if($request->input('boton')=='Eliminar'){
             $temasSeleccionados = $request->input('temas', []);
@@ -82,6 +100,17 @@ class DispositivoController extends Controller
                     $dispositivo->temas()->attach($tema->id);
                 }
             }
+        }else{
+            $dispositivosValidados= $request->validate([
+                'nombre' => 'required | min:3 | max:50',
+                'descripcion' => 'required | min:10 | max:255',
+                'codigo'=> 'required | min:5 | max:5 | unique:dispositivos,codigo'
+            ]);
+            $dispositivosValidados['codigo'] = strtoupper($dispositivosValidados['codigo']);
+            $dispositivo->nombre=$dispositivosValidados['nombre'];
+            $dispositivo->descripcion=$dispositivosValidados['descripcion'];
+            $dispositivo->codigo=$dispositivosValidados['codigo'];
+            $dispositivo->save();
         }
         
         return redirect()->route('dispositivos.index')->with('exito',"Se actualizo el dispositivo $dispositivo->nombre correctamente.");
@@ -95,4 +124,6 @@ class DispositivoController extends Controller
         $dispositivo->delete();
         return redirect()->route('dispositivos.index');
     }
+    
+    
 }

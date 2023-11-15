@@ -43,7 +43,13 @@
             <x-text-input id="hasta" class="block mt-1 w-full" type="date" name="hasta" :value="old('hasta')" required autofocus autocomplete="hasta" />
             <x-input-error :messages="$errors->get('hasta')" class="mt-2" />
          </div>         
-   
+         <!-- Duracion -->
+         <div class="mt-4">
+            <x-input-label for="duracion" :value="__('Duracion')" />
+            <x-text-input id="duracion" class="block mt-1 w-full" type="number" name="duracion"
+             :value="old('duracion')" required autofocus autocomplete="duracion" />
+            <x-input-error :messages="$errors->get('duracion')" class="mt-2" />
+           </div>
          <div class="flex items-center justify-end mt-4">
           <x-primary-button class="ml-4">
            {{ __('Guardar') }}

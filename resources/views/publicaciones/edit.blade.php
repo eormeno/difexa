@@ -31,7 +31,7 @@
          <!-- Imagen -->
          <div class="mt-4">
             <x-input-label for="imagen" :value="__('Imágen')" />
-            <img src="data:;base64,{{ $publicacion->imagen }}" alt="Imagen del Producto" class="max-w-40 max-h-40">
+            <img src="data:;base64,{{ $publicacion->imagen }}" alt="Imagen" class="max-w-40 max-h-40">
             <x-text-input id="imagen" class="block mt-1" type="file" name="imagen" :value="old('imagen')" required autocomplete="imagen" />
             <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
          </div>
@@ -50,7 +50,13 @@
              :value="old('hasta', $publicacion->hasta)" required autofocus autocomplete="hasta" />
             <x-input-error :messages="$errors->get('hasta')" class="mt-2" />
            </div>         
-   
+         <!-- Duracion -->
+         <div class="mt-4">
+          <x-input-label for="duracion" :value="__('Duracion')" />
+          <x-text-input id="duracion" class="block mt-1 w-full" type="number" name="duracion"
+           :value="old('duracion', $publicacion->duracion)" required autofocus autocomplete="duracion" />
+          <x-input-error :messages="$errors->get('duracion')" class="mt-2" />
+         </div>
          <div class="flex items-center justify-end mt-4">
           <x-primary-button class="ml-4">
            {{ __('Guardar') }}

@@ -23,10 +23,15 @@
          <div class="grid grid-cols-2">
             <!-- Descripción -->
             <div class="mt-4 pr-4">
-            <x-input-label for="descripcion" :value="__('Descripción')" />
-            <textarea id="descripcion" class="block mt-1 w-full" type="text" name="descripcion"
-            required autofocus autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion)}}</textarea>
-            <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                <x-input-label for="descripcion" :value="__('Descripción')" />
+                <textarea id="descripcion" class="block mt-1 w-full" type="text" name="descripcion"
+                required autofocus autocomplete="descripcion">{{ old('descripcion', $dispositivo->descripcion)}}</textarea>
+                <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
+                <div class="mt-4">
+                    <x-input-label for="codigo" :value="__('Código')" />
+                    <x-text-input id="codigo" class="block mt-1 w-full" type="text" name="codigo" :value="old('codigo', $dispositivo->codigo)" required autofocus autocomplete="codigo" maxlength="5" />
+                    <x-input-error :messages="$errors->get('codigo')" class="mt-2" />
+                </div>
             </div>
             <div class="mt-4">
                 <div class="flex items-center  space-x-4">
@@ -59,7 +64,7 @@
             </div> 
          </div>
          <div class="flex items-center justify-end mt-4">
-          <x-primary-button class="ml-4">
+          <x-primary-button name="boton" value="Guardar" class="ml-4">
            {{ __('Guardar') }}
           </x-primary-button>
          </div>

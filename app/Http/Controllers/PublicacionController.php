@@ -32,11 +32,12 @@ class PublicacionController extends Controller
     public function store(Request $request)
     {
         $atributos=request()->validate([
-            'titulo' => 'required | min:3 | max:50',
+            'titulo' => 'required | min:3 | max:80',
             'contenido' => 'required | min:3 | max:255',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif | max:2048',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,webp| max:2048',
             'desde' => 'required | date | after:now',
             'hasta' => 'required | date | after:desde',
+            'duracion'=>'required|integer|min:1',
         ]);
         $rutaImagen = $request->file('imagen')->getRealPath();
         $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));
@@ -47,11 +48,6 @@ class PublicacionController extends Controller
         $publicacion=Publicacion::create($atributos);
 
         $publicacion->save();
-        //if ($request->hasFile('imagen')) {
-        //    $imagen = $request->file('imagen');
-        //    $nombreArchivo = time() . '_' . $imagen->getClientOriginalName();
-        //    $imagen->move(public_path('uploads'), $nombreArchivo);
-        //}
         
         return redirect()->route('publicaciones.index')->with('exito','Se creo una publicación correctamente.');
     }
@@ -79,13 +75,14 @@ class PublicacionController extends Controller
     public function update(Request $request, string $id)
     {
         $validaciones=[
-            'titulo' => 'required | min:3 | max:50',
+            'titulo' => 'required | min:3 | max:80',
             'contenido' => 'required | min:3 | max:255',   
             'desde' => 'required | date | after:now',
             'hasta' => 'required | date | after:desde',
+            'duracion'=>'required|integer|min:1',
         ];
         if ($request->hasFile('imagen')) {
-            $validaciones['imagen'] = 'image|mimes:jpeg,png|max:2048';
+            $validaciones['imagen'] = 'image|mimes:jpeg,png,webp|max:2048';
             $atributos=$request->validate($validaciones);
             $rutaImagen = $request->file('imagen')->getRealPath();
             $atributos['imagen']=base64_encode(file_get_contents($rutaImagen));

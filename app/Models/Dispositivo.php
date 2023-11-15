@@ -12,6 +12,7 @@ class Dispositivo extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'codigo'
     ];
 
     public function temas(){
