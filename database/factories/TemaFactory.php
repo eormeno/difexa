@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TemaFactory extends Factory {
     public function definition(): array {
-        $titulo = $this->faker->sentence();
+        $titulo = $this->faker->word();
         $slug = Str::slug($titulo);
         return [
             'titulo' => $titulo,
