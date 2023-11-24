@@ -24,22 +24,16 @@ class TemasController extends Controller
         return view('temas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, Tema $tema)
     {
-        $temas_validados = $request->validate([
-            'titulo' => 'required | min:3 | max:50',
+        $tema_validado = $request->validate([
+            'titulo' => 'required | min:3 | max:51',
             'descripcion' => 'required | min:10 | max:255',
-            'slug' => 'required | unique:temas,slug | min:3 | max:50',
+            'slug' => 'required | unique:temas,slug, ' . $tema . ' | min:3 | max:50',
         ]);
-        $tema = new Tema();
-        $tema->titulo = $temas_validados['titulo'];
-        $tema->descripcion = $temas_validados['descripcion'];
-        $tema->slug = $temas_validados['slug'];
-        $tema->save();
-        return redirect()->route('temas.index');
+        $titulo = $tema_validado['titulo'];
+        Tema::create($tema_validado);
+        return redirect()->route('temas.index')->with('success', "$titulo creado exitosamente");
     }
 
     /**
